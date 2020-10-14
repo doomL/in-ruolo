@@ -6404,6 +6404,7 @@
     <Content Include="Content\vendors\general\wnumb\bower.json" />
     <Content Include="Content\vendors\general\wnumb\package.json" />
     <Content Include="Content\vendors\general\wnumb\README.md" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -6417,6 +6418,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <None Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
     <None Include="Views\User\Fatturazione.cshtml" />
     <None Include="Views\User\CambiaPassword.cshtml" />
     <None Include="Views\User\Formazione.cshtml" />
