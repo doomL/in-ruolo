@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +13,7 @@ namespace inRuolo.Controllers
         // GET: User
         public ActionResult Index()
         {
+            //Console.WriteLine(Service.InvokeServiceGetApi("Esami"));
             return View();
         }
         public ActionResult Fatturazione()
@@ -23,6 +26,11 @@ namespace inRuolo.Controllers
         }
         public ActionResult Formazione()
         {
+            //string jsonResult=Service.InvokeServiceGetApi("Titoli");
+          
+            //var jobject = JsonConvert.DeserializeObject<JObject>(titoli);
+            //System.Diagnostics.Debug.WriteLine(jsonResult);
+            //JObject json = JObject.Parse(jsonResult);
             return View();
         }
         
