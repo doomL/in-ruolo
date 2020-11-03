@@ -89,7 +89,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- end::Head -->
 <!-- begin::Body -->
 <body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
-
+    @using inRuolo.Models
     <!-- begin:: Page -->
     <!-- begin:: Header Mobile -->
     <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
@@ -1252,13 +1252,13 @@ License: You must have a valid license purchased only from themeforest(the above
                         </div>
 
                         <!--end: Language bar -->
-                        @{var username = "username"; }
+                        @{User user = (User)Session["user"]; }
                         <!--begin: User Bar -->
                         <div class="kt-header__topbar-item kt-header__topbar-item--user">
                             <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
                                 <div class="kt-header__topbar-user">
                                     <span class="kt-header__topbar-welcome kt-hidden-mobile">Ciao,</span>
-                                    <span class="kt-header__topbar-username kt-hidden-mobile">@username</span>
+                                    <span class="kt-header__topbar-username kt-hidden-mobile">@user.Email</span>
                                     <img class="kt-hidden" alt="Pic" src="~/Content/media/users/300_25.jpg" />
 
                                     <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
@@ -1277,7 +1277,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     </div>
 
                                     <div class="kt-user-card__name">
-                                        @username
+                                        @user.Email
                                     </div>
                                     <div class="kt-user-card__badge">
                                         <span class="btn btn-success btn-sm btn-bold btn-font-md">23 messages</span>

@@ -264,58 +264,33 @@ var KTDatatableDataLocalDemo = function () {
 	};
 }();
 
-
-//function del() {
-//	swal({
-//		title: "Are you sure?",
-//		text: "Once deleted, you will not be able to recover this imaginary file!",
-//		icon: "warning",
-//		buttons: true,
-//		dangerMode: true,
+//document.getElementById("addNewTitolo").addEventListener("click", function () {
+//	Swal.mixin({
+//		input: 'text',
+//		confirmButtonText: 'Next &rarr;',
+//		showCancelButton: true,
+//		progressSteps: ['1', '2', '3']
+//	}).queue([
+//		{
+//			title: 'Question 1',
+//			text: 'Chaining swal2 modals is easy'
+//		},
+//		'Question 2',
+//		'Question 3'
+//	]).then((result) => {
+//		if (result.value) {
+//			const answers = JSON.stringify(result.value)
+//			Swal.fire({
+//				title: 'All done!',
+//				html: `
+//		Your answers:
+//		<pre><code>${answers}</code></pre>
+//	  `,
+//				confirmButtonText: 'Lovely!'
+//			})
+//		}
 //	})
-//		.then((willDelete) => {
-//			// redirect with javascript here as per your logic after showing the alert using the urlToRedirect value
-//			if (willDelete) {
-//				swal("Poof! Your imaginary file has been deleted!", {
-//					icon: "success",
-//				});
-//			} else {
-//				swal("Your imaginary file is safe!");
-//			}
-//		});
-//}
-
-jQuery(document).ready(function () {
-	KTDatatableDataLocalDemo.init();
-});
-
-document.getElementById("addNewTitolo").addEventListener("click", function () {
-	Swal.mixin({
-		input: 'text',
-		confirmButtonText: 'Next &rarr;',
-		showCancelButton: true,
-		progressSteps: ['1', '2', '3']
-	}).queue([
-		{
-			title: 'Question 1',
-			text: 'Chaining swal2 modals is easy'
-		},
-		'Question 2',
-		'Question 3'
-	]).then((result) => {
-		if (result.value) {
-			const answers = JSON.stringify(result.value)
-			Swal.fire({
-				title: 'All done!',
-				html: `
-		Your answers:
-		<pre><code>${answers}</code></pre>
-	  `,
-				confirmButtonText: 'Lovely!'
-			})
-		}
-	})
-});
+//});
 document.getElementById("addNewComplementare").addEventListener("click", function () {
 	Swal.mixin({
 		input: 'text',
@@ -342,4 +317,27 @@ document.getElementById("addNewComplementare").addEventListener("click", functio
 			})
 		}
 	})
+});
+//function del() {
+//	swal({
+//		title: "Are you sure?",
+//		text: "Once deleted, you will not be able to recover this imaginary file!",
+//		icon: "warning",
+//		buttons: true,
+//		dangerMode: true,
+//	})
+//		.then((willDelete) => {
+//			// redirect with javascript here as per your logic after showing the alert using the urlToRedirect value
+//			if (willDelete) {
+//				swal("Poof! Your imaginary file has been deleted!", {
+//					icon: "success",
+//				});
+//			} else {
+//				swal("Your imaginary file is safe!");
+//			}
+//		});
+//}
+
+jQuery(document).ready(function () {
+	KTDatatableDataLocalDemo.init();
 });

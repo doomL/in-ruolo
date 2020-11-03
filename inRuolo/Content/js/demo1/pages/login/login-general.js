@@ -104,7 +104,7 @@ var KTLoginGeneral = function () {
 							showErrorMsg(form, 'danger', 'Email o Password Sbagliati');
 						else
 
-							window.location.href = '/User/Fatturazione';
+							window.location.href = '/User/Index';
 					}, 2000);
 				}
 			});

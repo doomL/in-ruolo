@@ -343,6 +343,7 @@
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-ajax.min.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-json.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-json.min.js" />
+    <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-localCompl.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-local.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-local.min.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\html-table.js" />
@@ -6335,9 +6336,14 @@
     <None Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\User\Fatturazione - Copia.cshtml" />
+    <Content Include="Views\User\Complementari - Copia.cshtml" />
     <None Include="Views\User\Fatturazione.cshtml" />
     <None Include="Views\User\CambiaPassword.cshtml" />
-    <None Include="Views\User\Formazione.cshtml" />
+    <Content Include="Views\User\Formazione.cshtml" />
+    <Content Include="Views\User\Complementari.cshtml" />
+    <Content Include="Views\User\Titoli - Copia.cshtml" />
+    <None Include="Views\User\Titoli.cshtml" />
     <None Include="Views\User\overview.cshtml" />
     <None Include="Views\User\Index.cshtml" />
     <None Include="Views\Error\Error404.cshtml" />

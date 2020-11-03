@@ -2,22 +2,7 @@
     Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 @using inRuolo.Models
-@{User user = (User)Session["user"]; }
-@*@{ if (user == null)
-    {
-        System.Diagnostics.Debug.WriteLine("nulllllllllllllllllllllllllllllllllll");
-        <script>
-            alert("Dwadwa");
-            window.location.href = '/Login';
-        </script>
-
-    }
-}*@
-<script>
-        window.location.href("/Login");
-</script>
 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-
     <!-- begin:: Subheader -->
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-subheader__main">
@@ -42,7 +27,7 @@
                 </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
                 <a href="" class="kt-subheader__breadcrumbs-link">
-                    Personal Information
+                    Email Settings
                 </a>-->
             <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
             <!--</div>-->
@@ -136,7 +121,7 @@
             <div class="kt-grid__item kt-app__toggle kt-app__aside" id="kt_user_profile_aside">
 
                 <!--begin:: Widgets/Applications/User/Profile1-->
-                <div class="kt-portlet ">
+                <div class="kt-portlet kt-portlet--height-fluid-">
                     <div class="kt-portlet__head  kt-portlet__head--noborder">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title">
@@ -193,14 +178,13 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="kt-portlet__body kt-portlet__body--fit-y">
 
                         <!--begin::Widget -->
                         <div class="kt-widget kt-widget--user-profile-1">
                             <div class="kt-widget__head">
                                 <div class="kt-widget__media">
-
+                                    @{User user = (User)Session["user"]; }
                                     @{string nC = user.Nome.Substring(0, 1) + user.Cognome.Substring(0, 1);}
                                     <img src="https://eu.ui-avatars.com/api/?name=@nC" alt="image">
                                 </div>
@@ -208,7 +192,6 @@
                                     <div class="kt-widget__section">
                                         <a href="#" class="kt-widget__username">
                                             @user.Email
-                                            </a>
                                     </div>
                                     <span class="kt-widget__subtitle">
                                         @user.Nome @user.Cognome
@@ -232,7 +215,7 @@
                                     </div> -->
                                 </div>
                                 <div class="kt-widget__items">
-                                    <a href="/User/Index" class="kt-widget__item kt-widget__item--active">
+                                    <a href="/User/Index" class="kt-widget__item kt">
                                         <span class="kt-widget__section">
                                             <span class="kt-widget__icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
@@ -283,7 +266,7 @@
 
                                     </a>
                                     <div class="btn-group dropright">
-                                        <a href="#" class="btn btn-secondary dropdown-toggle kt-widget__item kt-widget__item" @*role="button"*@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="true">
+                                        <a href="#" class="btn btn-secondary dropdown-toggle kt-widget__item kt-widget__item--active" @*role="button"*@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="true">
                                             <span class="kt-widget__section">
                                                 <span class="kt-widget__icon">
                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
@@ -308,7 +291,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!--end::Widget -->
                     </div>
                 </div>
@@ -317,172 +299,139 @@
             </div>
 
             <!--End:: App Aside-->
-            <!--Begin:: App Content-->
+            <!--Begin:: App Titoli-->
             <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
                 <div class="row">
                     <div class="col-xl-12">
-                        <div class="kt-portlet">
-                            <div class="kt-portlet__head">
+
+
+                        <div class="kt-portlet kt-portlet--mobile">
+                            <div class="kt-portlet__head kt-portlet__head--lg">
                                 <div class="kt-portlet__head-label">
-                                    <h3 class="kt-portlet__head-title">Personal Information <small>update your personal informaiton</small></h3>
+                                    <span class="kt-portlet__head-icon">
+                                        <i class="kt-font-brand flaticon2-file"></i>
+                                    </span>
+                                    <h3 class="kt-portlet__head-title">
+                                        Complementari
+                                    </h3>
                                 </div>
                                 <div class="kt-portlet__head-toolbar">
                                     <div class="kt-portlet__head-wrapper">
+                                        <a href="#" class="btn btn-clean btn-icon-sm">
+                                            <i class="la la-long-arrow-left"></i>
+                                            Back
+                                        </a>
+                                        &nbsp;
                                         <div class="dropdown dropdown-inline">
-                                            <button type="button" class="btn btn-label-brand btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="flaticon2-gear"></i>
+                                            <button type="button" class="btn btn-brand btn-icon-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="flaticon2-plus"></i> Add New
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <ul class="kt-nav">
                                                     <li class="kt-nav__section kt-nav__section--first">
-                                                        <span class="kt-nav__section-text">Export Tools</span>
+                                                        <span class="kt-nav__section-text">Choose an action:</span>
                                                     </li>
                                                     <li class="kt-nav__item">
-                                                        <a href="#" class="kt-nav__link">
-                                                            <i class="kt-nav__link-icon la la-print"></i>
-                                                            <span class="kt-nav__link-text">Print</span>
+                                                        <a id="addNewComplementare" class="kt-nav__link">
+                                                            <i class="kt-nav__link-icon flaticon2-open-text-book"></i>
+                                                            <span class="kt-nav__link-text">Reservations</span>
                                                         </a>
                                                     </li>
                                                     <li class="kt-nav__item">
                                                         <a href="#" class="kt-nav__link">
-                                                            <i class="kt-nav__link-icon la la-copy"></i>
-                                                            <span class="kt-nav__link-text">Copy</span>
+                                                            <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
+                                                            <span class="kt-nav__link-text">Appointments</span>
                                                         </a>
                                                     </li>
-                                                    <li class="kt-nav__item">
-                                                        <a href="#" class="kt-nav__link">
-                                                            <i class="kt-nav__link-icon la la-file-excel-o"></i>
-                                                            <span class="kt-nav__link-text">Excel</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="kt-nav__item">
-                                                        <a href="#" class="kt-nav__link">
-                                                            <i class="kt-nav__link-icon la la-file-text-o"></i>
-                                                            <span class="kt-nav__link-text">CSV</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="kt-nav__item">
-                                                        <a href="#" class="kt-nav__link">
-                                                            <i class="kt-nav__link-icon la la-file-pdf-o"></i>
-                                                            <span class="kt-nav__link-text">PDF</span>
-                                                        </a>
-                                                    </li>
+
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <form class="kt-form kt-form--label-right">
-                                <div class="kt-portlet__body">
-                                    <div class="kt-section kt-section--first">
-                                        <div class="kt-section__body">
-                                            <div class="row">
-                                                <label class="col-xl-3"></label>
-                                            </div>
-                                            @*<div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
-                                                    <div class="col-lg-9 col-xl-6">
-                                                        <div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_apps_user_add_avatar">
-                                                            <div class="kt-avatar__holder" style="background-image: url(&quot;http://keenthemes.com/metronic/preview/default/custom/user/assets/media/users/100_1.jpg&quot;);"></div>
-                                                            <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="Change avatar">
-                                                                <i class="fa fa-pen"></i>
-                                                                <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
-                                                            </label>
-                                                            <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
-                                                                <i class="fa fa-times"></i>
-                                                            </span>
+                            <div class="kt-portlet__body">
+
+                                <!--begin: Search Form -->
+                                <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
+                                    <div class="row align-items-center">
+                                        <div class="col-xl-8 order-2 order-xl-1">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                                    <div class="kt-input-icon kt-input-icon--left">
+                                                        <input type="text" class="form-control" placeholder="Search..." id="generalSearch">
+                                                        <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                                            <span><i class="la la-search"></i></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                                    <div class="kt-form__group kt-form__group--inline">
+                                                        <div class="kt-form__label">
+                                                            <label>Status:</label>
+                                                        </div>
+                                                        <div class="kt-form__control">
+                                                            <select class="form-control bootstrap-select" id="kt_form_status">
+                                                                <option value="">All</option>
+                                                                <option value="1">Pending</option>
+                                                                <option value="2">Delivered</option>
+                                                                <option value="3">Canceled</option>
+                                                                <option value="4">Success</option>
+                                                                <option value="5">Info</option>
+                                                                <option value="6">Danger</option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                </div>*@
-                                            <div class="form-group row">
-                                                <label class="col-xl-3 col-lg-3 col-form-label">Nome</label>
-                                                <div class="col-lg-9 col-xl-6">
-                                                    <input class="form-control" type="text" placeholder="Nick" value="@user.Nome">
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-xl-3 col-lg-3 col-form-label">Cognome</label>
-                                                <div class="col-lg-9 col-xl-6">
-                                                    <input class="form-control" type="text" placeholder="Bold" value="@user.Cognome">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="col-xl-3 col-lg-3 col-form-label">Email</label>
-                                                <div class="col-lg-9 col-xl-6">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
-                                                        <input type="text" class="form-control" placeholder="nick.bold@loop.com" placeholder="Email" aria-describedby="basic-addon1"value="@user.Email">
+                                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                                    <div class="kt-form__group kt-form__group--inline">
+                                                        <div class="kt-form__label">
+                                                            <label>Type:</label>
+                                                        </div>
+                                                        <div class="kt-form__control">
+                                                            <select class="form-control bootstrap-select" id="kt_form_type">
+                                                                <option value="">All</option>
+                                                                <option value="1">Online</option>
+                                                                <option value="2">Retail</option>
+                                                                <option value="3">Direct</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <label class="col-xl-3"></label>
-
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-xl-3 col-lg-3 col-form-label">Città</label>
-                                                <div class="col-lg-9 col-xl-6">
-                                                    <input class="form-control" id="citta" type="text" placeholder="Rende" value="@user.Citta">
-
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-xl-3 col-lg-3 col-form-label">Cellulare</label>
-                                                <div class="col-lg-9 col-xl-6">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
-                                                        <input type="text" class="form-control" placeholder="+35278953712" placeholder="Phone" aria-describedby="basic-addon1" value="@user.Cellulare">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="col-xl-3 col-lg-3 col-form-label">Data Di Nascita</label>
-                                                <div class="col-lg-9 col-xl-6">
-                                                    <div class="input-group">
-                                                        <input type="date" class="form-control"value="@user.DataNascita">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group form-group-last row">
-                                                <label class="col-xl-3 col-lg-3 col-form-label">Sesso</label>
-                                                <div class="col-lg-9 col-xl-6">
-                                                    <select class="form-control">
-                                                        <option value="M">Maschio</option>
-                                                        <option value="F">Femmina</option>
-
-                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="kt-portlet__foot">
-                                    <div class="kt-form__actions">
-                                        <div class="row">
-                                            <div class="col-lg-3 col-xl-3">
-                                            </div>
-                                            <div class="col-lg-9 col-xl-9">
-                                                <button type="reset" class="btn btn-success">Submit</button>&nbsp;
-                                                <button type="reset" class="btn btn-secondary">Reset</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+
+                                <!--end: Search Form -->
+                            </div>
+                            <div class="kt-portlet__body kt-portlet__body--fit">
+
+                                <!--begin: Datatable -->
+                                <div class="kt-datatable1" id="local_data"></div>
+
+                                <!--end: Datatable -->
+                            </div>
                         </div>
+
+
                     </div>
+
                 </div>
+
             </div>
 
-            <!--End:: App Content-->
+            <!--End:: App Titoli-->
+            <!--Begin:: App Esami-->
+            <!--End:: App Esami-->
         </div>
+
 
         <!--End::App-->
     </div>
 
     <!-- end:: Content -->
 </div>
+<script src="~/Content/js/demo1/pages/crud/metronic-datatable/base/data-localCompl.js" type="text/javascript"></script>
+
 

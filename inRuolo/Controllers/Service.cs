@@ -15,7 +15,7 @@ using System.Threading.Tasks;
     {
         static DateTime dtScadenza = DateTime.MinValue;
         //static string host = "http://localhost:52098";
-        static string host = "https://ws.notiziesullascuola.it";
+        static string host = "https://ws.inruolo.it";
         static string token = "";
 
         private static string GetToken()

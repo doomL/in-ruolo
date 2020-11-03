@@ -18,6 +18,7 @@ namespace inRuolo.Controllers
         }
         public ActionResult Fatturazione()
         {
+
             return View();
         }
         public ActionResult CambiaPassword()
@@ -27,13 +28,23 @@ namespace inRuolo.Controllers
         public ActionResult Formazione()
         {
             //string jsonResult=Service.InvokeServiceGetApi("Titoli");
-          
+
             //var jobject = JsonConvert.DeserializeObject<JObject>(titoli);
             //System.Diagnostics.Debug.WriteLine(jsonResult);
             //JObject json = JObject.Parse(jsonResult);
+            string jsonResult = Service.InvokeServiceGetApi("TitoloUtente/all/" + 1);
+            System.Diagnostics.Debug.WriteLine(jsonResult);
             return View();
         }
-        
+        public ActionResult Titoli()
+        {
+            return View();
+        }
+        public ActionResult Complementari()
+        {
+            return View();
+        }
+
 
     }
 }
