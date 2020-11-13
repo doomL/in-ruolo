@@ -352,7 +352,7 @@
                             <div class="kt-portlet__body">
 
                                 <!--begin: Search Form -->
-                                <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
+                                @*<div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
                                     <div class="row align-items-center">
                                         <div class="col-xl-8 order-2 order-xl-1">
                                             <div class="row align-items-center">
@@ -400,7 +400,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
 
                                 <!--end: Search Form -->
                             </div>
@@ -477,12 +477,12 @@
                                 <!-- Modal::Esami -->
                                 <!-- remote datatable modal -->
                                 <div id="kt_modal_KTDatatable_remote" class="modal fade" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content" style="min-height: 590px;">
+                                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                                        <div class="modal-content" id="esamiModalId" style="min-height: 590px;">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">
-                                                    Datatable
-                                                    <small>remote data source</small>
+                                                    Esami
+                                                    <small>Aggiorna il Piano di Studi</small>
                                                 </h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -525,18 +525,12 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-xl-4 order-1 order-xl-2 kt-align-right">
-                                                            <a href="#" class="btn btn-default kt-hidden">
-                                                                <i class="la la-cart-plus"></i> New Order
-                                                            </a>
-                                                            <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg d-xl-none"></div>
-                                                        </div>
                                                     </div>
                                                 </div>
 
                                                 <!--end: Search Form -->
-                                            </div>
-                                            <div class="modal-body modal-body-fit">
+                                            @*</div>
+                                            <div class="modal-body modal-body-fit">*@
 
                                                 <!--begin: Datatable -->
                                                 <div id="modal_datatable_ajax_source"></div>
@@ -544,8 +538,8 @@
                                                 <!--end: Datatable -->
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-clean btn-bold btn-upper btn-font-sm" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-default btn-bold btn-upper btn-font-sm">Submit</button>
+                                                <button type="button" class="btn btn-clean btn-bold btn-upper btn-font-sm" data-dismiss="modal">Chiudi</button>
+                                                <button type="button" class="btn btn-default btn-bold btn-upper btn-font-sm" id="salvaPianoDiStudi">Salva</button>
                                             </div>
                                         </div>
                                     </div>

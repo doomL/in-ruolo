@@ -1,13 +1,11 @@
 "use strict";
 // Class definition
 
-var selectedID = [];
-var idTitolo;
 var KTDatatableRemoteAjaxDemo = function () {
 	// Private functions
 
 	// basic demo
-	var datatableTitoli = function () {
+	var demo = function () {
 
 		var datatable = $('.kt-datatable').KTDatatable({
 			// datasource definition
@@ -137,22 +135,6 @@ var KTDatatableRemoteAjaxDemo = function () {
 
 		});
 
-		$('#kt_form_status').on('change', function () {
-			datatable.search($(this).val().toLowerCase(), 'Status');
-		});
-
-		$('#kt_form_type').on('change', function () {
-			datatable.search($(this).val().toLowerCase(), 'Type');
-		});
-		datatable.on('click', '[data-record-id]', function () {
-			modalSubRemoteDatatable($(this).data('record-id'));
-			$('#kt_modal_KTDatatable_remote').modal('show');
-		});
-
-		$('#kt_form_status,#kt_form_type').selectpicker();
-
-	};
-	var datatableComplementari = function () {
 		var datatable1 = $('.kt-datatable1').KTDatatable({
 			// datasource definition
 			data: {
@@ -296,142 +278,19 @@ var KTDatatableRemoteAjaxDemo = function () {
 		$('#kt_form_type').on('change', function () {
 			datatable.search($(this).val().toLowerCase(), 'Type');
 		});
+		datatable.on('click', '[data-record-id]', function () {
+			modalSubRemoteDatatable($(this).data('record-id'));
+			$('#kt_modal_KTDatatable_remote').modal('show');
+		});
+
 		$('#kt_form_status,#kt_form_type').selectpicker();
-	}
-	var modalSubRemoteDatatable = function (id) {
-		idTitolo = id;
-		var modal = $('#kt_modal_KTDatatable_remote');
-		var el = $('#modal_datatable_ajax_source');
-		var jsonEsami;
-		$.ajax({
-			url: 'User/GetEsamiUtenteJson',
-			data: { idTitolo: id },
-			async: false,
-			success: function (response) {
-				jsonEsami = JSON.parse(response);
-				console.log(jsonEsami)
-			}
-		});
-		var datatable = el.KTDatatable({
 
-			//localData
-			data: {
-				type: 'local',
-				source: jsonEsami,
-			},
-			// layout definition
-			layout: {
-				scroll: true, // enable/disable datatable scroll both horizontal and vertical when needed.
-				height: 640, // datatable's body's fixed height
-				footer: false, // display/hide footer
-
-			},
-
-			// column sorting
-			sortable: true,
-
-			pagination: false,
-
-			search: {
-				input: modal.find('#examSearch'),
-				delay: 400,
-			},
-
-			// columns definition
-			columns: [
-				 {
-					field: 'Codice',
-					title: 'Codice',
-				}, {
-					field: 'Descrizione',
-					title: 'Nome',
-				},
-				{
-					field: 'Risultato',
-					title: 'Sostenuto/Cfu',
-					sortable: false,
-					width: 110,
-					overflow: 'visible',
-					autoHide: false,
-					template: function (row) {
-						return '\
-							<div class="input-group">\
-							<div class="input-group-prepend">\
-								<span class="input-group-text">\
-									<label class="kt-checkbox kt-checkbox--single kt-checkbox--success">\
-										<input class="checkboxExam" id="'+ row.Id+'" name = "esamiCheckbox" type = "checkbox"'+ row.Sostenuto + ' >\
-											<span></span>\
-									</label>\
-								</span>\
-							</div>\
-								<input type="text" id="cfu'+ row.Id +'" name="esamiInput" class="form-control" value="'+ row.Cfu + '" aria-label="Text input with checkbox">\
-							</div>';
-					},
-				}
-			]
-
-		});
-
-		modal.find('#areaSelect').on('change', function () {
-			console.log($(this).val().toLowerCase())
-			$(':checkbox[name="esamiCheckbox"]:checked').each(function () {
-				selectedID.push(this.id);
-			});
-			
-			datatable.search($(this).val().toLowerCase(), 'AreaEsame.Id');
-			for (var i = 0; i < selectedID.length; i++)
-				$('#' + selectedID[i]).prop('checked', true);
-			alert(selectedID)
-			
-		});
-
-		modal.find('#areaSelect').selectpicker();
-
-		// fix datatable layout after modal shown
-		//datatable.hide();
-		modal.on('shown.bs.modal', function () {
-			var modalContent = $(this).find('#esamiModalId');
-			//datatable.spinnerCallback(true, modalContent);
-			console.log(modalContent)
-			datatable.redraw();
-			datatable.show();
-			//datatable.spinnerCallback(false, modalContent);
-			//datatable.on('kt-datatable--on-layout-updated', function () {
-			//});
-		}).on('hidden.bs.modal', function () {
-			selectedID = [];
-			$("#areaSelect").prop("selectedIndex", 0);
-			el.KTDatatable('destroy');
-		});
-
-
-		//datatable.hide();
-		//var alreadyReloaded = false;
-		//modal.on('shown.bs.modal', function () {
-		//	if (!alreadyReloaded) {
-		//		var modalContent = $(this).find('.modal-content');
-		//		datatable.spinnerCallback(true, modalContent);
-
-		//		datatable.reload();
-
-		//		datatable.on('kt-datatable--on-layout-updated', function () {
-		//			datatable.show();
-		//			datatable.spinnerCallback(false, modalContent);
-		//			datatable.redraw();
-		//		});
-
-		//		alreadyReloaded = true;
-		//	}
-		//});
 	};
-
 
 	return {
 		// public functions
 		init: function () {
-			datatableTitoli();
-			datatableComplementari();
-
+			demo();
 		},
 	};
 }();
@@ -486,7 +345,7 @@ $("#salvaComplementare").click(function () {
 			window.setTimeout(function () {
 				location.reload();
 			}, 2000);
-			el.KTDatatable('destroy');
+
 		}
 	});
 });
@@ -498,7 +357,7 @@ $('body').on('click', '#addExam', function () {
 	var examModal = $("#examBody");
 	examModal.append(' <div class="form-group" id="es' + divId + '">\
 		<div class="row">\
-			<select id="selectesame'+ divId + '" class="col-md-6 form-control select2-single">\
+			<select id="selectesame'+divId+'" class="col-md-6 form-control select2-single">\
 			   <option selected="selected" value="-1"> -- Esame -- </option>\
 			</select>\
 			<input type="number" class="col-md-2 offset-1 form-control" id="cfu" placeholder="CFU">\
@@ -514,61 +373,25 @@ $('body').on('click', '#addExam', function () {
 			const obj = JSON.parse(response);
 			var selectId = "selectesame" + divId;
 			console.log(selectId)
-			var $dropdown = $("#" + selectId);
+			var $dropdown = $("#"+selectId);
 			console.log($dropdown)
 			$dropdown.append('<option selected="selected" value="-1"> - All - </option>')
 			$.each(obj, function () {
-				$dropdown.append($("<option />").val(this.Id).text(this.Codice + " - " + this.Descrizione));
+				$dropdown.append($("<option />").val(this.Id).text(this.Codice+" - "+this.Descrizione));
 			});
 
 		}
 	});
-
+	
 });
 
-
-
-$("#salvaPianoDiStudi").click(function () {
-	var esami=[];
-	$(':checkbox[name="esamiCheckbox"]:checked').each(function () {
-		selectedID.push(this.id);
-
-		var SelectedEsame = { id: this.id, cfu:$("#cfu"+this.id).val()}
-		esami.push(SelectedEsame)
-	});
-
-	alert(JSON.stringify(esami))
-
-	alert(idTitolo);
-	$.ajax({
-		url: 'User/PutEsami',
-		data: { esami: JSON.stringify(esami),idTitolo:idTitolo},
-		success: function (response) {
-			swal.fire({
-				title: "Successo!",
-				text: "Il Titolo e' stato aggiunto!",
-				type: "success",
-				timer: 2000,
-				showConfirmButton: false
-			});
-			window.setTimeout(function () {
-			$('#kt_modal_KTDatatable_remote').modal('toggle');
-			}, 2000);
-
-		}
-	});
-});
-
-$('.checkboxExam').mousedown(function () {
-	alert("checkbox");
-})
 function eliminaEsame(id) {
 	$("#es" + id).remove();
 	$.ajax({
 		url: 'User/DeleteEsame',
-		data: { id: id },
+		data: {id:id},
 		success: function (response) {
-
+		   
 		}
 	});
 }

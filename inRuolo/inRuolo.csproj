@@ -340,6 +340,7 @@
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\api\events.min.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\api\methods.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\api\methods.min.js" />
+    <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-ajax - Copia.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-ajax.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-ajax.min.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-json.js" />
