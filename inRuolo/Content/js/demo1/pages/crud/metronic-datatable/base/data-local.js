@@ -1,6 +1,8 @@
 'use strict';
 // Class definition
 
+
+
 var KTDatatableDataLocalDemo = function () {
 	// Private functions
 
@@ -26,7 +28,7 @@ var KTDatatableDataLocalDemo = function () {
 			data: {
 				type: 'local',
 				source: dataJSONArray,
-				pageSize: 5,
+				pageSize: 8,
 			},
 
 			// layout definition
@@ -285,61 +287,23 @@ var KTDatatableDataLocalDemo = function () {
 //		});
 //}
 
+
+	if ($('div').is('#TitoliPage')) {
+		$.ajax({
+			url: 'User/GetTitoli',
+			success: function (response) {
+				alert(response)
+			}
+		});
+	}
+
+	
 jQuery(document).ready(function () {
 	KTDatatableDataLocalDemo.init();
-});
+	$(".select2-single").select2({
+		placeholder: '-Seleziona un titolo-',
+		dropdownParent: $("#modalContent"),
+		width: '100%'
+	});
 
-document.getElementById("addNewTitolo").addEventListener("click", function () {
-	Swal.mixin({
-		input: 'text',
-		confirmButtonText: 'Next &rarr;',
-		showCancelButton: true,
-		progressSteps: ['1', '2', '3']
-	}).queue([
-		{
-			title: 'Question 1',
-			text: 'Chaining swal2 modals is easy'
-		},
-		'Question 2',
-		'Question 3'
-	]).then((result) => {
-		if (result.value) {
-			const answers = JSON.stringify(result.value)
-			Swal.fire({
-				title: 'All done!',
-				html: `
-		Your answers:
-		<pre><code>${answers}</code></pre>
-	  `,
-				confirmButtonText: 'Lovely!'
-			})
-		}
-	})
-});
-document.getElementById("addNewComplementare").addEventListener("click", function () {
-	Swal.mixin({
-		input: 'text',
-		confirmButtonText: 'Next &rarr;',
-		showCancelButton: true,
-		progressSteps: ['1', '2', '3']
-	}).queue([
-		{
-			title: 'Question 1',
-			text: 'Chaining swal2 modals is easy'
-		},
-		'Question 2',
-		'Question 3'
-	]).then((result) => {
-		if (result.value) {
-			const answers = JSON.stringify(result.value)
-			Swal.fire({
-				title: 'All done!',
-				html: `
-		Your answers:
-		<pre><code>${answers}</code></pre>
-	  `,
-				confirmButtonText: 'Lovely!'
-			})
-		}
-	})
 });

@@ -1,9 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout1.cshtml";
 }
-@using System.Collections.Generic;
 @using inRuolo.Models
-
 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="TitoliPageAjax">
     <!-- begin:: Subheader -->
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
@@ -475,77 +473,22 @@
                                 </div>
 
                                 <!-- Modal::Esami -->
-                                <!-- remote datatable modal -->
-                                <div id="kt_modal_KTDatatable_remote" class="modal fade" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content" style="min-height: 590px;">
+                                <div class="modal fade" id="kt_modal_KTDatatable_remote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content" id="modalContent">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">
-                                                    Datatable
-                                                    <small>remote data source</small>
-                                                </h5>
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi Esami</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body">
-
-                                                <!--begin: Search Form -->
-                                                <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-xl-8 order-2 order-xl-1">
-                                                            <div class="row align-items-center">
-                                                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-                                                                    <div class="kt-input-icon kt-input-icon--left">
-                                                                        <input type="text" class="form-control" placeholder="Search..." id="examSearch">
-                                                                        <span class="kt-input-icon__icon kt-input-icon__icon--left">
-                                                                            <span><i class="la la-search"></i></span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-                                                                    <div class="kt-form__group kt-form__group--inline">
-                                                                        <div class="kt-form__label">
-                                                                            <label>Area:</label>
-                                                                        </div>
-                                                                        <div class="kt-form__control">
-                                                                            <select class="form-control areaSelect1" id="areaSelect">
-                                                                                <option value="">All</option>
-                                                                                @{
-                                                                                    List<AreaEsame> aree = (List<AreaEsame>)Session["Aree"];
-                                                                                }
-                                                                                @for (var i = 0; i < aree.Count; i++)
-                                                                                {
-                                                                                    AreaEsame area = aree[i];
-                                                                                    <option value="@area.Id">@area.Descrizione</option>
-                                                                                }
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-4 order-1 order-xl-2 kt-align-right">
-                                                            <a href="#" class="btn btn-default kt-hidden">
-                                                                <i class="la la-cart-plus"></i> New Order
-                                                            </a>
-                                                            <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg d-xl-none"></div>
-                                                        </div>
-                                                    </div>
+                                            <div class="kt-scroll" data-scroll="true" data-height="600" style="height: 600px; overflow: auto;">
+                                                <div class="modal-body" id="examBody">
                                                 </div>
-
-                                                <!--end: Search Form -->
-                                            </div>
-                                            <div class="modal-body modal-body-fit">
-
-                                                <!--begin: Datatable -->
-                                                <div id="modal_datatable_ajax_source"></div>
-
-                                                <!--end: Datatable -->
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-clean btn-bold btn-upper btn-font-sm" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-default btn-bold btn-upper btn-font-sm">Submit</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                                                <button type="button" class="btn btn-primary" id="salvaTitolo">Salva</button>
                                             </div>
                                         </div>
                                     </div>

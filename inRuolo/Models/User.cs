@@ -65,16 +65,6 @@ namespace inRuolo.Models
             PuntoVendita=false;
             Password=null;
         }
-
-
-
-        //public User(string email, string cognome, string nome, string password)
-        //{
-        //    Email = email;
-        //    Cognome = cognome;
-        //    Nome = nome;
-        //    Password = password;
-        //}
         public void Print()
         {
             System.Diagnostics.Debug.WriteLine(Email + Password + Nome + Cognome);
@@ -146,6 +136,33 @@ namespace inRuolo.Models
         public int Id;
         public string Nome;
         public string Tipo;
+    }
+    public class EsameUtente
+    {
+        public int IdEsame;
+        public bool Vo;
+        public int IdTitolo;
+        public int IdFormazione;
+        public int Cfu;
+    }
+    public class Esame
+    {
+        public int Id;
+        public string Codice;
+        public string Descrizione;
+        public AreaEsame AreaEsame;
+    }
+    public class EsameJson
+    {
+        public int Id;
+        public string Descrizione;
+        public int Cfu;
+    }
+    public class AreaEsame
+    {
+        public int Id;
+        public string Codice;
+        public string Descrizione;
     }
 
 }

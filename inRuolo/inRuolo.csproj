@@ -327,6 +327,7 @@
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\advanced\column-rendering.min.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\advanced\column-width.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\advanced\column-width.min.js" />
+    <Content Include="Content\js\demo1\pages\crud\metronic-datatable\advanced\modal - Copia.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\advanced\modal.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\advanced\modal.min.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\advanced\record-selection.js" />
@@ -3984,6 +3985,7 @@
     <Content Include="Content\vendors\general\markdown\node_modules\nopt\bin\nopt.js" />
     <Content Include="Content\vendors\general\markdown\node_modules\nopt\examples\my-program.js" />
     <Content Include="Content\vendors\general\markdown\node_modules\nopt\lib\nopt.js" />
+    <Content Include="Content\vendors\general\md5.min.js" />
     <Content Include="Content\vendors\general\moment\ender.js" />
     <Content Include="Content\vendors\general\moment\locale\af.js" />
     <Content Include="Content\vendors\general\moment\locale\ar-dz.js" />
@@ -4559,8 +4561,8 @@
     <Content Include="Content\vendors\general\select2\dist\js\i18n\ar.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\az.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\bg.js" />
+    <Content Include="Content\vendors\general\select2\dist\js\i18n\bn.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\bs.js" />
-    <Content Include="Content\vendors\general\select2\dist\js\i18n\build.txt" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\ca.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\cs.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\da.js" />
@@ -4568,6 +4570,7 @@
     <Content Include="Content\vendors\general\select2\dist\js\i18n\dsb.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\el.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\en.js" />
+    <Content Include="Content\vendors\general\select2\dist\js\i18n\eo.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\es.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\et.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\eu.js" />
@@ -4585,6 +4588,7 @@
     <Content Include="Content\vendors\general\select2\dist\js\i18n\is.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\it.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\ja.js" />
+    <Content Include="Content\vendors\general\select2\dist\js\i18n\ka.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\km.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\ko.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\lt.js" />
@@ -4592,7 +4596,9 @@
     <Content Include="Content\vendors\general\select2\dist\js\i18n\mk.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\ms.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\nb.js" />
+    <Content Include="Content\vendors\general\select2\dist\js\i18n\ne.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\nl.js" />
+    <Content Include="Content\vendors\general\select2\dist\js\i18n\pa.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\pl.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\ps.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\pt-BR.js" />
@@ -4601,6 +4607,7 @@
     <Content Include="Content\vendors\general\select2\dist\js\i18n\ru.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\sk.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\sl.js" />
+    <Content Include="Content\vendors\general\select2\dist\js\i18n\sq.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\sr-Cyrl.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\sr.js" />
     <Content Include="Content\vendors\general\select2\dist\js\i18n\sv.js" />
@@ -6342,8 +6349,7 @@
     <None Include="Views\User\CambiaPassword.cshtml" />
     <Content Include="Views\User\Formazione.cshtml" />
     <Content Include="Views\User\Complementari.cshtml" />
-    <Content Include="Views\User\Titoli - Copia.cshtml" />
-    <None Include="Views\User\Titoli.cshtml" />
+    <Content Include="Views\User\Titoli.cshtml" />
     <None Include="Views\User\overview.cshtml" />
     <None Include="Views\User\Index.cshtml" />
     <None Include="Views\Error\Error404.cshtml" />
@@ -6359,6 +6365,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Wizard\Index.cshtml" />
+    <Content Include="Views\User\TitoliSelect.cshtml" />
+    <Content Include="Views\User\Titoli - Copia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
