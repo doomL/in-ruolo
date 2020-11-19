@@ -20,7 +20,7 @@ namespace inRuolo.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            System.Diagnostics.Debug.WriteLine("--------------------Login Page------------------");
+            Logger.Out("--------------------Login Page------------------");
             return View();
         }
         public ActionResult SignIn()
@@ -32,9 +32,9 @@ namespace inRuolo.Controllers
             cred.password = null;
             string loggedUser = Service.InvokeServicePostApi("User/login", cred);
             User loggato = JsonConvert.DeserializeObject<User>(loggedUser);
-            System.Diagnostics.Debug.WriteLine(loggato.Nome);
+            Logger.Out(loggato.Nome);
             bool response=false;
-            System.Diagnostics.Debug.WriteLine(loggedUser);
+            Logger.Out(loggedUser);
             if (loggedUser != "")
             {
                 response = true;
@@ -44,7 +44,7 @@ namespace inRuolo.Controllers
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("errore");
+                Logger.Out("errore");
                 return Json(response, JsonRequestBehavior.AllowGet);
 
             }
@@ -58,7 +58,7 @@ namespace inRuolo.Controllers
             utente.Nome = Request["nome"];
             //var json = Newtonsoft.Json.JsonConvert.SerializeObject(utente);
             String output=Service.InvokeServicePostApi("User/registrazione", utente);
-            System.Diagnostics.Debug.WriteLine(output);
+            Logger.Out(output);
             bool response = true;
             return Json(response, JsonRequestBehavior.AllowGet);
         }

@@ -5,7 +5,7 @@
 @{User user = (User)Session["user"]; }
 @*@{ if (user == null)
     {
-        System.Diagnostics.Debug.WriteLine("nulllllllllllllllllllllllllllllllllll");
+        Logger.Out("nulllllllllllllllllllllllllllllllllll");
         <script>
             alert("Dwadwa");
             window.location.href = '/Login';
@@ -398,13 +398,13 @@
                                             <div class="form-group row">
                                                 <label class="col-xl-3 col-lg-3 col-form-label">Nome</label>
                                                 <div class="col-lg-9 col-xl-6">
-                                                    <input class="form-control" type="text" placeholder="Nick" value="@user.Nome">
+                                                    <input id="nome" class="form-control" type="text" placeholder="Nick" value="@user.Nome">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-xl-3 col-lg-3 col-form-label">Cognome</label>
                                                 <div class="col-lg-9 col-xl-6">
-                                                    <input class="form-control" type="text" placeholder="Bold" value="@user.Cognome">
+                                                    <input id="cognome" class="form-control" type="text" placeholder="Bold" value="@user.Cognome">
                                                 </div>
                                             </div>
 
@@ -413,7 +413,7 @@
                                                 <div class="col-lg-9 col-xl-6">
                                                     <div class="input-group">
                                                         <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
-                                                        <input type="text" class="form-control" placeholder="nick.bold@loop.com" placeholder="Email" aria-describedby="basic-addon1"value="@user.Email">
+                                                        <input id="email" type="text" class="form-control" placeholder="nick.bold@loop.com" aria-describedby="basic-addon1"value="@user.Email">
                                                     </div>
                                                 </div>
                                             </div>
@@ -424,7 +424,7 @@
                                             <div class="form-group row">
                                                 <label class="col-xl-3 col-lg-3 col-form-label">Città</label>
                                                 <div class="col-lg-9 col-xl-6">
-                                                    <input class="form-control" id="citta" type="text" placeholder="Rende" value="@user.Citta">
+                                                    <input class="form-control" id="citta" type="text" placeholder="Città" value="@user.Citta">
 
                                                 </div>
                                             </div>
@@ -433,7 +433,7 @@
                                                 <div class="col-lg-9 col-xl-6">
                                                     <div class="input-group">
                                                         <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
-                                                        <input type="text" class="form-control" placeholder="+35278953712" placeholder="Phone" aria-describedby="basic-addon1" value="@user.Cellulare">
+                                                        <input id="cellulare" type="text" class="form-control" placeholder="Telefono" aria-describedby="basic-addon1" value="@user.Cellulare">
                                                     </div>
                                                 </div>
                                             </div>
@@ -442,14 +442,14 @@
                                                 <label class="col-xl-3 col-lg-3 col-form-label">Data Di Nascita</label>
                                                 <div class="col-lg-9 col-xl-6">
                                                     <div class="input-group">
-                                                        <input type="date" class="form-control"value="@user.DataNascita">
+                                                        <input id="data" type="date" class="form-control"value="@user.DataNascita">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group form-group-last row">
                                                 <label class="col-xl-3 col-lg-3 col-form-label">Sesso</label>
                                                 <div class="col-lg-9 col-xl-6">
-                                                    <select class="form-control">
+                                                    <select id="sesso" class="form-control">
                                                         <option value="M">Maschio</option>
                                                         <option value="F">Femmina</option>
 
@@ -465,7 +465,7 @@
                                             <div class="col-lg-3 col-xl-3">
                                             </div>
                                             <div class="col-lg-9 col-xl-9">
-                                                <button type="reset" class="btn btn-success">Submit</button>&nbsp;
+                                                <button type="submit" id="updateUtente" class="btn btn-success">Submit</button>&nbsp;
                                                 <button type="reset" class="btn btn-secondary">Reset</button>
                                             </div>
                                         </div>

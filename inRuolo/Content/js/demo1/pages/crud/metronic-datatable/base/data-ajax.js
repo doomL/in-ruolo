@@ -146,6 +146,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 		});
 		datatable.on('click', '[data-record-id]', function () {
 			modalSubRemoteDatatable($(this).data('record-id'));
+			modalSubRemoteDatatableVo($(this).data('record-id'));
 			$('#kt_modal_KTDatatable_remote').modal('show');
 		});
 
@@ -309,7 +310,6 @@ var KTDatatableRemoteAjaxDemo = function () {
 			async: false,
 			success: function (response) {
 				jsonEsami = JSON.parse(response);
-				console.log(jsonEsami)
 			}
 		});
 		var datatable = el.KTDatatable({
@@ -342,9 +342,11 @@ var KTDatatableRemoteAjaxDemo = function () {
 				 {
 					field: 'Codice',
 					title: 'Codice',
+					sortable: false,
 				}, {
 					field: 'Descrizione',
 					title: 'Nome',
+					sortable: false,
 				},
 				{
 					field: 'Risultato',
@@ -373,7 +375,6 @@ var KTDatatableRemoteAjaxDemo = function () {
 		});
 
 		modal.find('#areaSelect').on('change', function () {
-			console.log($(this).val().toLowerCase())
 			$(':checkbox[name="esamiCheckbox"]:checked').each(function () {
 				selectedID.push(this.id);
 			});
@@ -381,7 +382,6 @@ var KTDatatableRemoteAjaxDemo = function () {
 			datatable.search($(this).val().toLowerCase(), 'AreaEsame.Id');
 			for (var i = 0; i < selectedID.length; i++)
 				$('#' + selectedID[i]).prop('checked', true);
-			alert(selectedID)
 			
 		});
 
@@ -392,7 +392,6 @@ var KTDatatableRemoteAjaxDemo = function () {
 		modal.on('shown.bs.modal', function () {
 			var modalContent = $(this).find('#esamiModalId');
 			//datatable.spinnerCallback(true, modalContent);
-			console.log(modalContent)
 			datatable.redraw();
 			datatable.show();
 			//datatable.spinnerCallback(false, modalContent);
@@ -424,7 +423,159 @@ var KTDatatableRemoteAjaxDemo = function () {
 		//	}
 		//});
 	};
+	var subTableInit = function (e) {
+		$('<div/>').attr('id', 'modal_datatable_ajax_source-vo' + e.data.Id).appendTo(e.detailCell).KTDatatable({
+			data: {
+				type: 'local',
+				source: e.data.Equivalenti,
+				pageSize: 10,
+			},
 
+			// layout definition
+			layout: {
+				scroll: true,
+				height: 300,
+				footer: false,
+
+				// enable/disable datatable spinner.
+				spinner: {
+					type: 1,
+					theme: 'default',
+				},
+			},
+
+			sortable: true,
+
+			// columns definition
+			columns: [
+				{
+					field: 'Nome',
+					title: 'Equivalenti',
+				}, ],
+		});
+	};
+	var modalSubRemoteDatatableVo = function (id) {
+		idTitolo = id;
+		var modal = $('#kt_modal_KTDatatable_remote');
+		var el = $('#modal_datatable_ajax_source-vo');
+		var jsonEsami;
+		$.ajax({
+			url: 'User/GetEsamiUtenteJsonVo',
+			data: { idTitolo: id },
+			async: false,
+			success: function (response) {
+				jsonEsami = JSON.parse(response);
+				console.log(jsonEsami)
+			}
+		});
+		var datatable = el.KTDatatable({
+
+			//localData
+			data: {
+				type: 'local',
+				source: jsonEsami,
+			},
+			// layout definition
+			layout: {
+				scroll: true, // enable/disable datatable scroll both horizontal and vertical when needed.
+				height: 640, // datatable's body's fixed height
+				footer: false, // display/hide footer
+
+			},
+
+			// column sorting
+			sortable: true,
+
+			pagination: false,
+
+			detail: {
+				title: 'Load sub table',
+				content: subTableInit,
+			},
+			search: {
+				input: modal.find('#examVoSearch'),
+				delay: 400,
+			},
+
+			// columns definition
+			columns: [
+				{
+					field: 'Id',
+					title: 'Equivalenti',
+					sortable: false,
+					//width: 30,
+					textAlign: 'center',
+				},
+				{
+					field: 'Descrizione',
+					title: 'Nome',
+					//width: 400,
+					sortable: true,
+				},
+				{
+					field: 'Risultato',
+					title: 'Sostenuto',
+					sortable: false,
+					overflow: 'visible',
+					autoHide: false,
+					template: function (row) {
+						return '\
+							<div class="input-group">\
+							<div class="input-group-prepend">\
+								<span class="input-group-text">\
+									<label class="kt-checkbox kt-checkbox--single kt-checkbox--success">\
+										<input class="checkboxExam" id="'+ row.Id + '" name = "esamiCheckbox" type = "checkbox"' + row.Sostenuto + ' >\
+											<span></span>\
+									</label>\
+								</span>\
+							</div>\
+								<input type="text" id="cfu'+ row.Id + '" name="esamiInput" class="form-control" value="' + row.Cfu + '" aria-label="Text input with checkbox">\
+							</div>';
+					},
+				}
+			]
+
+		});
+
+	
+
+
+		//// fix datatable layout after modal shown
+		////datatable.hide();
+		//modal.on('shown.bs.modal', function () {
+		//	var modalContent = $(this).find('#esamiModalId');
+		//	//datatable.spinnerCallback(true, modalContent);
+		//	datatable.redraw();
+		//	datatable.show();
+		//	//datatable.spinnerCallback(false, modalContent);
+		//	//datatable.on('kt-datatable--on-layout-updated', function () {
+		//	//});
+		//}).on('hidden.bs.modal', function () {
+		//	selectedID = [];
+		//	$("#areaSelect").prop("selectedIndex", 0);
+		//	el.KTDatatable('destroy');
+		//});
+
+
+		datatable.hide();
+		var alreadyReloaded = false;
+		modal.on('shown.bs.modal', function () {
+			if (!alreadyReloaded) {
+				var modalContent = $(this).find('.modal-content');
+				datatable.spinnerCallback(true, modalContent);
+
+				datatable.reload();
+
+				datatable.on('kt-datatable--on-layout-updated', function () {
+					datatable.show();
+					datatable.spinnerCallback(false, modalContent);
+					datatable.redraw();
+				});
+
+				alreadyReloaded = true;
+			}
+		});
+	};
 
 	return {
 		// public functions
@@ -494,7 +645,6 @@ $("#salvaComplementare").click(function () {
 var divId = -1;
 $('body').on('click', '#addExam', function () {
 	divId++
-	console.log("adding" + divId)
 	var examModal = $("#examBody");
 	examModal.append(' <div class="form-group" id="es' + divId + '">\
 		<div class="row">\
@@ -513,9 +663,7 @@ $('body').on('click', '#addExam', function () {
 			//console.log(response)
 			const obj = JSON.parse(response);
 			var selectId = "selectesame" + divId;
-			console.log(selectId)
 			var $dropdown = $("#" + selectId);
-			console.log($dropdown)
 			$dropdown.append('<option selected="selected" value="-1"> - All - </option>')
 			$.each(obj, function () {
 				$dropdown.append($("<option />").val(this.Id).text(this.Codice + " - " + this.Descrizione));
@@ -537,9 +685,7 @@ $("#salvaPianoDiStudi").click(function () {
 		esami.push(SelectedEsame)
 	});
 
-	alert(JSON.stringify(esami))
-
-	alert(idTitolo);
+	
 	$.ajax({
 		url: 'User/PutEsami',
 		data: { esami: JSON.stringify(esami),idTitolo:idTitolo},

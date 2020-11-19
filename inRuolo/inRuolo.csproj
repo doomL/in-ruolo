@@ -51,12 +51,21 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -124,13 +133,28 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AjaxResponse.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Logger.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RequestBody.cs" />
     <Compile Include="Controllers\Service.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WizardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AreaEsame.cs" />
+    <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\ClasseConcorso.cs" />
+    <Compile Include="Models\Complementare.cs" />
+    <Compile Include="Models\DatiFatturazione.cs" />
+    <Compile Include="Models\Esame.cs" />
+    <Compile Include="Models\EsameJson.cs" />
+    <Compile Include="Models\EsameTab.cs" />
+    <Compile Include="Models\EsameUtente.cs" />
+    <Compile Include="Models\EsameVO.cs" />
+    <Compile Include="Models\FormazioneUtente.cs" />
+    <Compile Include="Models\Titolo.cs" />
+    <Compile Include="Models\TitoloUtente.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -5497,10 +5521,7 @@
     <Content Include="Content\vendors\general\wnumb\test.html" />
     <Content Include="Content\vendors\general\wnumb\wNumb.js" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\vendors\custom\vendors\bootstrap-multiselectsplitter\LICENCE" />
     <Content Include="Content\vendors\custom\vendors\flaticon2\font\Flaticon2.eot" />
     <Content Include="Content\vendors\custom\vendors\flaticon2\font\Flaticon2.ttf" />
@@ -6330,30 +6351,21 @@
     <Content Include="Content\vendors\general\wnumb\package.json" />
     <Content Include="Content\vendors\general\wnumb\README.md" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <None Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
-    <Content Include="Views\User\Fatturazione - Copia.cshtml" />
     <Content Include="Views\User\Complementari - Copia.cshtml" />
-    <None Include="Views\User\Fatturazione.cshtml" />
-    <None Include="Views\User\CambiaPassword.cshtml" />
-    <Content Include="Views\User\Formazione.cshtml" />
     <Content Include="Views\User\Complementari.cshtml" />
+    <Content Include="Views\User\Fatturazione - Copia.cshtml" />
+    <Content Include="Views\User\Formazione.cshtml" />
+    <Content Include="Views\User\Titoli - Copia.cshtml" />
     <Content Include="Views\User\Titoli.cshtml" />
-    <None Include="Views\User\overview.cshtml" />
-    <None Include="Views\User\Index.cshtml" />
-    <None Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\User\TitoliSelect.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Wizard\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -6361,25 +6373,19 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Wizard\Index.cshtml" />
-    <Content Include="Views\User\TitoliSelect.cshtml" />
-    <Content Include="Views\User\Titoli - Copia.cshtml" />
+    <Content Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\User\CambiaPassword.cshtml" />
+    <Content Include="Views\User\Fatturazione.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\overview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="logger\" />
+    <Folder Include="Views\RequestBody\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\vendors\general\handlebars\lib\handlebars.d.ts" />
@@ -6395,6 +6401,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

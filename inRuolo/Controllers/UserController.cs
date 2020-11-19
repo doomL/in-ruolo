@@ -11,6 +11,7 @@ namespace inRuolo.Controllers
 {
     public class UserController : Controller
     {
+        Logger log = new Logger();
         // GET: User
         public ActionResult Index()
         {
@@ -31,10 +32,10 @@ namespace inRuolo.Controllers
             //string jsonResult=Service.InvokeServiceGetApi("Titoli");
 
             //var jobject = JsonConvert.DeserializeObject<JObject>(titoli);
-            //System.Diagnostics.Debug.WriteLine(jsonResult);
+            //Logger.Out(jsonResult);
             //JObject json = JObject.Parse(jsonResult);
             string jsonResult = Service.InvokeServiceGetApi("TitoloUtente/all/" + 1);
-            System.Diagnostics.Debug.WriteLine(jsonResult);
+            Logger.Out(jsonResult);
             return View();
         }
         public ActionResult Titoli()
@@ -56,14 +57,14 @@ namespace inRuolo.Controllers
         {
             User utenteLoggato = (User)Session["user"];
             string jsonResult = Service.InvokeServiceGetApi("TitoloUtente/all/" + utenteLoggato.Id);
-            System.Diagnostics.Debug.WriteLine(jsonResult);
+            Logger.Out(jsonResult);
             return jsonResult;
         }
         public string GetComplementari()
         {
             User utenteLoggato = (User)Session["user"];
             string jsonResult = Service.InvokeServiceGetApi("Complementare/all/" + utenteLoggato.Id);
-            System.Diagnostics.Debug.WriteLine(jsonResult);
+            Logger.Out(jsonResult);
             return jsonResult;
         }
         public ActionResult PutTitolo()
@@ -89,8 +90,8 @@ namespace inRuolo.Controllers
             User utenteLoggato = (User)Session["user"];
             //var json = Newtonsoft.Json.JsonConvert.SerializeObject(utente);
 
-            System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(titoloUtente));
-            System.Diagnostics.Debug.WriteLine(Service.InvokeServicePostApi("TitoloUtente/upsert/" + utenteLoggato.Id, titoloUtente));
+            Logger.Out(Newtonsoft.Json.JsonConvert.SerializeObject(titoloUtente));
+            Logger.Out(Service.InvokeServicePostApi("TitoloUtente/upsert/" + utenteLoggato.Id, titoloUtente));
             bool response = true;
             return Json(response, JsonRequestBehavior.AllowGet);
             //return null;
@@ -108,7 +109,7 @@ namespace inRuolo.Controllers
             complementare.StrTipo = Request["strTipo"];
             User utenteLoggato = (User)Session["user"];
             string output = Service.InvokeServicePostApi("complementare/upsert/" + utenteLoggato.Id, complementare);
-            System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(complementare));
+            Logger.Out(Newtonsoft.Json.JsonConvert.SerializeObject(complementare));
             bool response = true;
             return Json(response, JsonRequestBehavior.AllowGet);
         }
@@ -148,7 +149,7 @@ namespace inRuolo.Controllers
                 {
                     esameTmp = new EsameJson();
 
-                    //System.Diagnostics.Debug.WriteLine(esamiUtente[i].IdEsame);
+                    //Logger.Out(esamiUtente[i].IdEsame);
                     esame = JsonConvert.DeserializeObject<Esame>(Service.InvokeServiceGetApi("Esami/" + esamiUtente[i].IdEsame));
                     esameTmp.Id = esame.Id;
                     esameTmp.Descrizione = esame.Descrizione;
@@ -162,7 +163,7 @@ namespace inRuolo.Controllers
                 }
             }
             string jsonOutput = JsonConvert.SerializeObject(esamiJson);
-            //System.Diagnostics.Debug.WriteLine(jsonOutput);
+            //Logger.Out(jsonOutput);
             return jsonOutput;
         }
         public string GetEsamiUtenteJson()
@@ -172,15 +173,15 @@ namespace inRuolo.Controllers
             List<EsameUtente> esamiUtente = JsonConvert.DeserializeObject<List<EsameUtente>>(EsamiUtenteJson);
             List<EsameTab> esamiTab = new List<EsameTab>();
             List<Esame> esami = JsonConvert.DeserializeObject<List<Esame>>(Service.InvokeServiceGetApi("Esami/all/"));
+            //List<EsameVO> esamiVO = JsonConvert.DeserializeObject<List<EsameVO>>(Service.InvokeServiceGetApi("Esami/vo/all/"));
             EsameTab esameTmp;
-            System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(esamiUtente));
+            //Logger.Out(JsonConvert.SerializeObject(esamiUtente));
             for (int i = 0; i < esami.Count; i++)
             {
                 esameTmp = new EsameTab();
                 EsameUtente esU = esamiUtente.Find(x => x.IdEsame == esami[i].Id);
                 if (esU != null && esU.IdTitolo == Int32.Parse(Request["idTitolo"])/* || esamiUtente[i].IdFormazione == Int32.Parse(Request["idFormazione"])*/)
                 {
-
                     esameTmp.Id = esami[i].Id;
                     esameTmp.Descrizione = esami[i].Descrizione;
                     esameTmp.Cfu = esU.Cfu;
@@ -188,10 +189,19 @@ namespace inRuolo.Controllers
                     esameTmp.Codice = esami[i].Codice;
                     esameTmp.Sostenuto = "checked";
                     esamiTab.Add(esameTmp);
-                    System.Diagnostics.Debug.WriteLine("IFFFFFFF" + esameTmp.ToString());
+                    //Logger.Out("IFFFFFFF" + esameTmp.ToString());
                 }
                 else
                 {
+                    //if (esUVO != null && esUVO.IdTitolo == Int32.Parse(Request["idTitolo"])){
+                    //    esameTmp.Id = esamiVO[i].Id;
+                    //    esameTmp.Descrizione = esamiVO[i].Nome;
+                    //    esameTmp.Cfu = esU.Cfu;
+                    //    esameTmp.AreaEsame.Id = 15;
+                    //    esameTmp.Codice = "Vecchio Ordinamento";
+                    //    esameTmp.Sostenuto = "checked";
+                    //    esamiTab.Add(esameTmp);
+                    //}
                     esameTmp.Id = esami[i].Id;
                     esameTmp.Descrizione = esami[i].Descrizione;
                     esameTmp.AreaEsame = esami[i].AreaEsame;
@@ -202,7 +212,47 @@ namespace inRuolo.Controllers
 
             }
             string jsonOutput = JsonConvert.SerializeObject(esamiTab);
-            System.Diagnostics.Debug.WriteLine(jsonOutput);
+            //Logger.Out(jsonOutput);
+            return jsonOutput;
+        }
+        public string GetEsamiUtenteJsonVo()
+        {
+
+            User utenteLoggato = (User)Session["user"];
+            String EsamiUtenteJson = Service.InvokeServiceGetApi("EsamiPerUtente/all/" + utenteLoggato.Id);
+            List<EsameUtente> esamiUtente = JsonConvert.DeserializeObject<List<EsameUtente>>(EsamiUtenteJson);
+            List<EsameTab> esamiTab = new List<EsameTab>();
+            List<EsameVO> esamiVO = JsonConvert.DeserializeObject<List<EsameVO>>(Service.InvokeServiceGetApi("Esami/vo/all/"));
+            EsameTab esameTmp;
+            Logger.Out(JsonConvert.SerializeObject(esamiVO));
+            for (int i = 0; i < esamiVO.Count; i++)
+            {
+                esameTmp = new EsameTab();
+                EsameUtente esU = esamiUtente.Find(x => x.IdEsame == esamiVO[i].Id);
+                if (esU != null && esU.Vo == true && esU.IdTitolo == Int32.Parse(Request["idTitolo"])/* || esamiUtente[i].IdFormazione == Int32.Parse(Request["idFormazione"])*/)
+                {
+                    esameTmp.Id = esamiVO[i].Id;
+                    esameTmp.Descrizione = esamiVO[i].Nome;
+                    esameTmp.Cfu = esU.Cfu;
+                    esameTmp.Equivalenti = esamiVO[i].Equivalenti;
+                    esameTmp.Ssd = esamiVO[i].Ssd;
+                    esameTmp.Sostenuto = "checked";
+                    esamiTab.Add(esameTmp);
+                    Logger.Out("IFFFFFFF" + esameTmp.Id);
+                }
+                else
+                {
+                    esameTmp.Id = esamiVO[i].Id;
+                    esameTmp.Descrizione = esamiVO[i].Nome;
+                    esameTmp.Equivalenti = esamiVO[i].Equivalenti;
+                    esameTmp.Ssd = esamiVO[i].Ssd;
+                    esameTmp.Sostenuto = "";
+                    esamiTab.Add(esameTmp);
+                }
+
+            }
+            string jsonOutput = JsonConvert.SerializeObject(esamiTab);
+            //Logger.Out(jsonOutput);
             return jsonOutput;
         }
         public string GetEsamiUtenteTitolo(int idTitolo)
@@ -232,13 +282,13 @@ namespace inRuolo.Controllers
 
         //    }
         //    string output = Service.InvokeServicePostApi("EsamiPerUtente/delete/" + utenteLoggato.Id, esame);
-        //    System.Diagnostics.Debug.WriteLine(output);
+        //    Logger.Out(output);
         //    bool response = true;
         //    return Json(response, JsonRequestBehavior.AllowGet);
         //}
         public string GetEsamiArea()
         {
-            System.Diagnostics.Debug.WriteLine(Request["idArea"]);
+            Logger.Out(Request["idArea"]);
             String esami = Service.InvokeServiceGetApi("Esami/xarea/" + Request["idArea"]);
             return esami;
         }
@@ -253,7 +303,7 @@ namespace inRuolo.Controllers
                 esamiUtente.RemoveAll(x => x.IdEsame == int.Parse(json[i]["id"].ToString())&&x.IdTitolo==int.Parse(idTitolo));
 
             }
-            System.Diagnostics.Debug.WriteLine(esamiUtente.Count());
+            Logger.Out(esamiUtente.Count());
             foreach(EsameUtente esame in esamiUtente)
             {
                 Service.InvokeServicePostApi("EsamiPerUtente/delete/" + utenteLoggato.Id, esame);
@@ -264,7 +314,7 @@ namespace inRuolo.Controllers
             User utenteLoggato = (User)Session["user"];
             String idTitolo = Request["idTitolo"];
             String esami = Request["esami"];
-            System.Diagnostics.Debug.WriteLine("wcadwa" + esami);
+            Logger.Out("wcadwa" + esami);
             JArray json = JArray.Parse(esami);
             for (int i = 0; i < json.Count; i++)
             {
@@ -275,6 +325,24 @@ namespace inRuolo.Controllers
                 Service.InvokeServicePostApi("EsamiPerUtente/upsert/" + utenteLoggato.Id, esame);
             }
             deleteEsami(json,idTitolo);
+            bool response = true;
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult UpdateUtente()
+        {
+            RequestBody rb=new RequestBody();
+            string message = rb.GetDocumentContents(Request);
+            Logger.Out(Request["nome"]);
+            User ut = (User)Session["user"];
+            ut.Nome = Request["nome"];
+            ut.Cognome = Request["cognome"];
+            ut.Email = Request["email"];
+            ut.Citta = Request["citta"];
+            ut.Cellulare = Request["cellulare"];
+            ut.DataNascita = Request["data"];
+            ut.Sesso = Request["sesso"];
+            Session["user"] = ut;
+            Service.InvokeServicePostApi("User/update/",ut);
             bool response = true;
             return Json(response, JsonRequestBehavior.AllowGet);
         }
