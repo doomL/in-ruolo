@@ -66,9 +66,5 @@ namespace inRuolo.Models
             PuntoVendita = false;
             Password = null;
         }
-        public void Print()
-        {
-            Logger.Out(Email + Password + Nome + Cognome);
-        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace inRuolo.Models
 {
-    public class Esame
+    public class Ssd
     {
         public int Id;
         public string Codice;

@@ -3,10 +3,58 @@
 
 var selectedID = [];
 var idTitolo;
+var idSsd;
 var KTDatatableRemoteAjaxDemo = function () {
 	// Private functions
 
 	// basic demo
+	var subTableTitoli = function (e) {
+		$('<div/>').attr('id', 'modal_datatable_ajax_source' + e.data.Id).appendTo(e.detailCell).KTDatatable({
+			data: {
+				type: 'local',
+				source: e.data.prova,
+				pageSize: 10,
+			},
+
+			// layout definition
+			layout: {
+				scroll: true,
+				height: 300,
+				footer: false,
+
+				// enable/disable datatable spinner.
+				spinner: {
+					type: 1,
+					theme: 'default',
+				},
+			},
+
+			sortable: true,
+
+			// columns definition
+			columns: [
+				{
+					field: 'Descrizione',
+					title: 'Esame',
+				},
+				{
+					field: 'Elimina',
+					title: 'Elimina',
+					sortable: false,
+					width: 110,
+					overflow: 'visible',
+					autoHide: false,
+					template: function () {
+						return '\
+						<a class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Elimina">\
+							<i class="la la-trash"></i>\
+						</a>\
+						';
+					},
+				}
+			],
+		});
+	};
 	var datatableTitoli = function () {
 
 		var datatable = $('.kt-datatable').KTDatatable({
@@ -51,41 +99,46 @@ var KTDatatableRemoteAjaxDemo = function () {
 
 			// columns definition
 			columns: [
-				{
-					field: 'Id',
-					title: '#',
-					sortable: false,
-					width: 20,
-					type: 'number',
-					selector: { class: 'kt-checkbox--solid' },
-					textAlign: 'center',
-				},
+
 				{
 					field: 'Esami',
 					title: 'Piano Di Studi',
+					sortable: false,
+					width: 50,
 					// callback function support for column rendering
 					template: function (row) {
 						//return '<button type="button" id="' + row.Titolo.Id + '"  data-record-id="' + row.Titolo.Id + '" class="addbuttonTitoli btn btn-outline-brand btn-elevate btn-pill" data-toggle="modal" data-target="#kt_modal_KTDatatable_remote" ><i class="flaticon-menu-1"></i>Esami</button >';
-						return '<button type="button" id="' + row.Titolo.Id + '"  data-record-id="' + row.Titolo.Id + '" class="addbuttonTitoli btn btn-outline-brand btn-elevate btn-pill"><i class="flaticon2-document"></i>Esami</button >';
+						return '<button type="button" id="' + row.Titolo.Id + '"  data-record-id="' + row.Titolo.Id + '" class="addbuttonTitoli btn btn-info btn-icon btn-circle"><i class="fa fa-th-list"></i>';
 					}
 				}, {
 					field: 'Nome',
 					title: 'Nome Titolo',
+					sortable: false,
+					width: 400,
+
 				}, {
 					field: 'Luogo',
 					title: 'Luogo',
+					sortable: false,
+					width: 100,
 				}, {
 					field: 'Data',
 					title: 'Data Conseguimento',
 					type: 'date',
 					format: 'DD/MM/YYYY',
+					sortable: false,
+					width: 100,
 				}, {
 					field: 'Voto',
 					title: 'Voto',
+					sortable: false,
+					width: 50,
 				},
 				{
 					field: 'Lode',
 					title: 'Lode',
+					sortable: false,
+					width: 50,
 					// callback function support for column rendering
 					template: function (row) {
 
@@ -299,17 +352,65 @@ var KTDatatableRemoteAjaxDemo = function () {
 		});
 		$('#kt_form_status,#kt_form_type').selectpicker();
 	}
+	var subTableEsami = function (e) {
+		$('<div/>').attr('id', 'modal_datatable_ajax_source' + e.data.Id).appendTo(e.detailCell).KTDatatable({
+			data: {
+				type: 'local',
+				source: e.data.prova,
+				pageSize: 10,
+			},
+
+			// layout definition
+			layout: {
+				scroll: true,
+				height: 300,
+				footer: false,
+
+				// enable/disable datatable spinner.
+				spinner: {
+					type: 1,
+					theme: 'default',
+				},
+			},
+
+			sortable: true,
+
+			// columns definition
+			columns: [
+				{
+					field: 'Descrizione',
+					title: 'Esame',
+				},
+				{
+					field: 'Elimina',
+					title: 'Elimina',
+					sortable: false,
+					width: 110,
+					overflow: 'visible',
+					autoHide: false,
+					template: function () {
+						return '\
+						<a class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Elimina">\
+							<i class="la la-trash"></i>\
+						</a>\
+						';
+					},
+				}
+			],
+		});
+	};
 	var modalSubRemoteDatatable = function (id) {
 		idTitolo = id;
 		var modal = $('#kt_modal_KTDatatable_remote');
 		var el = $('#modal_datatable_ajax_source');
 		var jsonEsami;
 		$.ajax({
-			url: 'User/GetEsamiUtenteJson',
+			url: 'User/GetSsdUtente',
 			data: { idTitolo: id },
 			async: false,
 			success: function (response) {
 				jsonEsami = JSON.parse(response);
+				console.log(jsonEsami)
 			}
 		});
 		var datatable = el.KTDatatable({
@@ -332,6 +433,10 @@ var KTDatatableRemoteAjaxDemo = function () {
 
 			pagination: false,
 
+			//detail: {
+			//	title: 'Load sub table',
+			//	content: subTableEsami,
+			//},
 			search: {
 				input: modal.find('#examSearch'),
 				delay: 400,
@@ -339,18 +444,27 @@ var KTDatatableRemoteAjaxDemo = function () {
 
 			// columns definition
 			columns: [
-				 {
+				{
+					field: 'Esami',
+					title: 'Modifica Esami',
+					// callback function support for column rendering
+					template: function (row) {
+						return '<button type="button" name="' + idTitolo + '" id="' + row.Id + '"data-toggle="modal" data-target="#ModalAddEsami" class="currentExam btn btn-outline-brand btn-elevate btn-pill"><i class="fa fa-tasks"></i>Esami</button >';
+					}
+				},
+				{
+					field: 'Descrizione',
+					title: 'Descrizione',
+					sortable: false,
+				},
+				{
 					field: 'Codice',
 					title: 'Codice',
-					sortable: false,
-				}, {
-					field: 'Descrizione',
-					title: 'Nome',
 					sortable: false,
 				},
 				{
 					field: 'Risultato',
-					title: 'Sostenuto/Cfu',
+					title: 'Cfu Totali',
 					sortable: false,
 					width: 110,
 					overflow: 'visible',
@@ -361,12 +475,12 @@ var KTDatatableRemoteAjaxDemo = function () {
 							<div class="input-group-prepend">\
 								<span class="input-group-text">\
 									<label class="kt-checkbox kt-checkbox--single kt-checkbox--success">\
-										<input class="checkboxExam" id="'+ row.Id+'" name = "esamiCheckbox" type = "checkbox"'+ row.Sostenuto + ' >\
+										<input disabled class="checkboxExam" id="'+ row.Id + '" name = "esamiCheckbox" type = "checkbox"' + row.Sostenuto + ' >\
 											<span></span>\
 									</label>\
 								</span>\
 							</div>\
-								<input type="text" id="cfu'+ row.Id +'" name="esamiInput" class="form-control" value="'+ row.Cfu + '" aria-label="Text input with checkbox">\
+								<input disabled type="text" id="cfu'+ row.Id + '" name="esamiInput" class="form-control" value="' + row.Cfu + '" aria-label="Text input with checkbox">\
 							</div>';
 					},
 				}
@@ -378,11 +492,11 @@ var KTDatatableRemoteAjaxDemo = function () {
 			$(':checkbox[name="esamiCheckbox"]:checked').each(function () {
 				selectedID.push(this.id);
 			});
-			
+
 			datatable.search($(this).val().toLowerCase(), 'AreaEsame.Id');
 			for (var i = 0; i < selectedID.length; i++)
 				$('#' + selectedID[i]).prop('checked', true);
-			
+
 		});
 
 		modal.find('#areaSelect').selectpicker();
@@ -423,7 +537,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 		//	}
 		//});
 	};
-	var subTableInit = function (e) {
+	var subTableVo = function (e) {
 		$('<div/>').attr('id', 'modal_datatable_ajax_source-vo' + e.data.Id).appendTo(e.detailCell).KTDatatable({
 			data: {
 				type: 'local',
@@ -451,7 +565,37 @@ var KTDatatableRemoteAjaxDemo = function () {
 				{
 					field: 'Nome',
 					title: 'Equivalenti',
-				}, ],
+				},
+
+				//{
+				//	field: 'Risultato',
+				//	title: 'Sostenuto/Durata',
+				//	sortable: false,
+				//	overflow: 'visible',
+				//	autoHide: false,
+				//	template: function (row) {
+				//		return '\
+				//			<div class="input-group">\
+				//			<div class="input-group-prepend">\
+				//				<span class="input-group-text">\
+				//					<label class="kt-checkbox kt-checkbox--single kt-checkbox--success">\
+				//						<input class="checkboxExamVo" id="'+ row.Id + '" name = "esamiCheckbox" type = "checkbox"' + row.Sostenuto + ' >\
+				//							<span></span>\
+				//					</label>\
+				//				</span>\
+				//			</div>\
+				//				<select class="form-control" name="Semestri" id="semestri'+ row.Id + '" disabled>\
+				//					<option value="0"> -- Seleziona Durata -- </option>\
+				//					<option value="6">Un Semestre</option>\
+				//					<option value="12">Una Annualita\'</option>\
+				//					<option value="24">Due Annualita\'</option>\
+				//					<option value="36">Tre Annualita\'</option>\
+				//					<option value="48">Tre Annualita\'</option>\
+				//				</select >\
+				//			</div>';
+				//	},
+				//}
+			],
 		});
 	};
 	var modalSubRemoteDatatableVo = function (id) {
@@ -490,7 +634,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 
 			detail: {
 				title: 'Load sub table',
-				content: subTableInit,
+				content: subTableVo,
 			},
 			search: {
 				input: modal.find('#examVoSearch'),
@@ -513,8 +657,16 @@ var KTDatatableRemoteAjaxDemo = function () {
 					sortable: true,
 				},
 				{
+					field: 'Esami',
+					title: 'Aggiungi Esame VO',
+					// callback function support for column rendering
+					template: function (row) {
+						return '<button type="button" name="' + idTitolo + '" id="' + row.Id + '"data-toggle="modal" data-target="#ModalAddEsamiVo2" data-id="' + row.Id + '" class="currentExamVo btn btn-outline-brand btn-elevate btn-pill"><i class="fa fa-tasks"></i>Esami</button >';
+					}
+				},
+				{
 					field: 'Risultato',
-					title: 'Sostenuto',
+					title: 'Sostenuto/Durata',
 					sortable: false,
 					overflow: 'visible',
 					autoHide: false,
@@ -524,12 +676,19 @@ var KTDatatableRemoteAjaxDemo = function () {
 							<div class="input-group-prepend">\
 								<span class="input-group-text">\
 									<label class="kt-checkbox kt-checkbox--single kt-checkbox--success">\
-										<input class="checkboxExam" id="'+ row.Id + '" name = "esamiCheckbox" type = "checkbox"' + row.Sostenuto + ' >\
+										<input class="checkboxExamVo" id="'+ row.Id + '" name = "esamiCheckbox" type = "checkbox"' + row.Sostenuto + ' >\
 											<span></span>\
 									</label>\
 								</span>\
 							</div>\
-								<input type="text" id="cfu'+ row.Id + '" name="esamiInput" class="form-control" value="' + row.Cfu + '" aria-label="Text input with checkbox">\
+								<select class="form-control semestri" name="Semestri" id="semestri'+ row.Id + '" disabled>\
+									<option value="0"> -- Seleziona Durata -- </option>\
+									<option value="6">Un Semestre</option>\
+									<option value="12">Una Annualita\'</option>\
+									<option value="24">Due Annualita\'</option>\
+									<option value="36">Tre Annualita\'</option>\
+									<option value="48">Tre Annualita\'</option>\
+								</select >\
 							</div>';
 					},
 				}
@@ -537,44 +696,44 @@ var KTDatatableRemoteAjaxDemo = function () {
 
 		});
 
-	
 
 
-		//// fix datatable layout after modal shown
-		////datatable.hide();
-		//modal.on('shown.bs.modal', function () {
-		//	var modalContent = $(this).find('#esamiModalId');
-		//	//datatable.spinnerCallback(true, modalContent);
-		//	datatable.redraw();
-		//	datatable.show();
-		//	//datatable.spinnerCallback(false, modalContent);
-		//	//datatable.on('kt-datatable--on-layout-updated', function () {
-		//	//});
-		//}).on('hidden.bs.modal', function () {
-		//	selectedID = [];
-		//	$("#areaSelect").prop("selectedIndex", 0);
-		//	el.KTDatatable('destroy');
-		//});
 
-
-		datatable.hide();
-		var alreadyReloaded = false;
+		// fix datatable layout after modal shown
+		//datatable.hide();
 		modal.on('shown.bs.modal', function () {
-			if (!alreadyReloaded) {
-				var modalContent = $(this).find('.modal-content');
-				datatable.spinnerCallback(true, modalContent);
-
-				datatable.reload();
-
-				datatable.on('kt-datatable--on-layout-updated', function () {
-					datatable.show();
-					datatable.spinnerCallback(false, modalContent);
-					datatable.redraw();
-				});
-
-				alreadyReloaded = true;
-			}
+			var modalContent = $(this).find('#esamiModalId');
+			//datatable.spinnerCallback(true, modalContent);
+			datatable.redraw();
+			datatable.show();
+			//datatable.spinnerCallback(false, modalContent);
+			//datatable.on('kt-datatable--on-layout-updated', function () {
+			//});
+		}).on('hidden.bs.modal', function () {
+			selectedID = [];
+			$("#areaSelect").prop("selectedIndex", 0);
+			el.KTDatatable('destroy');
 		});
+
+
+		//datatable.hide();
+		//var alreadyReloaded = false;
+		//modal.on('shown.bs.modal', function () {
+		//	if (!alreadyReloaded) {
+		//		var modalContent = $(this).find('.modal-content');
+		//		datatable.spinnerCallback(true, modalContent);
+
+		//		datatable.reload();
+
+		//		datatable.on('kt-datatable--on-layout-updated', function () {
+		//			datatable.show();
+		//			datatable.spinnerCallback(false, modalContent);
+		//			datatable.redraw();
+		//		});
+
+		//		alreadyReloaded = true;
+		//	}
+		//});
 	};
 
 	return {
@@ -676,48 +835,171 @@ $('body').on('click', '#addExam', function () {
 
 
 
-$("#salvaPianoDiStudi").click(function () {
-	var esami=[];
-	$(':checkbox[name="esamiCheckbox"]:checked').each(function () {
-		selectedID.push(this.id);
-
-		var SelectedEsame = { id: this.id, cfu:$("#cfu"+this.id).val()}
-		esami.push(SelectedEsame)
+$("#salvaEsami").click(function () {
+	var array = [];
+	var i = 0;
+	$('#tableBody tr.new').each(function () {
+		var obj = new Object();
+		var data1 = $(this).find("td:eq(0) input[type='text']").val();
+		var data2 = $(this).find("td:eq(1) input[type='number']").val();
+		obj.name = data1
+		obj.cfu = data2
+		array[i] = obj
+		i++
 	});
-
-	
+	var esami = JSON.stringify(array);
 	$.ajax({
 		url: 'User/PutEsami',
-		data: { esami: JSON.stringify(esami),idTitolo:idTitolo},
+		data: { esami: esami, idTitolo: idTitolo, idSsd: idSsd },
 		success: function (response) {
 			swal.fire({
 				title: "Successo!",
-				text: "Il Titolo e' stato aggiunto!",
+				text: "Esami Aggiunti!",
 				type: "success",
 				timer: 2000,
 				showConfirmButton: false
 			});
 			window.setTimeout(function () {
-			$('#kt_modal_KTDatatable_remote').modal('toggle');
+				$('#ModalAddEsami').modal('toggle');
+			}, 2000);
+
+		}
+	});
+	alert(idSsd)
+});
+
+
+var idVo;
+$('#ModalAddEsamiVo').on('shown.bs.modal', function (event) {
+
+	// The reference tag is your anchor tag here
+	var reference_tag = $(event.relatedTarget);
+	idVo = reference_tag.data('id')
+})
+
+$("#salvaEsameVo").click(function () {
+	var obj = new Object();
+	$('#tableBodyVo tr').each(function () {
+		var data1 = $(this).find("td:eq(0) input[type='text']").val();
+		var data2 = $(this).find("td:eq(1) select").val();
+		obj.name = data1
+		obj.cfu = data2
+
+	});
+	$.ajax({
+		url: 'User/PutEsamiVo',
+		data: {cfu: obj.cfu,name:obj.name, idTitolo: idTitolo, idSsd: idVo },
+		success: function (response) {
+			swal.fire({
+				title: "Successo!",
+				text: "Esame Aggiunto!",
+				type: "success",
+				timer: 2000,
+				showConfirmButton: false
+			});
+			window.setTimeout(function () {
+				$('#ModalAddEsamiVo').modal('toggle');
 			}, 2000);
 
 		}
 	});
 });
 
-$('.checkboxExam').mousedown(function () {
-	alert("checkbox");
-})
-function eliminaEsame(id) {
-	$("#es" + id).remove();
-	$.ajax({
-		url: 'User/DeleteEsame',
-		data: { id: id },
-		success: function (response) {
 
+$('body').on('change', '.checkboxExamVo', function () {
+	var id = this.id
+	if ($('#semestri' + id).is(':disabled')) {
+		$('#semestri' + id).prop('disabled', false);
+		if ($('#semestri' + id).val() != "0") {
+			alert("carico esame con CFU" + $('#semestri' + id).val() + " e codice" + id)
+			$.ajax({
+				url: 'User/PutEsamiVo',
+				data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo},
+				success: function (response) {
+					swal.fire({
+						title: "Successo!",
+						text: "Esami Aggiunti!",
+						type: "success",
+						timer: 2000,
+						showConfirmButton: false
+					});
+					window.setTimeout(function () {
+						$('#ModalAddEsami').modal('toggle');
+					}, 2000);
+
+				}
+			});
 		}
-	});
-}
+	}
+	else {
+		$('#semestri' + id).prop('disabled', true);
+		if ($('#semestri' + id).val() != "0") {
+			alert("cancellato")
+			$.ajax({
+				url: 'User/DeleteEsamiVo',
+				data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo },
+				success: function (response) {
+					swal.fire({
+						title: "Successo!",
+						text: "Esami Aggiunti!",
+						type: "success",
+						timer: 2000,
+						showConfirmButton: false
+					});
+					window.setTimeout(function () {
+						$('#ModalAddEsami').modal('toggle');
+					}, 2000);
+
+				}
+			});
+		}
+	}
+})
+
+$('body').on('change', '.semestri', function () {
+	var id = this.id
+	console.log($("#" + id).val())
+	if ($("#" + id).val() == "0") {
+		alert("cancellato")
+		$.ajax({
+			url: 'User/DeleteEsamiVo',
+			data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo, idSsd: idSsd },
+			success: function (response) {
+				swal.fire({
+					title: "Successo!",
+					text: "Esami Aggiunti!",
+					type: "success",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				window.setTimeout(function () {
+					$('#ModalAddEsami').modal('toggle');
+				}, 2000);
+
+			}
+		});
+	}
+	else {
+		alert("carico esame")
+		$.ajax({
+			url: 'User/PutEsamiVo',
+			data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo, idSsd: idSsd },
+			success: function (response) {
+				swal.fire({
+					title: "Successo!",
+					text: "Esami Aggiunti!",
+					type: "success",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				window.setTimeout(function () {
+					$('#ModalAddEsami').modal('toggle');
+				}, 2000);
+
+			}
+		});
+	}
+})
 
 //$('body').on('click', '.addbuttonTitoli', function (e) {
 //	window.console.log(this.id, e);
@@ -789,6 +1071,172 @@ function EnumTitoli() {
 		}
 	});
 }
+var counter = 0;
+
+$('body').on('click', '.currentExam', function (e) {
+	window.console.log(this.id, e);
+	idSsd = this.id
+	$("#tableBody").empty();
+	var idT = $('#' + this.id).attr('name')
+	var jsonEsami;
+	$.ajax({
+		url: 'User/GetEsamiUtente',
+		data: { idSsd: idSsd, idTitolo: idT },
+		async: false,
+		success: function (response) {
+			jsonEsami = JSON.parse(response);
+			console.log(jsonEsami)
+		}
+	});
+	for (var i = 0; i < jsonEsami.length; i++) {
+		var newRow = $("<tr class='row'>");
+		var cols = "";
+		//aggiungere typeahead
+		cols += '<td class="col-md-8"><input type="text" disabled value="' + jsonEsami[i].NomeEsame + '" class="form-control" name = "name' + counter + '" /></td > ';
+		cols += '<td class="col-md-2"><input type="number" disabled value="' + jsonEsami[i].Cfu + '" class="form-control" name="cfu' + counter + '"/></td>';
+		cols += '<td class="col-md-1"><button type="button" id="' + jsonEsami[i].IdEsame + '" class="ibtnDel btn btn-danger btn-icon"><i class="fa fa-trash"></i></button></td>';
+		newRow.append(cols);
+		$("table.order-list").append(newRow);
+		counter++;
+	}
+
+});
+
+
+$("#addrow").on("click", function () {
+	var newRow = $("<tr class='row new'>");
+	var cols = "";
+
+	//aggiungere typeahead
+	cols += '<td class="col-md-8"><input type="text" class="form-control" name="name' + counter + '"/></td>';
+	cols += '<td class="col-md-2"><input type="number" class="form-control" name="cfu' + counter + '"/></td>';
+
+	cols += '<td class="col-md-1"><button type="button" class="ibtnDel btn btn-danger btn-icon"><i class="fa fa-trash"></i></button></td>';
+	newRow.append(cols);
+	$("table.order-list").append(newRow);
+	counter++;
+});
+
+
+
+$("table.order-list").on("click", ".ibtnDel", function (event) {
+
+	alert(this.id)
+	var idEsame = this.id
+	swal.fire({
+		title: 'Vuoi Cancellare Questo Esame?',
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Si',
+		cancelButtonText: 'Annulla',
+		reverseButtons: true
+	}).then(function (result) {
+		if (result.value) {
+			$.ajax({
+				url: 'User/DeleteEsami',
+				data: { idEsame: idEsame },
+				async: false,
+				success: function (response) {
+
+					swal.fire(
+						'Eliminato!',
+						'Il Tuo Esame è stato cancellato.',
+						'success'
+					)
+				}
+			});
+		}
+	});
+	$(this).closest("tr").remove();
+	counter -= 1
+
+});
+
+
+
+
+
+//--------------Esami VO-----------------------
+var counter = 0;
+
+$('body').on('click', '.currentExam', function (e) {
+	window.console.log(this.id, e);
+	idSsd = this.id
+	$("#tableBody").empty();
+	var idT = $('#' + this.id).attr('name')
+	var jsonEsami;
+	$.ajax({
+		url: 'User/GetEsamiUtente',
+		data: { idSsd: idSsd, idTitolo: idT },
+		async: false,
+		success: function (response) {
+			jsonEsami = JSON.parse(response);
+			console.log(jsonEsami)
+		}
+	});
+	for (var i = 0; i < jsonEsami.length; i++) {
+		var newRow = $("<tr class='row'>");
+		var cols = "";
+		//aggiungere typeahead
+		cols += '<td class="col-md-8"><input type="text" disabled value="' + jsonEsami[i].NomeEsame + '" class="form-control" name = "name' + counter + '" /></td > ';
+		cols += '<td class="col-md-2"><input type="number" disabled value="' + jsonEsami[i].Cfu + '" class="form-control" name="cfu' + counter + '"/></td>';
+		cols += '<td class="col-md-1"><button type="button" id="' + jsonEsami[i].IdEsame + '" class="ibtnDel btn btn-danger btn-icon"><i class="fa fa-trash"></i></button></td>';
+		newRow.append(cols);
+		$("table.order-list").append(newRow);
+		counter++;
+	}
+
+});
+
+
+$("#addrow").on("click", function () {
+	var newRow = $("<tr class='row new'>");
+	var cols = "";
+
+	//aggiungere typeahead
+	cols += '<td class="col-md-8"><input type="text" class="form-control" name="name' + counter + '"/></td>';
+	cols += '<td class="col-md-2"><input type="number" class="form-control" name="cfu' + counter + '"/></td>';
+
+	cols += '<td class="col-md-1"><button type="button" class="ibtnDel btn btn-danger btn-icon"><i class="fa fa-trash"></i></button></td>';
+	newRow.append(cols);
+	$("table.order-list").append(newRow);
+	counter++;
+});
+
+
+
+$("table.order-list").on("click", ".ibtnDel", function (event) {
+
+	alert(this.id)
+	var idEsame = this.id
+	swal.fire({
+		title: 'Vuoi Cancellare Questo Esame?',
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Si',
+		cancelButtonText: 'Annulla',
+		reverseButtons: true
+	}).then(function (result) {
+		if (result.value) {
+			$.ajax({
+				url: 'User/DeleteEsami',
+				data: { idEsame: idEsame },
+				async: false,
+				success: function (response) {
+
+					swal.fire(
+						'Eliminato!',
+						'Il Tuo Esame è stato cancellato.',
+						'success'
+					)
+				}
+			});
+		}
+	});
+	$(this).closest("tr").remove();
+	counter -= 1
+
+});
 
 jQuery(document).ready(function () {
 	KTDatatableRemoteAjaxDemo.init();

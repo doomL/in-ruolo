@@ -9,7 +9,8 @@
         public bool Vo;
         public string Sostenuto;
         public int Cfu;
-        public EsameVO[] Equivalenti;
-        public Esame[] Ssd;
+        public SsdVo[] Equivalenti;
+        public EsameUtente[] EsamiUtente;
+        public EsameUtente[] EsamiUtenteVo;
     }
 }

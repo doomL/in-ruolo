@@ -1,3 +1,4 @@
+using CommonNSSLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace inRuolo
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            log4net.Config.XmlConfigurator.Configure();
+            Log.Init();
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }

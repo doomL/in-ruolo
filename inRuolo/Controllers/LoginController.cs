@@ -1,12 +1,8 @@
-﻿using inRuolo.Models;
+﻿using CommonNSSLib;
+using inRuolo.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 
 namespace inRuolo.Controllers
 {
@@ -20,7 +16,8 @@ namespace inRuolo.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            Logger.Out("--------------------Login Page------------------");
+            //Log.Write("Debug","--------------------Login Page------------------");
+            Log.Write("Debug", "login", Logger.GetUserIP());
             return View();
         }
         public ActionResult SignIn()
@@ -32,9 +29,9 @@ namespace inRuolo.Controllers
             cred.password = null;
             string loggedUser = Service.InvokeServicePostApi("User/login", cred);
             User loggato = JsonConvert.DeserializeObject<User>(loggedUser);
-            Logger.Out(loggato.Nome);
+            Log.Write("Debug",loggato.Nome);
             bool response=false;
-            Logger.Out(loggedUser);
+            Log.Write("Debug",loggedUser);
             if (loggedUser != "")
             {
                 response = true;
@@ -44,7 +41,7 @@ namespace inRuolo.Controllers
             }
             else
             {
-                Logger.Out("errore");
+                Log.Write("Debug","errore");
                 return Json(response, JsonRequestBehavior.AllowGet);
 
             }
@@ -58,7 +55,7 @@ namespace inRuolo.Controllers
             utente.Nome = Request["nome"];
             //var json = Newtonsoft.Json.JsonConvert.SerializeObject(utente);
             String output=Service.InvokeServicePostApi("User/registrazione", utente);
-            Logger.Out(output);
+            Log.Write("Debug",output);
             bool response = true;
             return Json(response, JsonRequestBehavior.AllowGet);
         }

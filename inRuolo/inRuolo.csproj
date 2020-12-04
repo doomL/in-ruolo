@@ -47,6 +47,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonNSSLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\CommonNSSLib.dll</HintPath>
+    </Reference>
+    <Reference Include="HBConnections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\HBConnections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -135,6 +147,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Logger.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PanoramicaController.cs" />
     <Compile Include="Controllers\RequestBody.cs" />
     <Compile Include="Controllers\Service.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -144,14 +157,15 @@
     </Compile>
     <Compile Include="Models\AreaEsame.cs" />
     <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\Parametri.cs" />
     <Compile Include="Models\ClasseConcorso.cs" />
     <Compile Include="Models\Complementare.cs" />
     <Compile Include="Models\DatiFatturazione.cs" />
-    <Compile Include="Models\Esame.cs" />
-    <Compile Include="Models\EsameJson.cs" />
+    <Compile Include="Models\Ssd.cs" />
+    <Compile Include="Models\SsdUtente.cs" />
     <Compile Include="Models\EsameTab.cs" />
     <Compile Include="Models\EsameUtente.cs" />
-    <Compile Include="Models\EsameVO.cs" />
+    <Compile Include="Models\SsdVo.cs" />
     <Compile Include="Models\FormazioneUtente.cs" />
     <Compile Include="Models\Titolo.cs" />
     <Compile Include="Models\TitoloUtente.cs" />
@@ -1184,6 +1198,7 @@
     <Content Include="Content\media\logos\logo-mini-lg.png" />
     <Content Include="Content\media\logos\logo-mini-md.png" />
     <Content Include="Content\media\logos\logo-mini-sm.png" />
+    <Content Include="Content\media\logos\Nss.png" />
     <Content Include="Content\media\misc\bg-1.jpg" />
     <Content Include="Content\media\misc\bg-2.jpg" />
     <Content Include="Content\media\products\product1.jpg" />
@@ -6350,6 +6365,7 @@
     <Content Include="Content\vendors\general\wnumb\bower.json" />
     <Content Include="Content\vendors\general\wnumb\package.json" />
     <Content Include="Content\vendors\general\wnumb\README.md" />
+    <Content Include="logger\logIR.log" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
@@ -6378,10 +6394,10 @@
     <Content Include="Views\User\Fatturazione.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\overview.cshtml" />
+    <Content Include="Views\Panoramica\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="logger\" />
     <Folder Include="Views\RequestBody\" />
   </ItemGroup>
   <ItemGroup>
