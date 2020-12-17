@@ -1,8 +1,13 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout1.cshtml";
 }
+@using inRuolo.Models
+@{
+    var Titoli = (TitoloUtente[])ViewData["Titoli"];
+    var ClassiDiConcorso = (HashSet<ClasseConcorso>)ViewData["ClassiDiConcorso"];
+    var Complementari = (Complementare[])ViewData["Complementari"];
 
-
+}
 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
 
     <!-- begin:: Subheader -->
@@ -67,27 +72,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Complementare 1</td>
-                                            <td>97</td>
-                                            <td>Unical</td>
-                                            <td>13/07/2019</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Complementare 2</td>
-                                            <td>84</td>
-                                            <td>Unical</td>
-                                            <td>13/07/2019</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Complementare 3</td>
-                                            <td>100</td>
-                                            <td>Unical</td>
-                                            <td>13/07/2019</td>
-                                        </tr>
+                                        @{var row = 1; }
+                                        @foreach (var x in Titoli)
+                                        {
+                                            <tr>
+                                               <th scope="row">@row</th>
+                                                <td>@x.Nome</td>
+                                                <td>@x.Voto</td>
+                                                <td>@x.Luogo</td>
+                                                <td>@x.Data</td>
+                                            </tr>
+                                            row++;
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -97,33 +93,24 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Nome</th>
-                                            <th>Voto</th>
+                                            <th>Tipo</th>
                                             <th>Luogo</th>
                                             <th>Data Conseguimento</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Titolo 1</td>
-                                            <td>97</td>
-                                            <td>Unical</td>
-                                            <td>13/07/2019</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Titolo 2</td>
-                                            <td>84</td>
-                                            <td>Unical</td>
-                                            <td>13/07/2019</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Titolo 3</td>
-                                            <td>100</td>
-                                            <td>Unical</td>
-                                            <td>13/07/2019</td>
-                                        </tr>
+                                        @{row = 1; }
+                                        @foreach (var x in Complementari)
+                                        {
+                                            <tr>
+                                                <th scope="row">@row</th>
+                                                <td>@x.Nome</td>
+                                                <td>@x.StrTipo</td>
+                                                <td>@x.Luogo</td>
+                                                <td>@x.Data</td>
+                                            </tr>
+                                            row++;
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -165,28 +152,16 @@
                                                     <span> </span>
                                                 </div>
                                             </div>
+                                           
                                             <div class="kt-widget6__body">
-                                                <div class="kt-widget6__item">
-                                                    <span class="kt-font-success kt-font-bold"><h4>A-01</h4></span>
-                                                    <span><h5> Arte e immagine nella scuola secondaria di I grado </h5></span>
-                                                    <span> </span>
-                                                </div>
-                                                <div class="kt-widget6__item">
-                                                    <span class="kt-font-success kt-font-bold"><h4>A-14</h4></span>
-                                                    <span><h5> Discipline plastiche, scultoree e scenoplastiche </h5></span>
-                                                    <span> </span>
-                                                </div>
-                                                <div class="kt-widget6__item">
-                                                    <span class="kt-font-success kt-font-bold"><h4>A-16</h4></span>
-                                                    <span><h5> Disegno artistico e modellazione odontotecnica </h5></span>
-                                                    <span> </span>
-                                                </div>
-                                                <div class="kt-widget6__item">
-                                                    <span class="kt-font-success kt-font-bold"><h4>A-62</h4></span>
-                                                    <span><h5> Tecnologie e tecniche per la grafica </h5></span>
-                                                    <span> </span>
-                                                </div>
-
+                                                @foreach (var x in ClassiDiConcorso)
+                                                {
+                                                    <div class="kt-widget6__item">
+                                                        <span class="kt-font-success kt-font-bold"><h4>@x.Nome</h4></span>
+                                                        <span><h5> @x.Descrizione</h5></span>
+                                                        <span> </span>
+                                                    </div>
+                                                }
                                             </div>
 
                                         </div>

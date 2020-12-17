@@ -1,8 +1,10 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout1.cshtml";
 }
+@using System.Collections.Generic;
 @using inRuolo.Models
-<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="TitoliPageAjax">
     <!-- begin:: Subheader -->
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-subheader__main">
@@ -110,21 +112,19 @@
         <!--Begin::App-->
         <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app">
 
-          
+
             <!--Begin:: App Titoli-->
             <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
                 <div class="row">
                     <div class="col-xl-12">
-
-
                         <div class="kt-portlet kt-portlet--mobile">
                             <div class="kt-portlet__head kt-portlet__head--lg">
                                 <div class="kt-portlet__head-label">
                                     <span class="kt-portlet__head-icon">
-                                        <i class="kt-font-brand flaticon2-file"></i>
+                                        <i class="kt-font-brand flaticon2-layers"></i>
                                     </span>
                                     <h3 class="kt-portlet__head-title">
-                                        Complementari
+                                        Titoli Di Studio
                                     </h3>
                                 </div>
                                 <div class="kt-portlet__head-toolbar">
@@ -144,18 +144,17 @@
                                                         <span class="kt-nav__section-text">Choose an action:</span>
                                                     </li>
                                                     <li class="kt-nav__item">
-                                                        <a id="addNewComplementare" class="kt-nav__link">
+                                                        <a class="kt-nav__link" id="addNewTitolo">
                                                             <i class="kt-nav__link-icon flaticon2-open-text-book"></i>
                                                             <span class="kt-nav__link-text">Reservations</span>
                                                         </a>
                                                     </li>
                                                     <li class="kt-nav__item">
-                                                        <a href="#" class="kt-nav__link" data-toggle="modal" data-target="#ModalComplementari">
+                                                        <a href="#" class="kt-nav__link" data-toggle="modal" data-target="#ModalTitoli">
                                                             <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
                                                             <span class="kt-nav__link-text">Appointments</span>
                                                         </a>
                                                     </li>
-
                                                 </ul>
                                             </div>
                                         </div>
@@ -165,135 +164,119 @@
                             <div class="kt-portlet__body">
 
                                 <!--begin: Search Form -->
-                                <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
-                                    <div class="row align-items-center">
-                                        <div class="col-xl-8 order-2 order-xl-1">
-                                            <div class="row align-items-center">
-                                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-                                                    <div class="kt-input-icon kt-input-icon--left">
-                                                        <input type="text" class="form-control" placeholder="Search..." id="generalSearch">
-                                                        <span class="kt-input-icon__icon kt-input-icon__icon--left">
-                                                            <span><i class="la la-search"></i></span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-                                                    <div class="kt-form__group kt-form__group--inline">
-                                                        <div class="kt-form__label">
-                                                            <label>Status:</label>
-                                                        </div>
-                                                        <div class="kt-form__control">
-                                                            <select class="form-control bootstrap-select" id="kt_form_status">
-                                                                <option value="">All</option>
-                                                                <option value="1">Pending</option>
-                                                                <option value="2">Delivered</option>
-                                                                <option value="3">Canceled</option>
-                                                                <option value="4">Success</option>
-                                                                <option value="5">Info</option>
-                                                                <option value="6">Danger</option>
-                                                            </select>
+                                @*<div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
+                                        <div class="row align-items-center">
+                                            <div class="col-xl-8 order-2 order-xl-1">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                                        <div class="kt-input-icon kt-input-icon--left">
+                                                            <input type="text" class="form-control" placeholder="Search..." id="generalSearch">
+                                                            <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                                                <span><i class="la la-search"></i></span>
+                                                            </span>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-                                                    <div class="kt-form__group kt-form__group--inline">
-                                                        <div class="kt-form__label">
-                                                            <label>Type:</label>
+                                                    <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                                        <div class="kt-form__group kt-form__group--inline">
+                                                            <div class="kt-form__label">
+                                                                <label>Status:</label>
+                                                            </div>
+                                                            <div class="kt-form__control">
+                                                                <select class="form-control bootstrap-select" id="kt_form_status">
+                                                                    <option value="">All</option>
+                                                                    <option value="1">Pending</option>
+                                                                    <option value="2">Delivered</option>
+                                                                    <option value="3">Canceled</option>
+                                                                    <option value="4">Success</option>
+                                                                    <option value="5">Info</option>
+                                                                    <option value="6">Danger</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
-                                                        <div class="kt-form__control">
-                                                            <select class="form-control bootstrap-select" id="kt_form_type">
-                                                                <option value="">All</option>
-                                                                <option value="1">Online</option>
-                                                                <option value="2">Retail</option>
-                                                                <option value="3">Direct</option>
-                                                            </select>
+                                                    </div>
+                                                    <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                                        <div class="kt-form__group kt-form__group--inline">
+                                                            <div class="kt-form__label">
+                                                                <label>Type:</label>
+                                                            </div>
+                                                            <div class="kt-form__control">
+                                                                <select class="form-control bootstrap-select" id="kt_form_type">
+                                                                    <option value="">All</option>
+                                                                    <option value="1">Online</option>
+                                                                    <option value="2">Retail</option>
+                                                                    <option value="3">Direct</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </div>*@
 
                                 <!--end: Search Form -->
                             </div>
                             <div class="kt-portlet__body kt-portlet__body--fit">
 
                                 <!--begin: Datatable -->
-                                <div class="kt-datatable1" id="ajax_data"></div>
+                                <div class="kt-datatable" id="ajax_data"></div>
 
                                 <!--end: Datatable -->
                                 <!-- Modal -->
-                                <div class="modal fade" id="ModalComplementari" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal fade" id="ModalTitoli" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content" id="modalContent">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi Certificazione Complementare</h5>
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi Titolo</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label for="nome">Nome</label>
-                                                    <input type="text" class="form-control" id="nomeComplementare" placeholder="Nome">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="categoria">Tipo</label>
-                                                    <select class="form-control" id="categoriaCompl">
+                                                    <label for="categoria">Categoria Titolo</label>
+                                                    <select class="form-control" id="categoriaTitolo" onchange=FillTitolo()>
                                                     </select>
                                                 </div>
+
+                                                <label for="exampleFormControlSelect1">Titolo</label>
                                                 <div class="form-group">
-                                                    <label for="luogo">Luogo</label>
-                                                    <input type="text" class="form-control" id="luogoComplementare" placeholder="Luogo">
+                                                    <select id="select2-multiple" class="form-control select2-single">
+                                                        <option selected="selected" value="-1"> - Seleziona Prima Una Categoria - </option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Luogo Conseguimento Titolo</label>
+                                                    <input type="text" class="form-control" id="luogo" placeholder="Luogo">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Data Conseguimento Titolo</label>
-                                                    <select name="yearpicker" class="form-control" id="yearpickerCompl"></select>
+                                                    <select name="yearpicker" class="form-control" id="yearpicker"></select>
 
                                                     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
                                                     <script type="text/javascript">
                                                         let startYear = 1950;
                                                         let endYear = new Date().getFullYear();
                                                         for (i = endYear; i > startYear; i--) {
-                                                            $('#yearpickerCompl').append($('<option />').val(i + '/' + (i + 1)).html(i + '/' + (i + 1)));
+                                                            $('#yearpicker').append($('<option />').val(i + '/' + (i + 1)).html(i + '/' + (i + 1)));
                                                         }
                                                     </script>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label for="ente">Ente</label>
-                                                    <input type="text" class="form-control" id="enteComplementare" placeholder="Ente">
+                                                <label for="exampleInputEmail1">Voto</label>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <input type="number" class="form-control" id="voto" placeholder="Voto">
+                                                    </div>
+
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="lode" value="option2">
+                                                        <label class="form-check-label" for="inlineCheckbox2">Lode</label>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="livello">Livello</label>
-                                                    <input type="text" class="form-control" id="livelloComplementare" placeholder="Livello">
-                                                </div>
 
 
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
-                                                <button type="button" class="btn btn-primary" id="salvaComplementare">Salva</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Modal::Esami -->
-                                <div class="modal fade" id="ModalEsami" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content" id="modalContent">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi Esami</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="kt-scroll" data-scroll="true" data-height="600" style="height: 600px; overflow: auto;">
-                                                <div class="modal-body" id="examBody">
-                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
@@ -302,8 +285,273 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Modal::Esami -->
+                                <!-- remote datatable modal -->
+                                <div id="kt_modal_KTDatatable_remote" class="modal fade" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                                        <div class="modal-content" id="esamiModalId" style="min-height: 590px;">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">
+                                                    Esami
+                                                    <small>Aggiorna il Piano di Studi</small>
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" href="#examTab" data-toggle="tab">Esami</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#voTab" data-toggle="tab">Esami Vecchio Ordinamento</a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="examTab" role="tabpanel">
+                                                        <!--begin: Search Form -->
+                                                        <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-xl-8 order-2 order-xl-1">
+                                                                    <div class="row align-items-center">
+                                                                        <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                                                            <div class="kt-input-icon kt-input-icon--left">
+                                                                                <input type="text" class="form-control" placeholder="Search..." id="examSearch">
+                                                                                <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                                                                    <span><i class="la la-search"></i></span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                                                            <div class="kt-form__group kt-form__group--inline">
+                                                                                <div class="kt-form__label">
+                                                                                    <label>Area:</label>
+                                                                                </div>
+                                                                                <div class="kt-form__control">
+                                                                                    <select class="form-control areaSelect1" id="areaSelect">
+                                                                                        <option value="">All</option>
+                                                                                        @{
+                                                                                            List<AreaEsame> aree = (List<AreaEsame>)Session["Aree"];
+                                                                                        }
+                                                                                        @for (var i = 0; i < aree.Count; i++)
+                                                                                        {
+                                                                                            AreaEsame area = aree[i];
+                                                                                            <option value="@area.Id">@area.Descrizione</option>
+                                                                                        }
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!--end: Search Form -->
+                                                        @*</div>
+                                                            <div class="modal-body modal-body-fit">*@
+
+                                                        <!--begin: Datatable -->
+                                                        <div id="modal_datatable_ajax_source"></div>
+
+                                                        <!--end: Datatable -->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-clean btn-bold btn-upper btn-font-sm" data-dismiss="modal">Chiudi</button>
+                                                            <button type="button" class="btn btn-default btn-bold btn-upper btn-font-sm" id="salvaPianoDiStudi">Salva</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane" id="voTab" role="tabpanel">
+                                                        <!--begin: Search Form -->
+                                                        <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-xl-8 order-2 order-xl-1">
+                                                                    <div class="row align-items-center">
+                                                                        <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                                                            <div class="kt-input-icon kt-input-icon--left">
+                                                                                <input type="text" class="form-control" placeholder="Search..." id="examVoSearch">
+                                                                                <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                                                                    <span><i class="la la-search"></i></span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!--end: Search Form -->
+                                                        <!--begin: Datatable -->
+                                                        <div id="modal_datatable_ajax_source-vo"></div>
+
+                                                        <!--end: Datatable -->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-clean btn-bold btn-upper btn-font-sm" data-dismiss="modal">Chiudi</button>
+                                                            <button type="button" class="btn btn-default btn-bold btn-upper btn-font-sm" id="salvaPianoDiStudi">Salva</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="ModalTitoli" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content" id="modalContent">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi Titolo</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="categoria">Categoria Titolo</label>
+                                                    <select class="form-control" id="categoriaTitolo" onchange=FillTitolo()>
+                                                    </select>
+                                                </div>
+
+                                                <label for="exampleFormControlSelect1">Titolo</label>
+                                                <div class="form-group">
+                                                    <select id="select2-multiple" class="form-control select2-single">
+                                                        <option selected="selected" value="-1"> - Seleziona Prima Una Categoria - </option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Luogo Conseguimento Titolo</label>
+                                                    <input type="text" class="form-control" id="luogo" placeholder="Luogo">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Data Conseguimento Titolo</label>
+                                                    <select name="yearpicker" class="form-control" id="yearpicker"></select>
+
+                                                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                                                    <script type="text/javascript">
+                                                        let startYear = 1950;
+                                                        let endYear = new Date().getFullYear();
+                                                        for (i = endYear; i > startYear; i--) {
+                                                            $('#yearpicker').append($('<option />').val(i + '/' + (i + 1)).html(i + '/' + (i + 1)));
+                                                        }
+                                                    </script>
+                                                </div>
+
+                                                <label for="exampleInputEmail1">Voto</label>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <input type="number" class="form-control" id="voto" placeholder="Voto">
+                                                    </div>
+
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="lode" value="option2">
+                                                        <label class="form-check-label" for="inlineCheckbox2">Lode</label>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                                                <button type="button" class="btn btn-primary" id="salvaTitolo">Salva</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- Modal AddEsamiVo -->
+                                <div class="modal fade" id="ModalAddEsamiVo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content" id="modalContent">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi EsameVo</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table id="examVoTable" class="table">
+                                                    <thead>
+                                                        <tr class="row">
+                                                            <td class="col-md-6">Nome</td>
+                                                            <td class="col-md-6">Semestri</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tableBodyVo">
+                                                        <tr class="row">
+                                                            <td class="col-md-6"><input type="text" class="form-control" name="semestriModal" placeholder="Nome" /></td>
+                                                            <td class="col-md-6">
+                                                                <select class="form-control semestriModal" name="SemestriModal">
+                                                                    <option value="0"> -- Seleziona Durata -- </option>
+                                                                    <option value="6">Un Semestre</option>
+                                                                    <option value="12">Una Annualità</option>
+                                                                    <option value="24">Due Annualità</option>
+                                                                    <option value="36">Tre Annualità</option>
+                                                                    <option value="48">Tre Annualità</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                                                <button type="button" class="btn btn-primary" id="salvaEsameVo">Salva</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal AddEsami -->
+                                <div class="modal fade" id="ModalAddEsami" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content" id="modalContent">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi Esame</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table id="examTable" class=" table order-list">
+                                                    <thead>
+                                                        <tr class="row">
+                                                            <td class="col-md-8">Nome</td>
+                                                            <td>CFU</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tableBody">
+                                                        <tr>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="5" style="text-align: left;">
+                                                                <input type="button" class="btn btn-brand btn-elevate btn-pill btn-elevate-air " id="addrow" value="Add Row" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                                                <button type="button" class="btn btn-primary" id="salvaEsami">Salva</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
+
                         </div>
+
+
 
 
                     </div>
@@ -323,6 +571,7 @@
 
     <!-- end:: Content -->
 </div>
-@*<script src="~/Content/js/demo1/pages/crud/metronic-datatable/base/data-localCompl.js" type="text/javascript"></script>*@
-
-
+@section JavaScript
+{
+    <script src="~/Content/js/demo1/pages/crud/metronic-datatable/base/data-ajaxComplementari.js" type="text/javascript"></script>
+}

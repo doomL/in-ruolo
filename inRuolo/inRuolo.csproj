@@ -157,6 +157,8 @@
     </Compile>
     <Compile Include="Models\AreaEsame.cs" />
     <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\ClasseNota.cs" />
+    <Compile Include="Models\Nota.cs" />
     <Compile Include="Models\Parametri.cs" />
     <Compile Include="Models\ClasseConcorso.cs" />
     <Compile Include="Models\Complementare.cs" />
@@ -378,7 +380,7 @@
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\api\events.min.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\api\methods.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\api\methods.min.js" />
-    <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-ajax - Copia.js" />
+    <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-ajaxComplementari.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-ajax.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-ajax.min.js" />
     <Content Include="Content\js\demo1\pages\crud\metronic-datatable\base\data-json.js" />
@@ -6372,13 +6374,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
-    <Content Include="Views\User\Complementari - Copia.cshtml" />
     <Content Include="Views\User\Complementari.cshtml" />
     <Content Include="Views\User\Fatturazione - Copia.cshtml" />
-    <Content Include="Views\User\Formazione.cshtml" />
     <Content Include="Views\User\Titoli - Copia.cshtml" />
     <Content Include="Views\User\Titoli.cshtml" />
-    <Content Include="Views\User\TitoliSelect.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Wizard\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -6393,8 +6392,8 @@
     <Content Include="Views\User\CambiaPassword.cshtml" />
     <Content Include="Views\User\Fatturazione.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\overview.cshtml" />
     <Content Include="Views\Panoramica\Index.cshtml" />
+    <Content Include="Views\User\Complementari - Copia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

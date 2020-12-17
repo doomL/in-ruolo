@@ -36,6 +36,9 @@ namespace inRuolo.Controllers
         }
         public ActionResult Complementari()
         {
+            String output = Service.InvokeServiceGetApi("SSD/area/all/");
+            List<AreaEsame> aree = JsonConvert.DeserializeObject<List<AreaEsame>>(output);
+            Session["Aree"] = aree;
             return View();
         }
         public string GetTitoli()
@@ -127,7 +130,7 @@ namespace inRuolo.Controllers
             {
                 IdUtente = utenteLoggato.Id,
                 IdTitolo = Int32.Parse(Request["idTitolo"]),
-                IdFormazione = -1,
+                IdFormazione = Int32.Parse(Request["idFormazione"]),
                 IdSsd = -1,
                 Vo = false
             };
@@ -141,7 +144,7 @@ namespace inRuolo.Controllers
             {
                 esameTmp = new EsameTab();
                 SsdUtente sU = ssdUtente.Find(x => x.Ssd.Id == esami[i].Id);
-                if (sU != null)
+                if (sU != null && sU.Esami.Length != 0)
                 {
                     esameTmp.Id = esami[i].Id;
                     esameTmp.Descrizione = esami[i].Descrizione;
@@ -176,43 +179,93 @@ namespace inRuolo.Controllers
             {
                 IdUtente = utenteLoggato.Id,
                 IdTitolo = Int32.Parse(Request["idTitolo"]),
-                IdFormazione = -1,
+                IdFormazione = Int32.Parse(Request["idFormazione"]),
                 IdSsd = -1,
                 Vo = true
-
             };
 
             String output = Service.InvokeServicePostApi("EsamiPerUtente/parametri", parametri);
             List<SsdUtente> ssdUtente = JsonConvert.DeserializeObject<List<SsdUtente>>(output);
-            System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(ssdUtente));
+            //System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(ssdUtente));
             List<EsameTab> esamiTab = new List<EsameTab>();
             List<SsdVo> esamiVO = JsonConvert.DeserializeObject<List<SsdVo>>(Service.InvokeServiceGetApi("SSD/vo/all/"));
             EsameTab esameTmp;
-            System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(esamiVO));
+            //System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(esamiVO));
             for (int i = 0; i < esamiVO.Count; i++)
             {
-                System.Diagnostics.Debug.WriteLine(i);
                 esameTmp = new EsameTab();
-                SsdUtente sU = ssdUtente.Find(x => x.Ssd.Id == esamiVO[i].Id);
+                SsdUtente sU = ssdUtente.Find(x => x.SsdVo.Id == esamiVO[i].Id);
                 if (sU != null)
                 {
-                    esameTmp.Id = esamiVO[i].Id;
-                    esameTmp.Descrizione = esamiVO[i].Nome;
-                    esameTmp.Cfu = sU.Cfu;
-                    esameTmp.Sostenuto = "checked";
-                    esameTmp.EsamiUtente = sU.Esami;
-                    esameTmp.Equivalenti = esamiVO[i].Equivalenti;
-                    for(int j = 0; j < sU.Esami.Length; j++)
+                    EsameUtente eU = Array.Find(sU.Esami, ele => ele.NomeEsame == esamiVO[i].Nome);
+                    if (eU != null)
                     {
-                        SsdVo equi = new SsdVo()
+                        System.Diagnostics.Debug.WriteLine("priinttt");
+                        esameTmp.Cfu = eU.Cfu;
+                        esameTmp.Id = eU.IdEsame;
+                        esameTmp.Sostenuto = "checked";
+                        sU.Esami = sU.Esami.Where(val => val != eU).ToArray();
+                    }
+                    else
+                    {
+                        esameTmp.Cfu = 0;
+                        esameTmp.Sostenuto = "";
+                        esameTmp.Id = esamiVO[i].Id;
+                    }
+                    int equivSize = esamiVO[i].Equivalenti.Length;
+                    esameTmp.Descrizione = esamiVO[i].Nome;
+
+                    //esameTmp.EsamiUtente = sU.Esami;
+
+                    if (esamiVO[i].Equivalenti.Length != 0)
+                    {
+                        esameTmp.EquivalenteTabs = new EquivalenteTab[esamiVO[i].Equivalenti.Length + sU.Esami.Length];
+                        for (int j = 0; j < esamiVO[i].Equivalenti.Length; j++)
+                        {
+                            EsameUtente eq = Array.Find(sU.Esami, ele => ele.NomeEsame == esamiVO[i].Equivalenti[j].Nome);
+                            EquivalenteTab eT;
+                            if (eq != null)
+                            {
+                                eT = new EquivalenteTab()
+                                {
+                                    IdPadre = eq.IdSsd,
+                                    Id = eq.IdEsame,
+                                    Cfu = eq.Cfu,
+                                    Nome = eq.NomeEsame,
+                                    Sostenuto = "checked"
+                                };
+
+                            }
+                            else
+                            {
+                                eT = new EquivalenteTab()
+                                {
+                                    IdPadre = esamiVO[i].Equivalenti[j].IdPadre,
+                                    Id = esamiVO[i].Equivalenti[j].Id,
+                                    Cfu = 0,
+                                    Nome = esamiVO[i].Equivalenti[j].Nome,
+                                    Sostenuto = ""
+                                };
+                            }
+                            esameTmp.EquivalenteTabs[j] = eT;
+                        }
+                    }
+                    for (int j = 0; j < sU.Esami.Length; j++)
+                    {
+                        EquivalenteTab equi = new EquivalenteTab()
                         {
                             IdPadre = sU.Esami[j].IdSsd,
                             Nome = sU.Esami[j].NomeEsame,
-                            Id = sU.Esami[j].IdEsame
+                            Id = sU.Esami[j].IdEsame,
+                            Cfu = sU.Esami[j].Cfu,
+                            Sostenuto = "checked"
 
                         };
-                        esameTmp.Equivalenti.Append(equi);
+                        System.Diagnostics.Debug.WriteLine("EsameUtente rr " + JsonConvert.SerializeObject(equi));
+                        esameTmp.EquivalenteTabs[equivSize] = equi;
+                        equivSize++;
                     }
+
                     esameTmp.Vo = true;
                     esamiTab.Add(esameTmp);
                 }
@@ -222,6 +275,22 @@ namespace inRuolo.Controllers
                     esameTmp.Descrizione = esamiVO[i].Nome;
                     esameTmp.Sostenuto = "";
                     esameTmp.Equivalenti = esamiVO[i].Equivalenti;
+                    if (esamiVO[i].Equivalenti.Length != 0)
+                    {
+                        esameTmp.EquivalenteTabs = new EquivalenteTab[esamiVO[i].Equivalenti.Length];
+                        for (int j = 0; j < esamiVO[i].Equivalenti.Length; j++)
+                        {
+                            EquivalenteTab eT = new EquivalenteTab()
+                            {
+                                IdPadre = esamiVO[i].Equivalenti[j].IdPadre,
+                                Id = esamiVO[i].Equivalenti[j].Id,
+                                Cfu = 0,
+                                Nome = esamiVO[i].Equivalenti[j].Nome,
+                                Sostenuto = ""
+                            };
+                            esameTmp.EquivalenteTabs[j] = eT;
+                        }
+                    }
                     esameTmp.Vo = true;
                     esamiTab.Add(esameTmp);
                 }
@@ -238,11 +307,30 @@ namespace inRuolo.Controllers
             {
                 IdUtente = utenteLoggato.Id,
                 IdTitolo = Int32.Parse(Request["idTitolo"]),
-                IdFormazione = -1,
+                IdFormazione = Int32.Parse(Request["idFormazione"]),
                 IdSsd = Int32.Parse(Request["idSsd"])
             };
             String output = Service.InvokeServicePostApi("EsamiPerUtente/parametri", parametri);
-            System.Diagnostics.Debug.WriteLine(output);
+            //System.Diagnostics.Debug.WriteLine(output);
+            if (output == "[]")
+                return null;
+            SsdUtente[] ssdUtente = JsonConvert.DeserializeObject<SsdUtente[]>(output);
+            return JsonConvert.SerializeObject(ssdUtente[0].Esami);
+
+        }
+        public string GetEsamiUtenteVo()
+        {
+            User utenteLoggato = (User)Session["user"];
+            Parametri parametri = new Parametri()
+            {
+                IdUtente = utenteLoggato.Id,
+                IdTitolo = Int32.Parse(Request["idTitolo"]),
+                IdFormazione = Int32.Parse(Request["idFormazione"]),
+                IdSsd = Int32.Parse(Request["idSsd"]),
+                Vo = true
+            };
+            String output = Service.InvokeServicePostApi("EsamiPerUtente/parametri", parametri);
+            //System.Diagnostics.Debug.WriteLine(output);
             if (output == "[]")
                 return null;
             SsdUtente[] ssdUtente = JsonConvert.DeserializeObject<SsdUtente[]>(output);
@@ -305,7 +393,8 @@ namespace inRuolo.Controllers
             User utenteLoggato = (User)Session["user"];
             EsameUtente esame = new EsameUtente()
             {
-                IdEsame = Int32.Parse(Request["idEsame"])
+                IdEsame = Int32.Parse(Request["idEsame"]),
+                Vo = true
             };
             String output = Service.InvokeServicePostApi("EsamiPerUtente/delete/" + utenteLoggato.Id, esame);
             System.Diagnostics.Debug.WriteLine(output);
@@ -317,6 +406,7 @@ namespace inRuolo.Controllers
         {
             User utenteLoggato = (User)Session["user"];
             String idTitolo = Request["idTitolo"];
+            String idFormazione = Request["idFormazione"];
             String idSsd = Request["idSsd"];
             String esami = Request["esami"];
             JArray json = JArray.Parse(esami);
@@ -326,6 +416,7 @@ namespace inRuolo.Controllers
                 {
                     Cfu = Int32.Parse(json[i]["cfu"].ToString()),
                     IdTitolo = Int32.Parse(idTitolo),
+                    IdFormazione = Int32.Parse(idFormazione),
                     IdSsd = Int32.Parse(idSsd),
                     NomeEsame = json[i]["name"].ToString(),
                     Vo = false
@@ -339,15 +430,24 @@ namespace inRuolo.Controllers
         {
             User utenteLoggato = (User)Session["user"];
             String idTitolo = Request["idTitolo"];
-            String idSsd = Request["idSsd"];
+            String idFormazione = Request["idFormazione"];
+            string idSsd = Request["idSsd"];
             string cfu = Request["cfu"];
             string name = Request["name"];
-            System.Diagnostics.Debug.WriteLine(idTitolo + " " + idSsd + " " + cfu + " " + name);
+            SsdVo sV = JsonConvert.DeserializeObject<SsdVo>(Service.InvokeServiceGetApi("SSD/vo/" + idSsd));
+            if (name == null)
+                name = sV.Nome;
+            if (sV.IdPadre != -1)
+            {
+                idSsd = sV.IdPadre.ToString();
+            }
+            System.Diagnostics.Debug.WriteLine("stampaaa" + idTitolo + " " + idSsd + " " + cfu + " " + name);
             // SsdVo ssdVo = JsonConvert.DeserializeObject<SsdVo>(Service.InvokeServiceGetApi("SSD/vo/" + idEsame));
             EsameUtente esame = new EsameUtente
             {
                 Cfu = Int32.Parse(cfu),
                 IdTitolo = Int32.Parse(idTitolo),
+                IdFormazione = Int32.Parse(idFormazione),
                 IdSsd = Int32.Parse(idSsd),
                 NomeEsame = name,//ssdVo.Nome,
                 Vo = true

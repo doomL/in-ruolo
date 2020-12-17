@@ -2,7 +2,7 @@
 // Class definition
 
 var selectedID = [];
-var idTitolo;
+var idFormazione;
 var idSsd;
 var KTDatatableRemoteAjaxDemo = function () {
 	// Private functions
@@ -63,7 +63,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 				type: 'remote',
 				source: {
 					read: {
-						url: 'User/GetTitoli',
+						url: 'User/GetComplementari',
 						// sample custom headers
 						headers: { 'x-my-custokt-header': 'some value', 'x-test-header': 'the value' },
 						map: function (raw) {
@@ -107,62 +107,44 @@ var KTDatatableRemoteAjaxDemo = function () {
 					width: 50,
 					// callback function support for column rendering
 					template: function (row) {
+
+						var status = {
+							1: {'disabled': '','style':'' },
+							0: {'disabled': 'disabled', 'style': 'style="background-color:gray;"'},
+						};
 						//return '<button type="button" id="' + row.Titolo.Id + '"  data-record-id="' + row.Titolo.Id + '" class="addbuttonTitoli btn btn-outline-brand btn-elevate btn-pill" data-toggle="modal" data-target="#kt_modal_KTDatatable_remote" ><i class="flaticon-menu-1"></i>Esami</button >';
-						return '<button type="button" id="' + row.Titolo.Id + '"  data-record-id="' + row.Titolo.Id + '" class="addbuttonTitoli btn btn-info btn-icon btn-circle"><i class="fa fa-th-list"></i>';
+						return '<button ' + status[+row.ContieneSsd].disabled + ' type="button" id="' + row.Id + '"  data-record-id="' + row.Id + '" class="addbuttonTitoli btn btn-info btn-icon btn-circle" '+status[+row.ContieneSsd].style+'><i class="fa fa-th-list"></i>';
 					}
 				}, {
 					field: 'Nome',
-					title: 'Nome Titolo',
+					title: 'Nome Complementare',
 					sortable: false,
 					width: 400,
 
-				}, {
+				},
+				{
+					field: 'StrTipo',
+					title: 'Tipo',
+					sortable: false,
+				},{
 					field: 'Luogo',
 					title: 'Luogo',
 					sortable: false,
 					width: 100,
 				}, {
 					field: 'Data',
-					title: 'Data Conseguimento',
+					title: 'Data',
 					type: 'date',
 					format: 'DD/MM/YYYY',
 					sortable: false,
 					width: 100,
 				}, {
-					field: 'Voto',
-					title: 'Voto',
-					sortable: false,
-					width: 50,
-				},
-				{
-					field: 'Lode',
-					title: 'Lode',
-					sortable: false,
-					width: 50,
-					// callback function support for column rendering
-					template: function (row) {
-
-						var status = {
-							1: { 'title': 'Si', 'class': 'kt-badge--success' },
-							0: { 'title': 'No', 'class': ' kt-badge--danger' },
-						};
-						return '<span class="kt-badge ' + status[+row.Lode].class + ' kt-badge--inline kt-badge--pill">' + status[+row.Lode].title + '</span>';
-					},
-					//}, {
-					//	field: 'Type',
-					//	title: 'Type',
-					//	autoHide: false,
-					//	// callback function support for column rendering
-					//	template: function (row) {
-					//		var status = {
-					//			1: { 'title': 'Online', 'state': 'danger' },
-					//			2: { 'title': 'Retail', 'state': 'primary' },
-					//			3: { 'title': 'Direct', 'state': 'success' },
-					//		};
-					//		return '<span class="kt-badge kt-badge--' + status[row.Type].state + ' kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-' + status[row.Type].state +
-					//			'">' +
-					//			status[row.Type].title + '</span>';
-					//	},
+					field: 'Ente',
+					title: 'Ente',
+				}, {
+					field: 'Livello',
+					title: 'Livello',
+				
 				}, {
 					field: 'Actions',
 					title: 'Actions',
@@ -206,152 +188,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 		$('#kt_form_status,#kt_form_type').selectpicker();
 
 	};
-	var datatableComplementari = function () {
-		var datatable1 = $('.kt-datatable1').KTDatatable({
-			// datasource definition
-			data: {
-				type: 'remote',
-				source: {
-					read: {
-						url: 'User/GetComplementari',
-						// sample custom headers
-						headers: { 'x-my-custokt-header': 'some value', 'x-test-header': 'the value' },
-						map: function (raw) {
-							// sample data mapping
-							var dataSet = raw;
-							if (typeof raw.data !== 'undefined') {
-								dataSet = raw.data;
-							}
-							return dataSet;
-						},
-					},
-				},
-				pageSize: 10,
-				serverPaging: true,
-				serverFiltering: true,
-				serverSorting: true,
-			},
-
-			// layout definition
-			layout: {
-				scroll: false,
-				footer: false,
-			},
-
-			// column sorting
-			sortable: true,
-
-			pagination: true,
-
-			search: {
-				input: $('#generalSearch'),
-			},
-
-			// columns definition
-			columns: [
-				{
-					field: 'RecordID',
-					title: '#',
-					sortable: false,
-					width: 20,
-					type: 'number',
-					selector: { class: 'kt-checkbox--solid' },
-					textAlign: 'center',
-				},
-				{
-					field: 'Esami',
-					title: 'Piano Di Studi',
-					// callback function support for column rendering
-					template: function (row) {
-						return '<button data-record-id="' + row.Id + '"type="button" id="' + row.Id + '" class="addbuttonComplementari btn btn-outline-brand btn-elevate btn-pill" data-toggle="modal" data-target="#modal_datatable_ajax_source" ><i class="flaticon-menu-1"></i>Esami</button >';
-					}
-				}, {
-					field: 'Nome',
-					title: 'Nome',
-				}, {
-					field: 'StrTipo',
-					title: 'Tipo',
-				}, {
-					field: 'Luogo',
-					title: 'Luogo',
-
-				}, {
-					field: 'Data',
-					title: 'Data',
-					type: 'date',
-					format: 'DD/MM/YYYY',
-				}, {
-					field: 'Ente',
-					title: 'Ente',
-				}, {
-					field: 'Livello',
-					title: 'Livello',
-					//}, {
-					//	field: 'Status',
-					//	title: 'Status',
-					//	// callback function support for column rendering
-					//	template: function (row) {
-					//		var status = {
-					//			1: { 'title': 'Pending', 'class': 'kt-badge--brand' },
-					//			2: { 'title': 'Delivered', 'class': ' kt-badge--danger' },
-					//			3: { 'title': 'Canceled', 'class': ' kt-badge--primary' },
-					//			4: { 'title': 'Success', 'class': ' kt-badge--success' },
-					//			5: { 'title': 'Info', 'class': ' kt-badge--info' },
-					//			6: { 'title': 'Danger', 'class': ' kt-badge--danger' },
-					//			7: { 'title': 'Warning', 'class': ' kt-badge--warning' },
-					//		};
-					//		return '<span class="kt-badge ' + status[row.Status].class + ' kt-badge--inline kt-badge--pill">' + status[row.Status].title + '</span>';
-					//	},
-					//}, {
-					//	field: 'Type',
-					//	title: 'Type',
-					//	autoHide: false,
-					//	// callback function support for column rendering
-					//	template: function (row) {
-					//		var status = {
-					//			1: { 'title': 'Online', 'state': 'danger' },
-					//			2: { 'title': 'Retail', 'state': 'primary' },
-					//			3: { 'title': 'Direct', 'state': 'success' },
-					//		};
-					//		return '<span class="kt-badge kt-badge--' + status[row.Type].state + ' kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-' + status[row.Type].state +
-					//			'">' +
-					//			status[row.Type].title + '</span>';
-					//	},
-				}, {
-					field: 'Actions',
-					title: 'Actions',
-					sortable: false,
-					width: 110,
-					overflow: 'visible',
-					autoHide: false,
-					template: function () {
-						return '\
-						<div class="dropdown">\
-							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown">\
-								<i class="la la-cog"></i>\
-							</a>\
-							<div class="dropdown-menu dropdown-menu-right">\
-								<a class="dropdown-item" href="#"><i class="la la-edit"></i>Modifica</a>\
-							</div>\
-						</div>\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" id="trash"  title="Elimina">\
-							<i class="la la-trash"></i>\
-						</a>\
-					';
-					},
-				}],
-
-		});
-
-		$('#kt_form_status').on('change', function () {
-			datatable.search($(this).val().toLowerCase(), 'Status');
-		});
-
-		$('#kt_form_type').on('change', function () {
-			datatable.search($(this).val().toLowerCase(), 'Type');
-		});
-		$('#kt_form_status,#kt_form_type').selectpicker();
-	}
+	
 	var subTableEsami = function (e) {
 		$('<div/>').attr('id', 'modal_datatable_ajax_source' + e.data.Id).appendTo(e.detailCell).KTDatatable({
 			data: {
@@ -400,13 +237,13 @@ var KTDatatableRemoteAjaxDemo = function () {
 		});
 	};
 	var modalSubRemoteDatatable = function (id) {
-		idTitolo = id;
+		idFormazione = id;
 		var modal = $('#kt_modal_KTDatatable_remote');
 		var el = $('#modal_datatable_ajax_source');
 		var jsonEsami;
 		$.ajax({
 			url: 'User/GetSsdUtente',
-			data: { idFormazione: -1,idTitolo: id },
+			data: { idFormazione:id,idTitolo: -1 },
 			async: false,
 			success: function (response) {
 				jsonEsami = JSON.parse(response);
@@ -449,7 +286,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 					title: 'Modifica Esami',
 					// callback function support for column rendering
 					template: function (row) {
-						return '<button type="button" name="' + idTitolo + '" id="' + row.Id + '"data-toggle="modal" data-target="#ModalAddEsami" class="currentExam btn btn-outline-brand btn-elevate btn-pill"><i class="fa fa-tasks"></i>Esami</button >';
+						return '<button type="button" name="' + idFormazione + '" id="' + row.Id + '"data-toggle="modal" data-target="#ModalAddEsami" class="currentExam btn btn-outline-brand btn-elevate btn-pill"><i class="fa fa-tasks"></i>Esami</button >';
 					}
 				},
 				{
@@ -607,13 +444,13 @@ var KTDatatableRemoteAjaxDemo = function () {
 		});
 	};
 	var modalSubRemoteDatatableVo = function (id) {
-		idTitolo = id;
+		idFormazione = id;
 		var modal = $('#kt_modal_KTDatatable_remote');
 		var el = $('#modal_datatable_ajax_source-vo');
 		var jsonEsami;
 		$.ajax({
 			url: 'User/GetEsamiUtenteJsonVo',
-			data: { idFormazione: -1, idTitolo: id },
+			data: { idFormazione: id, idTitolo: -1 },
 			async: false,
 			success: function (response) {
 				jsonEsami = JSON.parse(response);
@@ -669,7 +506,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 					title: 'Aggiungi Esame VO',
 					// callback function support for column rendering
 					template: function (row) {
-						return '<button type="button" name="' + idTitolo + '" id="' + row.Id + '"data-toggle="modal" data-target="#ModalAddEsamiVo" data-id="' + row.Descrizione + '" class="currentExamVo btn btn-outline-brand btn-elevate btn-pill"><i class="fa fa-tasks"></i>Esami</button >';
+						return '<button type="button" name="' + idFormazione + '" id="' + row.Id + '"data-toggle="modal" data-target="#ModalAddEsamiVo" data-id="' + row.Descrizione + '" class="currentExamVo btn btn-outline-brand btn-elevate btn-pill"><i class="fa fa-tasks"></i>Esami</button >';
 					}
 				},
 				{
@@ -864,9 +701,10 @@ $("#salvaEsami").click(function () {
 		i++
 	});
 	var esami = JSON.stringify(array);
+	alert(idFormazione)
 	$.ajax({
 		url: 'User/PutEsami',
-		data: { esami: esami, idTitolo: idTitolo, idSsd: idSsd },
+		data: { esami: esami,idTitolo:0, idFormazione: idFormazione, idSsd: idSsd },//TODO fixare problema idFormazione=0
 		success: function (response) {
 			swal.fire({
 				title: "Successo!",
@@ -904,7 +742,7 @@ $("#salvaEsameVo").click(function () {
 	});
 	$.ajax({
 		url: 'User/PutEsamiVo',
-		data: { cfu: obj.cfu, name: obj.name, idTitolo: idTitolo, idSsd: idVo },
+		data: { cfu: obj.cfu, name: obj.name,idTitolo:0, idFormazione: idFormazione, idSsd: idVo },
 		success: function (response) {
 			swal.fire({
 				title: "Successo!",
@@ -957,7 +795,7 @@ $('body').on('change', '.checkboxExamVo', function () {
 			alert("carico esame con CFU" + $('#semestri' + id).val() + " e codice" + id)
 			$.ajax({
 				url: 'User/PutEsamiVo',
-				data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo },
+				data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: 0,idFormazione:idFormazione },
 				success: function (response) {
 					swal.fire({
 						title: "Successo!",
@@ -980,7 +818,7 @@ $('body').on('change', '.checkboxExamVo', function () {
 			alert("cancellato")
 			$.ajax({
 				url: 'User/DeleteEsamiVo',
-				data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo },
+				data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: 0,idFormazione:idFormazione },
 				success: function (response) {
 					swal.fire({
 						title: "Successo!",
@@ -1007,7 +845,7 @@ $('body').on('change', '.semestri', function () {
 		alert("cancellato")
 		$.ajax({
 			url: 'User/DeleteEsamiVo',
-			data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo, idSsd: idSsd },
+			data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: 0,idFormazione:idFormazione,idSsd: idSsd },
 			success: function (response) {
 				swal.fire({
 					title: "Successo!",
@@ -1024,10 +862,10 @@ $('body').on('change', '.semestri', function () {
 		});
 	}
 	else {
-		console.log("carico esame " + id + " " + $('#' + id + ' option:selected').val()+" " + idTitolo+" " + idSsd+" "+ dataId  )
+		console.log("carico esame " + id + " " + $('#' + id + ' option:selected').val()+" " + idFormazione+" " + idSsd+" "+ dataId  )
 		$.ajax({
 			url: 'User/PutEsamiVo',
-			data: { name:dataId,cfu: $('#' + id +' option:selected').val(), idTitolo: idTitolo, idSsd: id.replace('semestri','') },
+			data: { name: dataId, cfu: $('#' + id + ' option:selected').val(), idTitolo: 0, idFormazione: idFormazione, idSsd: id.replace('semestri','') },
 			success: function (response) {
 				swal.fire({
 					title: "Successo!",
@@ -1121,11 +959,11 @@ $('body').on('click', '.currentExam', function (e) {
 	window.console.log(this.id, e);
 	idSsd = this.id
 	$("#tableBody").empty();
-	var idT = $('#' + this.id).attr('name')
+	idFormazione = $('#' + this.id).attr('name')
 	var jsonEsami;
 	$.ajax({
 		url: 'User/GetEsamiUtente',
-		data: { idSsd: idSsd, idTitolo: idT },
+		data: { idSsd: idSsd, idTitolo: 0, idFormazione: idFormazione },
 		async: false,
 		success: function (response) {
 			jsonEsami = JSON.parse(response);

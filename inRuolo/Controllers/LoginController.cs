@@ -3,6 +3,7 @@ using inRuolo.Models;
 using Newtonsoft.Json;
 using System;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace inRuolo.Controllers
 {
@@ -37,6 +38,7 @@ namespace inRuolo.Controllers
                 response = true;
                 Session["user"] = loggato;
                 Session["loggato"] = true;
+                FormsAuthentication.SetAuthCookie(loggato.Email, true);
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             else

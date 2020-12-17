@@ -5,5 +5,6 @@
         public Ssd Ssd;
         public int Cfu;
         public EsameUtente[] Esami;
+        public SsdVo SsdVo;
     }
 }

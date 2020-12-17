@@ -10,7 +10,16 @@
         public string Sostenuto;
         public int Cfu;
         public SsdVo[] Equivalenti;
+        public EquivalenteTab[] EquivalenteTabs;
         public EsameUtente[] EsamiUtente;
         public EsameUtente[] EsamiUtenteVo;
+    }
+    public class EquivalenteTab
+    {
+        public int Id;
+        public string Nome;
+        public int IdPadre;
+        public string Sostenuto;
+        public int Cfu;
     }
 }
