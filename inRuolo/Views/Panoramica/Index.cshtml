@@ -4,8 +4,9 @@
 @using inRuolo.Models
 @{
     var Titoli = (TitoloUtente[])ViewData["Titoli"];
-    var ClassiDiConcorso = (HashSet<ClasseConcorso>)ViewData["ClassiDiConcorso"];
+    var ClassiDiConcorso = (ClasseConcorso[])ViewData["ClassiDiConcorsoAcquisite"];
     var Complementari = (Complementare[])ViewData["Complementari"];
+    var Acquisibili = (SoluzioneClasse[])ViewData["ClassiDiConcorsoAcquisibili"];
 
 }
 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
@@ -76,7 +77,7 @@
                                         @foreach (var x in Titoli)
                                         {
                                             <tr>
-                                               <th scope="row">@row</th>
+                                                <th scope="row">@row</th>
                                                 <td>@x.Nome</td>
                                                 <td>@x.Voto</td>
                                                 <td>@x.Luogo</td>
@@ -146,21 +147,27 @@
                                     <div class="kt-portlet__body">
                                         <div class="kt-widget6">
                                             <div class="kt-widget6__head">
-                                                <div class="kt-widget6__item">
-                                                    <span>Codice</span>
-                                                    <span>Nome</span>
-                                                    <span> </span>
-                                                </div>
-                                            </div>
-                                           
-                                            <div class="kt-widget6__body">
-                                                @foreach (var x in ClassiDiConcorso)
+                                                @if (ClassiDiConcorso != null)
                                                 {
                                                     <div class="kt-widget6__item">
-                                                        <span class="kt-font-success kt-font-bold"><h4>@x.Nome</h4></span>
-                                                        <span><h5> @x.Descrizione</h5></span>
+                                                        <span>Codice</span>
+                                                        <span>Nome</span>
                                                         <span> </span>
                                                     </div>
+                                                }
+                                            </div>
+
+                                            <div class="kt-widget6__body">
+                                                @if (ClassiDiConcorso != null)
+                                                {
+                                                    foreach (var x in ClassiDiConcorso)
+                                                    {
+                                                        <div class="kt-widget6__item">
+                                                            <span class="kt-font-success kt-font-bold"><h4>@x.Nome</h4></span>
+                                                            <span><h5> @x.Descrizione</h5></span>
+                                                            <span> </span>
+                                                        </div>
+                                                    }
                                                 }
                                             </div>
 
@@ -174,156 +181,130 @@
                                 </h3>
                                 <div class="kt-separator kt-separator--space kt-separator--dashed"></div>
                                 <!--Begin:: Conseguibili-->
-                                <div class="kt-portlet kt-portlet--collapse" data-ktportlet="true" id="kt_portlet_tools_41">
-                                    <div class="kt-portlet__head">
-                                        <div class="kt-portlet__head-label">
-                                            <h3 class="kt-portlet__head-title">
-                                                <span class="kt-font-warning">A–25</span> - Lingua inglese e seconda lingua comunitaria nella scuola secondaria di primo grado
-                                            </h3>
-                                        </div>
-                                        <div class="kt-portlet__head-toolbar">
-                                            <div class="kt-portlet__head-group">
-                                                <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-brand btn-icon-md" aria-describedby="tooltip_7cdafv7vvs"><i class="la la-angle-down"></i></a>
-                                                <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_7cdafv7vvs" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(678px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 27px;"></div>                            <div class="tooltip-inner">Expand</div>                        </div>
+                                @{var i = 0;}
+                                @if (Acquisibili != null)
+                                {
+                                    foreach (var x in Acquisibili)
+                                    {
+                                        var sumVinc = 0;
+                                        var sumList = 0;
+                                        foreach (var y in x.Soluzioni)
+                                        {
+                                            sumVinc += y.Vincolati.Length;
+                                            sumList += y.ListaScelte.Length;
+                                        }
+                                        <div class="kt-portlet kt-portlet--collapse" data-ktportlet="true" id="kt_portlet_tools_41">
+                                            <div class="kt-portlet__head">
+                                                <div class="kt-portlet__head-label">
+                                                    <h3 class="kt-portlet__head-title">
+                                                        @{System.Diagnostics.Debug.WriteLine(sumVinc + sumList);}
+                                                        @if (sumVinc + sumList >= 3)
+                                                        {
+
+                                                            <span class="kt-font-danger">@x.Classe.Nome</span>@x.Classe.Descrizione
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="kt-font-warning">@x.Classe.Nome</span> @x.Classe.Descrizione
+                                                        }
+                                                    </h3>
+                                                </div>
+                                                <div class="kt-portlet__head-toolbar">
+                                                    <div class="kt-portlet__head-group">
+                                                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-brand btn-icon-md" aria-describedby="tooltip_7cdafv7vvs"><i class="la la-angle-down"></i></a>
+                                                        <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_7cdafv7vvs" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(678px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 27px;"></div>                            <div class="tooltip-inner">Expand</div>                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-portlet__body" kt-hidden-height="298" style="display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;">
-                                        <div class="kt-portlet__content">
-                                            <!-- Conseguibile Content-->
+                                            <div class="kt-portlet__body" kt-hidden-height="298" style="display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;">
+                                                <div class="kt-portlet__content">
+                                                    <!-- Conseguibile Content-->
 
-                                            <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
-                                                <div class="card">
-                                                    <div class="card-header" id="headingOne6">
-                                                        <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseOne6" aria-expanded="false" aria-controls="collapseOne6">
-                                                            <i class="flaticon-pie-chart-1"></i> Cosa Ti Manca
-                                                        </div>
-                                                    </div>
-                                                    <div id="collapseOne6" class="collapse" aria-labelledby="headingOne6" data-parent="#accordionExample6" style="">
-                                                        <div class="card-body">
-                                                            <h5>
-                                                                - <span class="kt-font-info">25 CFU</span> - Del Settore Scientifico Disciplinare MAT/01
-                                                            </h5>
-                                                            <h5>
-                                                                - <span class="kt-font-info">6 CFU</span> - Del Settore Scientifico Disciplinare LIN/06
-                                                            </h5>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header" id="headingTwo6">
-                                                        <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseTwo6" aria-expanded="false" aria-controls="collapseTwo6">
-                                                            <i class="flaticon2-notification"></i> Cosa Dovresti Acquistare
-                                                        </div>
-                                                    </div>
-                                                    <div id="collapseTwo6" class="collapse" aria-labelledby="headingTwo6" data-parent="#accordionExample6">
-                                                        <div class="card-body">
-                                                            <h5>
-                                                                - <span class="kt-font-info">1 Master </span>: Lingue E Comunicazione
-                                                            </h5>
-                                                            <h5>
-                                                                - <span class="kt-font-info">6 CFU </span>: Corso ...
-                                                            </h5>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header" id="headingThree6">
-                                                        <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6">
-                                                            <i class="flaticon2-chart"></i> Quanto Ti Costa
-                                                        </div>
-                                                    </div>
-                                                    <div id="collapseThree6" class="collapse" aria-labelledby="headingThree6" data-parent="#accordionExample6">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-6">
-                                                                    <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-dollar-sign"></i></button>
-                                                                    <h3 class="kt-font-info d-inline-block align-middle">750,00 €</h3>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-clock"></i></button>
-                                                                    <h3 class="kt-font-info d-inline-block align-middle">5 Mesi</h3>
+                                                    <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading_@(i)one">
+                                                                <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)one" aria-expanded="false" aria-controls="collapse_@(i)one">
+                                                                    <i class="flaticon-pie-chart-1"></i> Cosa Ti Manca
                                                                 </div>
                                                             </div>
-                                                            <br />
-                                                            <div class="kt-divider"><span></span></div>
-                                                            <br />
-                                                            <div class="row justify-content-center">
-                                                                <button type="button" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</button>
-                                                                <button type="button" class="btn btn-outline-brand btn-lg"><i class="fa fa-star"></i> Lista Desideri</button>
+                                                            <div id="collapse_@(i)one" class="collapse" aria-labelledby="heading_@(i)one" data-parent="#accordionExample6" style="">
+                                                                @foreach (var y in x.Soluzioni)
+                                                                {
+                                                                    foreach (var z in y.Vincolati)
+                                                                    {
+                                                                        <div class="card-body">
+                                                                            <h5>
+                                                                                - <span class="kt-font-info">@z.NCrediti CFU</span> - Del Settore Scientifico Disciplinare @z.Ssd
+                                                                            </h5>
+
+                                                                        </div>
+                                                                    }
+                                                                    foreach (var z in y.ListaScelte)
+                                                                    {
+                                                                        <div class="card-body">
+                                                                            <h5>
+                                                                                - <span class="kt-font-info">@z.NCrediti CFU</span> - Del Settore Scientifico Disciplinare @String.Join(", ", z.SsdScelta);
+                                                                            </h5>
+
+
+                                                                        </div>
+                                                                    }
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading_@(i)two">
+                                                                <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)two" aria-expanded="false" aria-controls="collapse_@(i)two">
+                                                                    <i class="flaticon2-notification"></i> Cosa Dovresti Acquistare
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapse_@(i)two" class="collapse" aria-labelledby="heading_@(i)two" data-parent="#accordionExample6">
+                                                                <div class="card-body">
+                                                                    <h5>
+                                                                        - <span class="kt-font-info">1 Master </span>: Lingue E Comunicazione
+                                                                    </h5>
+                                                                    <h5>
+                                                                        - <span class="kt-font-info">6 CFU </span>: Corso ...
+                                                                    </h5>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading_@(i)three">
+                                                                <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)three" aria-expanded="false" aria-controls="collapse_@(i)three">
+                                                                    <i class="flaticon2-chart"></i> Quanto Ti Costa
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapse_@(i)three" class="collapse" aria-labelledby="heading_@(i)three" data-parent="#accordionExample6">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-dollar-sign"></i></button>
+                                                                            <h3 class="kt-font-info d-inline-block align-middle">750,00 €</h3>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-clock"></i></button>
+                                                                            <h3 class="kt-font-info d-inline-block align-middle">5 Mesi</h3>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br />
+                                                                    <div class="kt-divider"><span></span></div>
+                                                                    <br />
+                                                                    <div class="row justify-content-center">
+                                                                        <button type="button" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</button>
+                                                                        <button type="button" class="btn btn-outline-brand btn-lg"><i class="fa fa-star"></i> Lista Desideri</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div class="kt-portlet kt-portlet--collapse" data-ktportlet="true" id="kt_portlet_tools_414">
-                                    <div class="kt-portlet__head">
-                                        <div class="kt-portlet__head-label">
-                                            <h3 class="kt-portlet__head-title">
-                                                <span class="kt-font-danger">A–22</span> - Italiano, storia, geografia, nella scuola secondaria di I grado
-                                            </h3>
-                                        </div>
-                                        <div class="kt-portlet__head-toolbar">
-                                            <div class="kt-portlet__head-group">
-                                                <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-brand btn-icon-md" aria-describedby="tooltip_7cdafv7vvs"><i class="la la-angle-down"></i></a>
-                                                <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_7cdafv7vvs" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(678px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 27px;"></div>                            <div class="tooltip-inner">Expand</div>                        </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-portlet__body" kt-hidden-height="298" style="display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;">
-                                        <div class="kt-portlet__content">
-                                            <!-- Conseguibile Content-->
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="kt-portlet kt-portlet--collapse" data-ktportlet="true" id="kt_portlet_tools_413">
-                                    <div class="kt-portlet__head">
-                                        <div class="kt-portlet__head-label">
-                                            <h3 class="kt-portlet__head-title">
-                                                <span class="kt-font-warning">A–27</span> - Matematica e Fisica
-                                            </h3>
-                                        </div>
-                                        <div class="kt-portlet__head-toolbar">
-                                            <div class="kt-portlet__head-group">
-                                                <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-brand btn-icon-md" aria-describedby="tooltip_7cdafv7vvs"><i class="la la-angle-down"></i></a>
-                                                <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_7cdafv7vvs" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(678px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 27px;"></div>                            <div class="tooltip-inner">Expand</div>                        </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-portlet__body" kt-hidden-height="298" style="display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;">
-                                        <div class="kt-portlet__content">
-                                            <!-- Conseguibile Content-->
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="kt-portlet kt-portlet--collapse" data-ktportlet="true" id="kt_portlet_tools_412">
-                                    <div class="kt-portlet__head">
-                                        <div class="kt-portlet__head-label">
-                                            <h3 class="kt-portlet__head-title">
-                                                <span class="kt-font-danger">A–21</span> - Geografia
-                                            </h3>
-                                        </div>
-                                        <div class="kt-portlet__head-toolbar">
-                                            <div class="kt-portlet__head-group">
-                                                <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-brand btn-icon-md" aria-describedby="tooltip_7cdafv7vvs"><i class="la la-angle-down"></i></a>
-                                                <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_7cdafv7vvs" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(678px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 27px;"></div>                            <div class="tooltip-inner">Expand</div>                        </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-portlet__body" kt-hidden-height="298" style="display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;">
-                                        <div class="kt-portlet__content">
-                                            <!-- Conseguibile Content-->
-                                        </div>
-                                    </div>
-                                </div>
+                                        i++;
+                                    }
+                                }
 
                                 <!--end:: Conseguibili-->
                             </div>

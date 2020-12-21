@@ -434,13 +434,13 @@ namespace inRuolo.Controllers
             string idSsd = Request["idSsd"];
             string cfu = Request["cfu"];
             string name = Request["name"];
-            SsdVo sV = JsonConvert.DeserializeObject<SsdVo>(Service.InvokeServiceGetApi("SSD/vo/" + idSsd));
-            if (name == null)
-                name = sV.Nome;
-            if (sV.IdPadre != -1)
-            {
-                idSsd = sV.IdPadre.ToString();
-            }
+            //SsdVo sV = JsonConvert.DeserializeObject<SsdVo>(Service.InvokeServiceGetApi("SSD/vo/" + idSsd));
+            //if (name == null)
+            //    name = sV.Nome;
+            //if (sV.IdPadre != -1)
+            //{
+            //    idSsd = sV.IdPadre.ToString();
+            //}
             System.Diagnostics.Debug.WriteLine("stampaaa" + idTitolo + " " + idSsd + " " + cfu + " " + name);
             // SsdVo ssdVo = JsonConvert.DeserializeObject<SsdVo>(Service.InvokeServiceGetApi("SSD/vo/" + idEsame));
             EsameUtente esame = new EsameUtente
@@ -474,6 +474,14 @@ namespace inRuolo.Controllers
             Service.InvokeServicePostApi("User/update/", ut);
             bool response = true;
             return Json(response, JsonRequestBehavior.AllowGet);
+        }
+        public string GetEquivalenti()
+        {
+            System.Diagnostics.Debug.WriteLine("iddddddddddddddddd" + Request["idSsd"]);
+            String output = Service.InvokeServiceGetApi("SSD/vo/"+ Request["idSsd"]);
+            SsdVo esame = JsonConvert.DeserializeObject<SsdVo>(output);
+            SsdVo[] equivalenti = esame.Equivalenti;
+            return JsonConvert.SerializeObject(equivalenti);
         }
     }
 }

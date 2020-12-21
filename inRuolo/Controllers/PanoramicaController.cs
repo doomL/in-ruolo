@@ -14,15 +14,12 @@ namespace inRuolo.Controllers
         public ActionResult Index()
         {
             User utenteLoggato = (User)Session["user"];
-            List<ClasseNota> classi = JsonConvert.DeserializeObject<List<ClasseNota>>(Service.InvokeServiceGetApi("InRuolo/classi/" + utenteLoggato.Id)).Distinct().ToList();
-            HashSet<ClasseConcorso> classiConcorso = new HashSet<ClasseConcorso>();
-            foreach (ClasseNota x in classi)
-            {
-                classiConcorso.Add(x.Classe);
-            }
-            //ClasseNota[] uniqueClassi = classi.Distinct().ToArray();
-            var unique_items = new HashSet<ClasseNota>(classi);
-            ViewData["ClassiDiConcorso"] = classiConcorso;
+            SituazioneClassiUtente classi = JsonConvert.DeserializeObject<SituazioneClassiUtente>(Service.InvokeServiceGetApi("InRuolo/classi/" + utenteLoggato.Id));
+            //HashSet<ClasseConcorso> classiConcorso = new HashSet<ClasseConcorso>();
+            //HashSet<SoluzioneClasse> acquisibili = new HashSet<SoluzioneClasse>();
+            System.Diagnostics.Debug.WriteLine("lenght"+classi.ClassiAcquisite.Length);
+            ViewData["ClassiDiConcorsoAcquisite"] = classi.ClassiAcquisite;
+            ViewData["ClassiDiConcorsoAcquisibili"] = classi.ClassiAcquisibili;
             ViewData["Titoli"] = JsonConvert.DeserializeObject<TitoloUtente[]>(Service.InvokeServiceGetApi("TitoloUtente/all/" + utenteLoggato.Id));
             ViewData["Complementari"] = JsonConvert.DeserializeObject<Complementare[]>(Service.InvokeServiceGetApi("Complementare/all/" + utenteLoggato.Id));
             return View();

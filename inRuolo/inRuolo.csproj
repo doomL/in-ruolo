@@ -156,6 +156,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AreaEsame.cs" />
+    <Compile Include="Models\ScegliTra.cs" />
+    <Compile Include="Models\Vincolo.cs" />
+    <Compile Include="Models\Soluzione.cs" />
+    <Compile Include="Models\SoluzioneClasse.cs" />
+    <Compile Include="Models\SituazioneClassiUtente.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\ClasseNota.cs" />
     <Compile Include="Models\Nota.cs" />
