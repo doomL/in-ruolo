@@ -1,4 +1,6 @@
-﻿namespace inRuolo.Models
+﻿using System.Collections.Generic;
+
+namespace inRuolo.Models
 {
     public class EsameTab
     {
@@ -10,7 +12,7 @@
         public string Sostenuto;
         public int Cfu;
         public SsdVo[] Equivalenti;
-        public EquivalenteTab[] EquivalenteTabs;
+        public List<EquivalenteTab> EquivalenteTabs;
         public EsameUtente[] EsamiUtente;
         public EsameUtente[] EsamiUtenteVo;
     }

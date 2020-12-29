@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using System.Collections.Generic;
 @using inRuolo.Models
@@ -9,7 +9,7 @@
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-subheader__main">
             <h3 class="kt-subheader__title">
-                Profilo
+                Formazione
             </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <!--<div class="kt-subheader__breadcrumbs">
@@ -129,16 +129,16 @@
                                 </div>
                                 <div class="kt-portlet__head-toolbar">
                                     <div class="kt-portlet__head-wrapper">
-                                        <a href="#" class="btn btn-clean btn-icon-sm">
+                                        @*<a href="#" class="btn btn-clean btn-icon-sm">
                                             <i class="la la-long-arrow-left"></i>
                                             Back
-                                        </a>
+                                        </a>*@
                                         &nbsp;
-                                        <div class="dropdown dropdown-inline">
-                                            <button type="button" class="btn btn-brand btn-icon-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="flaticon2-plus"></i> Add New
+                                        @*<div class="dropdown dropdown-inline">*@
+                                            <button type="button" class="btn btn-brand btn-icon-sm" data-toggle="modal" aria-haspopup="true" aria-expanded="false" data-target="#ModalTitoli">
+                                                <i class="flaticon2-plus"></i> Nuovo Titolo
                                             </button>
-                                            <div class="dropdown-menu dropdown-menu-right">
+                                            @*<div class="dropdown-menu dropdown-menu-right">
                                                 <ul class="kt-nav">
                                                     <li class="kt-nav__section kt-nav__section--first">
                                                         <span class="kt-nav__section-text">Choose an action:</span>
@@ -157,7 +157,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
                             </div>

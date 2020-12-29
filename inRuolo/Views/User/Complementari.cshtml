@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using System.Collections.Generic;
 @using inRuolo.Models
@@ -9,7 +9,7 @@
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-subheader__main">
             <h3 class="kt-subheader__title">
-                Profilo
+                Formazione
             </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <!--<div class="kt-subheader__breadcrumbs">
@@ -124,21 +124,21 @@
                                         <i class="kt-font-brand flaticon2-layers"></i>
                                     </span>
                                     <h3 class="kt-portlet__head-title">
-                                        Titoli Di Studio
+                                        Complementari
                                     </h3>
                                 </div>
                                 <div class="kt-portlet__head-toolbar">
                                     <div class="kt-portlet__head-wrapper">
-                                        <a href="#" class="btn btn-clean btn-icon-sm">
+                                        @*<a href="#" class="btn btn-clean btn-icon-sm">
                                             <i class="la la-long-arrow-left"></i>
                                             Back
-                                        </a>
+                                        </a>*@
                                         &nbsp;
-                                        <div class="dropdown dropdown-inline">
-                                            <button type="button" class="btn btn-brand btn-icon-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="flaticon2-plus"></i> Add New
+                                        @*<div class="dropdown dropdown-inline">*@
+                                            <button type="button" class="btn btn-brand btn-icon-sm" data-toggle="modal" aria-haspopup="true" aria-expanded="false" data-target="#ModalComplementari">
+                                                <i class="flaticon2-plus"></i> Nuovo Complementare
                                             </button>
-                                            <div class="dropdown-menu dropdown-menu-right">
+                                            @*<div class="dropdown-menu dropdown-menu-right">
                                                 <ul class="kt-nav">
                                                     <li class="kt-nav__section kt-nav__section--first">
                                                         <span class="kt-nav__section-text">Choose an action:</span>
@@ -150,14 +150,14 @@
                                                         </a>
                                                     </li>
                                                     <li class="kt-nav__item">
-                                                        <a href="#" class="kt-nav__link" data-toggle="modal" data-target="#ModalTitoli">
+                                                        <a href="#" class="kt-nav__link" data-toggle="modal" data-target="#ModalComplementari">
                                                             <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
                                                             <span class="kt-nav__link-text">Appointments</span>
                                                         </a>
                                                     </li>
                                                 </ul>
-                                            </div>
-                                        </div>
+                                            </div>*@
+                                        @*</div>*@
                                     </div>
                                 </div>
                             </div>
@@ -223,64 +223,58 @@
 
                                 <!--end: Datatable -->
                                 <!-- Modal -->
-                                <div class="modal fade" id="ModalTitoli" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal fade" id="ModalComplementari" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content" id="modalContent">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi Titolo</h5>
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi Certificazione Complementare</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label for="categoria">Categoria Titolo</label>
-                                                    <select class="form-control" id="categoriaTitolo" onchange=FillTitolo()>
+                                                    <label for="nome">Nome</label>
+                                                    <input type="text" class="form-control" id="nomeComplementare" placeholder="Nome">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="categoria">Tipo</label>
+                                                    <select class="form-control" id="categoriaCompl">
                                                     </select>
                                                 </div>
-
-                                                <label for="exampleFormControlSelect1">Titolo</label>
                                                 <div class="form-group">
-                                                    <select id="select2-multiple" class="form-control select2-single">
-                                                        <option selected="selected" value="-1"> - Seleziona Prima Una Categoria - </option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">Luogo Conseguimento Titolo</label>
-                                                    <input type="text" class="form-control" id="luogo" placeholder="Luogo">
+                                                    <label for="luogo">Luogo</label>
+                                                    <input type="text" class="form-control" id="luogoComplementare" placeholder="Luogo">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Data Conseguimento Titolo</label>
-                                                    <select name="yearpicker" class="form-control" id="yearpicker"></select>
+                                                    <select name="yearpicker" class="form-control" id="yearpickerCompl"></select>
 
                                                     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
                                                     <script type="text/javascript">
                                                         let startYear = 1950;
                                                         let endYear = new Date().getFullYear();
                                                         for (i = endYear; i > startYear; i--) {
-                                                            $('#yearpicker').append($('<option />').val(i + '/' + (i + 1)).html(i + '/' + (i + 1)));
+                                                            $('#yearpickerCompl').append($('<option />').val(i + '/' + (i + 1)).html(i + '/' + (i + 1)));
                                                         }
                                                     </script>
                                                 </div>
 
-                                                <label for="exampleInputEmail1">Voto</label>
-                                                <div class="row">
-                                                    <div class="col-md-8">
-                                                        <input type="number" class="form-control" id="voto" placeholder="Voto">
-                                                    </div>
-
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="lode" value="option2">
-                                                        <label class="form-check-label" for="inlineCheckbox2">Lode</label>
-                                                    </div>
+                                                <div class="form-group">
+                                                    <label for="ente">Ente</label>
+                                                    <input type="text" class="form-control" id="enteComplementare" placeholder="Ente">
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="livello">Livello</label>
+                                                    <input type="text" class="form-control" id="livelloComplementare" placeholder="Livello">
+                                                </div>
+
 
 
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
-                                                <button type="button" class="btn btn-primary" id="salvaTitolo">Salva</button>
+                                                <button type="button" class="btn btn-primary" id="salvaComplementare">Salva</button>
                                             </div>
                                         </div>
                                     </div>
@@ -351,7 +345,7 @@
 
                                                         <!--end: Search Form -->
                                                         @*</div>
-                                                            <div class="modal-body modal-body-fit">*@
+                                <div class="modal-body modal-body-fit">*@
 
                                                         <!--begin: Datatable -->
                                                         <div id="modal_datatable_ajax_source"></div>
@@ -397,70 +391,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="ModalTitoli" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content" id="modalContent">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi Titolo</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label for="categoria">Categoria Titolo</label>
-                                                    <select class="form-control" id="categoriaTitolo" onchange=FillTitolo()>
-                                                    </select>
-                                                </div>
-
-                                                <label for="exampleFormControlSelect1">Titolo</label>
-                                                <div class="form-group">
-                                                    <select id="select2-multiple" class="form-control select2-single">
-                                                        <option selected="selected" value="-1"> - Seleziona Prima Una Categoria - </option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">Luogo Conseguimento Titolo</label>
-                                                    <input type="text" class="form-control" id="luogo" placeholder="Luogo">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">Data Conseguimento Titolo</label>
-                                                    <select name="yearpicker" class="form-control" id="yearpicker"></select>
-
-                                                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                                                    <script type="text/javascript">
-                                                        let startYear = 1950;
-                                                        let endYear = new Date().getFullYear();
-                                                        for (i = endYear; i > startYear; i--) {
-                                                            $('#yearpicker').append($('<option />').val(i + '/' + (i + 1)).html(i + '/' + (i + 1)));
-                                                        }
-                                                    </script>
-                                                </div>
-
-                                                <label for="exampleInputEmail1">Voto</label>
-                                                <div class="row">
-                                                    <div class="col-md-8">
-                                                        <input type="number" class="form-control" id="voto" placeholder="Voto">
-                                                    </div>
-
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="lode" value="option2">
-                                                        <label class="form-check-label" for="inlineCheckbox2">Lode</label>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
-                                                <button type="button" class="btn btn-primary" id="salvaTitolo">Salva</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                            
 
                                 <!-- Modal AddEsamiVo -->
                                 <div class="modal fade" id="ModalAddEsamiVo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -494,6 +425,15 @@
                                                                 </select>
                                                             </td>
                                                         </tr>
+                                                    <thead>
+                                                    <td>Esame Equivalente</td>
+                                                    </thead>
+                                                    <tr>
+                                                        <td>
+                                                            <select class="form-control equivalenti" name="equivalentiModal">
+                                                            </select>
+                                                        </td>
+                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </div>

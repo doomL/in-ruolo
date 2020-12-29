@@ -24,5 +24,17 @@ namespace inRuolo.Controllers
             ViewData["Complementari"] = JsonConvert.DeserializeObject<Complementare[]>(Service.InvokeServiceGetApi("Complementare/all/" + utenteLoggato.Id));
             return View();
         }
+        public ActionResult Lavoro()
+        {
+            return View();
+        }
+        public ActionResult Punteggio()
+        {
+            return View();
+        }
+        public ActionResult ClassiDiConcorso()
+        {
+            return View();
+        }
     }
 }

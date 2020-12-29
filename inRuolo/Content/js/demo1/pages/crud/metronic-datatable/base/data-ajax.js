@@ -170,7 +170,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 					width: 110,
 					overflow: 'visible',
 					autoHide: false,
-					template: function () {
+					template: function (row) {
 						return '\
 						<div class="dropdown">\
 							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown">\
@@ -180,7 +180,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 								<a class="dropdown-item" href="#"><i class="la la-edit"></i>Modifica</a>\
 							</div>\
 						</div>\
-						<a class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Elimina">\
+						<a class="deleteTitolo btn btn-sm btn-clean btn-icon btn-icon-md"  id="'+ row.Titolo.Id +'" title="Elimina" style="cursor: pointer;">\
 							<i class="la la-trash"></i>\
 						</a>\
 						';
@@ -438,7 +438,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 							48: { 'text': 'Quattro Annualita', },
 						};
 						return '\
-							<div class="input-group">\
+						<div class="input-group">\
 							<div class="input-group-prepend">\
 								<span class="input-group-text">\
 									<label class="kt-checkbox kt-checkbox--single kt-checkbox--success">\
@@ -448,7 +448,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 								</span>\
 							</div>\
 								<select value="'+ row.Cfu + '" class="form-control semestri" name="Semestri" id="semestri' + row.Id + '" disabled>\
-									<option value="0"  > -- Seleziona Durata -- </option>\
+									<option value="'+ row.Cfu + '" selected >' + status[row.Cfu].text + '</option>\
 									<option value="6">Un Semestre</option>\
 									<option value="12">Una Annualita\'</option>\
 									<option value="24">Due Annualita\'</option>\
@@ -526,42 +526,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 					template: function (row) {
 						return '<button type="button" name="' + idTitolo + '" id="' + row.Id + '"data-toggle="modal" data-target="#ModalAddEsamiVo" data-id="' + row.Id + '" class="currentExamVo btn btn-outline-brand btn-elevate btn-pill"><i class="fa fa-plus"></i>Aggiungi Esame</button >';
 					}
-					//},
-					//{
-					//	field: 'Risultato',
-					//	title: 'Sostenuto/Durata',
-					//	sortable: false,
-					//	overflow: 'visible',
-					//	autoHide: false,
-					//	template: function (row) {
-					//		var status = {
-					//			0: { 'text': '-- Seleziona Durata --'},
-					//			6: { 'text': 'Un Semestre'},
-					//			12: { 'text': 'Una Annualita'},
-					//			24: { 'text': 'Due Annualita'},
-					//			36: { 'text': 'Tre Annualita'},
-					//			48: { 'text': 'Quattro Annualita'},
-					//		};
-					//		return '\
-					//			<div class="input-group">\
-					//			<div class="input-group-prepend">\
-					//				<span class="input-group-text">\
-					//					<label class="kt-checkbox kt-checkbox--single kt-checkbox--success">\
-					//						<input class="checkboxExamVo" id="checkbox'+ row.Id + '" name = "esamiCheckbox" type = "checkbox"' + row.Sostenuto + ' >\
-					//							<span></span>\
-					//					</label>\
-					//				</span>\
-					//			</div>\
-					//				<select value="'+ row.Cfu+ '" class="form-control semestri" name="Semestri" id="semestri' + row.Id + '" disabled>\
-					//					<option value="'+row.Cfu+'" selected >'+ status[row.Cfu].text+'</option>\
-					//					<option value="6">Un Semestre</option>\
-					//					<option value="12">Una Annualita\'</option>\
-					//					<option value="24">Due Annualita\'</option>\
-					//					<option value="36">Tre Annualita\'</option>\
-					//					<option value="48">Quattro Annualita\'</option>\
-					//				</select >\
-					//			</div>';
-					//	},
+				
 				}
 			]
 
@@ -651,6 +616,38 @@ $("#salvaTitolo").click(function () {
 	});
 });
 
+$('body').on('click', '.deleteTitolo', function () {
+	var idTitolo=this.id
+	swal.fire({
+		title: 'Vuoi Cancellare Questo Titolo?',
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Si',
+		cancelButtonText: 'Annulla',
+		reverseButtons: true
+	}).then(function (result) {
+		if (result.value) {
+			$.ajax({
+				url: 'User/DeleteTitolo',
+				data: { idTitolo: idTitolo },
+				success: function (response) {
+					swal.fire({
+						title: "Successo!",
+						text: "Il Titolo e' stato eliminato!",
+						type: "success",
+						timer: 2000,
+						showConfirmButton: false
+					});
+		}
+	});
+	
+			window.setTimeout(function () {
+				location.reload();
+			}, 2000);
+
+		}
+	});
+});
 $("#salvaComplementare").click(function () {
 	$.ajax({
 		url: 'User/PutComplementare',
@@ -670,6 +667,7 @@ $("#salvaComplementare").click(function () {
 		}
 	});
 });
+
 
 var divId = -1;
 $('body').on('click', '#addExam', function () {
@@ -720,7 +718,7 @@ $("#salvaEsami").click(function () {
 	var esami = JSON.stringify(array);
 	$.ajax({
 		url: 'User/PutEsami',
-		data: { esami: esami, idTitolo: idTitolo, idSsd: idSsd },
+		data: { esami: esami, idTitolo: idTitolo, idSsd: idSsd,idFormazione:0 },
 		success: function (response) {
 			swal.fire({
 				title: "Successo!",
@@ -795,25 +793,31 @@ $("#salvaEsameVo").click(function () {
 $('body').on('change', '.checkboxExamVo', function () {
 	var id = this.id.substring('checkbox'.length)
 	console.log($("#checkbox" + id))
-	alert($("#checkbox" + id).is(':checked'))
+	//alert($("#checkbox" + id).is(':checked'))
 	if ($('#semestri' + id).is(':disabled')) {
 		if (!$("#checkbox" + id).is(':checked')) {
-			alert("cancello esame")
+			//alert("cancello esame")
 			//$("#semestri"+id+" option:selected").remove();
-			$("#semestri" + id).val("0").change();
+			//$("#semestri" + id).val("0").change();
+			//$('select[name=stuff] option:first').html("abcd");
 			$.ajax({
 				url: 'User/DeleteEsamiVo',
 				data: { idEsame: id },
 				success: function (response) {
 					swal.fire({
 						title: "Successo!",
-						text: "Esami Aggiunti!",
+						text: "Esame Cancellato!",
 						type: "success",
 						timer: 2000,
 						showConfirmButton: false
 					});
 					window.setTimeout(function () {
-						window.reload()//$('#ModalAddEsami').modal('toggle');
+						$('#kt_modal_KTDatatable_remote').modal('hide');
+						$('#kt_modal_KTDatatable_remote').on('hidden.bs.modal', function (e) {
+							console.log("modal2")
+							location.reload();
+						})
+						//window.reload()//$('#ModalAddEsami').modal('toggle');
 					}, 2000);
 
 				}
@@ -877,7 +881,7 @@ $('body').on('change', '.semestri', function () {
 		alert("cancellato")
 		$.ajax({
 			url: 'User/DeleteEsamiVo',
-			data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo, idSsd: idSsd },
+			data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo,idFormazione:0, idSsd: idSsd },
 			success: function (response) {
 				swal.fire({
 					title: "Successo!",
@@ -893,11 +897,11 @@ $('body').on('change', '.semestri', function () {
 			}
 		});
 	}
-	else {
+	else if (!$('#' + id).is('disabled')) { 
 		console.log("carico esame " + id + " " + $('#' + id + ' option:selected').val() + " " + idTitolo + " " + idSsd + " " + dataId)
 		$.ajax({
 			url: 'User/PutEsamiVo',
-			data: { name: dataId, cfu: $('#' + id + ' option:selected').val(), idTitolo: idTitolo, idSsd: id.replace('semestri', '') },
+			data: { name: dataId, cfu: $('#' + id + ' option:selected').val(), idTitolo: idTitolo, idFormazione: 0, idSsd: id.replace('semestri', '') },
 			success: function (response) {
 				swal.fire({
 					title: "Successo!",
@@ -906,9 +910,9 @@ $('body').on('change', '.semestri', function () {
 					timer: 2000,
 					showConfirmButton: false
 				});
-				window.setTimeout(function () {
-					$('#ModalAddEsami').modal('toggle');
-				}, 2000);
+				//window.setTimeout(function () {
+				//	$('#ModalAddEsami').modal('toggle');
+				//}, 2000);
 
 			}
 		});
@@ -995,7 +999,7 @@ $('body').on('click', '.currentExam', function (e) {
 	var jsonEsami;
 	$.ajax({
 		url: 'User/GetEsamiUtente',
-		data: { idSsd: idSsd, idTitolo: idT },
+		data: { idSsd: idSsd, idTitolo: idT,idFormazione:0 },
 		async: false,
 		success: function (response) {
 			jsonEsami = JSON.parse(response);
@@ -1051,7 +1055,7 @@ $("table.order-list").on("click", ".ibtnDel", function (event) {
 
 					swal.fire(
 						'Eliminato!',
-						'Il Tuo Esame � stato cancellato.',
+						'Il Tuo Esame e\' stato cancellato.',
 						'success'
 					)
 				}

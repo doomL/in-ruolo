@@ -9,6 +9,21 @@
         public int Cfu;
         public int IdSsd;
         public string NomeEsame;
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 
     //public EsameUtente[] ConvertToEsameUtente(SsdVo[] sV)

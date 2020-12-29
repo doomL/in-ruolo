@@ -194,24 +194,9 @@ namespace inRuolo.Controllers
             for (int i = 0; i < esamiVO.Count; i++)
             {
                 esameTmp = new EsameTab();
-                SsdUtente sU = ssdUtente.Find(x => x.SsdVo.Id == esamiVO[i].Id);
+                SsdUtente sU = ssdUtente.Find(x => x.SsdVo.IdPadre == esamiVO[i].Id);
                 if (sU != null)
                 {
-                    EsameUtente eU = Array.Find(sU.Esami, ele => ele.NomeEsame == esamiVO[i].Nome);
-                    if (eU != null)
-                    {
-                        System.Diagnostics.Debug.WriteLine("priinttt");
-                        esameTmp.Cfu = eU.Cfu;
-                        esameTmp.Id = eU.IdEsame;
-                        esameTmp.Sostenuto = "checked";
-                        sU.Esami = sU.Esami.Where(val => val != eU).ToArray();
-                    }
-                    else
-                    {
-                        esameTmp.Cfu = 0;
-                        esameTmp.Sostenuto = "";
-                        esameTmp.Id = esamiVO[i].Id;
-                    }
                     int equivSize = esamiVO[i].Equivalenti.Length;
                     esameTmp.Descrizione = esamiVO[i].Nome;
 
@@ -219,7 +204,7 @@ namespace inRuolo.Controllers
 
                     if (esamiVO[i].Equivalenti.Length != 0)
                     {
-                        esameTmp.EquivalenteTabs = new EquivalenteTab[esamiVO[i].Equivalenti.Length + sU.Esami.Length];
+                        esameTmp.EquivalenteTabs = new List<EquivalenteTab>();
                         for (int j = 0; j < esamiVO[i].Equivalenti.Length; j++)
                         {
                             EsameUtente eq = Array.Find(sU.Esami, ele => ele.NomeEsame == esamiVO[i].Equivalenti[j].Nome);
@@ -234,7 +219,7 @@ namespace inRuolo.Controllers
                                     Nome = eq.NomeEsame,
                                     Sostenuto = "checked"
                                 };
-
+                                sU.Esami = sU.Esami.Where(val => val != eq).ToArray();
                             }
                             else
                             {
@@ -247,7 +232,7 @@ namespace inRuolo.Controllers
                                     Sostenuto = ""
                                 };
                             }
-                            esameTmp.EquivalenteTabs[j] = eT;
+                            esameTmp.EquivalenteTabs.Add(eT);
                         }
                     }
                     for (int j = 0; j < sU.Esami.Length; j++)
@@ -262,8 +247,7 @@ namespace inRuolo.Controllers
 
                         };
                         System.Diagnostics.Debug.WriteLine("EsameUtente rr " + JsonConvert.SerializeObject(equi));
-                        esameTmp.EquivalenteTabs[equivSize] = equi;
-                        equivSize++;
+                        esameTmp.EquivalenteTabs.Add(equi);
                     }
 
                     esameTmp.Vo = true;
@@ -274,10 +258,10 @@ namespace inRuolo.Controllers
                     esameTmp.Id = esamiVO[i].Id;
                     esameTmp.Descrizione = esamiVO[i].Nome;
                     esameTmp.Sostenuto = "";
-                    esameTmp.Equivalenti = esamiVO[i].Equivalenti;
+                    //esameTmp.Equivalenti = esamiVO[i].Equivalenti;
                     if (esamiVO[i].Equivalenti.Length != 0)
                     {
-                        esameTmp.EquivalenteTabs = new EquivalenteTab[esamiVO[i].Equivalenti.Length];
+                        esameTmp.EquivalenteTabs = new List<EquivalenteTab>();
                         for (int j = 0; j < esamiVO[i].Equivalenti.Length; j++)
                         {
                             EquivalenteTab eT = new EquivalenteTab()
@@ -288,7 +272,7 @@ namespace inRuolo.Controllers
                                 Nome = esamiVO[i].Equivalenti[j].Nome,
                                 Sostenuto = ""
                             };
-                            esameTmp.EquivalenteTabs[j] = eT;
+                            esameTmp.EquivalenteTabs.Add(eT);
                         }
                     }
                     esameTmp.Vo = true;
@@ -375,6 +359,20 @@ namespace inRuolo.Controllers
         //    return esami;
         //}
 
+        public ActionResult DeleteTitolo()
+        {
+            User utenteLoggato = (User)Session["user"];
+            TitoloUtente titolo = new TitoloUtente()
+            {
+                Titolo = new Titolo(Int32.Parse(Request["idTitolo"]))
+            };
+            System.Diagnostics.Debug.WriteLine(Request["idTitolo"]);
+            String output = Service.InvokeServicePostApi("TitoloUtente/delete/" + utenteLoggato.Id, titolo);
+            System.Diagnostics.Debug.WriteLine(output);
+            bool response = true;
+            return Json(response, JsonRequestBehavior.AllowGet);
+
+        }
         public ActionResult DeleteEsami()
         {
             User utenteLoggato = (User)Session["user"];
@@ -434,9 +432,9 @@ namespace inRuolo.Controllers
             string idSsd = Request["idSsd"];
             string cfu = Request["cfu"];
             string name = Request["name"];
-            //SsdVo sV = JsonConvert.DeserializeObject<SsdVo>(Service.InvokeServiceGetApi("SSD/vo/" + idSsd));
-            //if (name == null)
-            //    name = sV.Nome;
+            SsdVo sV = JsonConvert.DeserializeObject<SsdVo>(Service.InvokeServiceGetApi("SSD/vo/" + idSsd));
+            if (name == null)
+                name = sV.Nome;
             //if (sV.IdPadre != -1)
             //{
             //    idSsd = sV.IdPadre.ToString();

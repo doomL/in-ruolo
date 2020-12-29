@@ -1,0 +1,152 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using inRuolo.Models
+
+<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+    <!-- begin:: Subheader -->
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                Lavoro
+            </h3>
+            <span class="kt-subheader__separator kt-hidden"></span>
+
+        </div>
+    </div>
+
+    <!-- end:: Subheader -->
+    <!-- begin:: Content -->
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+        <h3 class="display-4 text-center">Periodi Di Servizio</h3>
+        <div class="kt-divider"><span></span></div>
+        <br />
+        <!--Begin::App-->
+        <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app">
+            <!--Begin:: App Content-->
+
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            Riepilogo Periodi Supplenza
+                        </h3>
+                        <button type="button" class="btn btn-primary" style="position: absolute; right: 10px;" data-toggle="modal" data-target="#aggiungi"><i class="fa fa-plus"></i> Aggiungi</button>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+
+                    <!--begin::Section-->
+                    <div class="kt-section">
+                        <div class="kt-section__content">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Periodo</th>
+                                            <th>Scuola</th>
+                                            <th>Classe</th>
+                                            <th>Giorni</th>
+                                            <th>Punti</th>
+                                            <th>Modifica</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Jhon</td>
+                                            <td>Stone</td>
+                                            <td>@@jhon</td>
+                                            <td>Jhon</td>
+                                            <td>Stone</td>
+                                            <td>@@jhon</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Lisa</td>
+                                            <td>Nilson</td>
+                                            <td>@@lisa</td>
+                                            <td>Jhon</td>
+                                            <td>Stone</td>
+                                            <td>@@jhon</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>Larry</td>
+                                            <td>the Bird</td>
+                                            <td>@@twitter</td>
+                                            <td>Jhon</td>
+                                            <td>Stone</td>
+                                            <td>@@jhon</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--end::Section-->
+
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="aggiungi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content" id="modalContent">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Aggiungi Periodo</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="exampleFormControlSelect1">Periodo</label>
+                            <div class="form-group">
+                                <div class="input-daterange input-group" id="kt_datepicker_5">
+                                    <input type="text" class="form-control" name="start">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="end">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Codice Scuola</label>
+                                <input type="text" class="form-control" id="cod" placeholder="Cod.">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Scuola</label>
+                                <input type="text" class="form-control" id="scuola" placeholder="Scuola">
+                            </div>
+                            <label for="exampleFormControlSelect1">Classe Concorso</label>
+                            <div class="form-group">
+                                <select id="select2-multiple" class="form-control select2-single">
+                                    <option selected="selected" value="-1"> - Seleziona - </option>
+                                    <option value="-1"> Opzione1</option>
+                                    <option value="-1">Opzione2</option>
+                                    <option value="-1"> Opzione3 </option>
+                                    <option value="-1"> Opzione4 </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                            <button type="button" class="btn btn-primary" id="salvaPeriodo">Salva</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End:: App Content-->
+        </div>
+
+        <!--End::App-->
+    </div>
+    <!-- end:: Content -->
+</div>
+
+@section JavaScript
+{
+    <script src="~/Content/js/demo1/pages/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
+}

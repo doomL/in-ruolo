@@ -6378,10 +6378,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\User\Complementari.cshtml" />
-    <Content Include="Views\User\Fatturazione - Copia.cshtml" />
-    <Content Include="Views\User\Titoli - Copia.cshtml" />
     <Content Include="Views\User\Titoli.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Wizard\Index.cshtml" />
@@ -6399,6 +6396,9 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Panoramica\Index.cshtml" />
     <Content Include="Views\User\Complementari - Copia.cshtml" />
+    <Content Include="Views\Panoramica\ClassiDiConcorso.cshtml" />
+    <Content Include="Views\Panoramica\Lavoro.cshtml" />
+    <Content Include="Views\Panoramica\Punteggio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
