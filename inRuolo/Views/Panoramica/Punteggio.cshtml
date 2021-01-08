@@ -2,7 +2,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using inRuolo.Models
-
+@{
+    var ClassiDiConcorso = (List<ClasseConcorso>)ViewData["ClassiDiConcorso"];
+}
 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
 
     <!-- begin:: Subheader -->
@@ -24,11 +26,142 @@
         <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app">
 
             <!--Begin:: App Content-->
-            <!--End:: App Content-->
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            Riepilogo Periodi Supplenza
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+
+                    <div id="tooltips-follow"></div>
+
+
+                </div>
+
+                <!--End:: App Content-->
+            </div>
         </div>
-
+        <div class="row">
+            <!--begin::Portlet-->
+            <div class="col-lg-6">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <span class="kt-portlet__head-icon kt-hidden">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="kt-portlet__head-title">
+                                Comparazione Annualità
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div id="kt_flotcharts_7" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+            <!--begin::Portlet-->
+            <div class="col-lg-6">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <span class="kt-portlet__head-icon kt-hidden">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="kt-portlet__head-title">
+                                Confronto Con Altri Utenti
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div id="kt_flotcharts_2" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Portlet-->
         <!--End::App-->
-    </div>
-    <!-- end:: Content -->
-</div>
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="flaticon2-calendar-2"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title">
+                        Punteggi Per Classe Di Concorso
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <select class="form-control kt-select2" id="cdc" name="param">
+                        <option></option>
+                        @foreach (var x in ClassiDiConcorso)
+                        {
 
+                            <option value="@x.Id">@x.Nome - @x.Descrizione</option>
+                        }
+                    </select>
+
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-section">
+                    <div class="kt-section__content">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Periodo</th>
+                                    <th>Scuola</th>
+                                    <th>Classe</th>
+                                    <th>Giorni</th>
+                                    <th>Punti</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Jhon</td>
+                                    <td>Stone</td>
+                                    <td>jhon</td>
+                                    <td>Stone</td>
+                                    <td>jhon</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Lisa</td>
+                                    <td>Nilson</td>
+                                    <td>lisa</td>
+                                    <td>Nilson</td>
+                                    <td>lisa</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Larry</td>
+                                    <td>the Bird</td>
+                                    <td>twitter</td>
+                                    <td>the Bird</td>
+                                    <td>twitter</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @*<h3 class="text-right">Punti Totali Classe A-24: 253</h3>*@
+                <div class="col-lg-auto alert alert-outline-brand" style="align-self: flex-end;">
+                    <h4>Punti Totali Classe A-24: <strong>253</strong></h4>
+                </div>
+            </div>
+        </div>
+        <!-- end:: Content -->
+
+    </div>
+    @section JavaScript
+{
+        <script src="~/Content/vendors/custom/flot/flot.bundle.js" type="text/javascript"></script>
+        <script src="~/Content/vendors/general/jquery.flot.axislabels.js" type="text/javascript"></script>
+        <script src="~/Content/js/punteggio.js" type="text/javascript"></script>
+    }

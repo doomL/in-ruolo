@@ -1738,8 +1738,10 @@
 			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 			daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
 			daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-			months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+			months: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+				"Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],// ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+			monthsShort: ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu",
+				"Lug", "Ago", "Set", "Ott", "Nov", "Dic"],//["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			today: "Today",
 			clear: "Clear",
 			titleFormat: "MM yyyy"

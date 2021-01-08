@@ -2,7 +2,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using inRuolo.Models
-
+@{
+    var ClassiDiConcorso = (List<ClasseConcorso>)ViewData["ClassiDiConcorso"];
+}
 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
 
     <!-- begin:: Subheader -->
@@ -32,7 +34,7 @@
                         <h3 class="kt-portlet__head-title">
                             Riepilogo Periodi Supplenza
                         </h3>
-                        <button type="button" class="btn btn-primary" style="position: absolute; right: 10px;" data-toggle="modal" data-target="#aggiungi"><i class="fa fa-plus"></i> Aggiungi</button>
+                        <button type="button" id="aggiungiPeriodo" class="btn btn-primary" style="position: absolute; right: 10px;" data-toggle="modal" data-target="#modalPeriodo"><i class="fa fa-plus"></i> Aggiungi</button>
                     </div>
                 </div>
                 <div class="kt-portlet__body">
@@ -40,7 +42,7 @@
                     <!--begin::Section-->
                     <div class="kt-section">
                         <div class="kt-section__content">
-                            <div class="table-responsive">
+                            <div class="">
                                 <table class="table">
                                     <thead class="thead-light">
                                         <tr>
@@ -53,34 +55,8 @@
                                             <th>Modifica</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Jhon</td>
-                                            <td>Stone</td>
-                                            <td>@@jhon</td>
-                                            <td>Jhon</td>
-                                            <td>Stone</td>
-                                            <td>@@jhon</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Lisa</td>
-                                            <td>Nilson</td>
-                                            <td>@@lisa</td>
-                                            <td>Jhon</td>
-                                            <td>Stone</td>
-                                            <td>@@jhon</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@@twitter</td>
-                                            <td>Jhon</td>
-                                            <td>Stone</td>
-                                            <td>@@jhon</td>
-                                        </tr>
+                                    <tbody id="tableBody">
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -92,7 +68,7 @@
                 </div>
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="aggiungi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="modalPeriodo" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content" id="modalContent">
                         <div class="modal-header">
@@ -105,30 +81,53 @@
                             <label for="exampleFormControlSelect1">Periodo</label>
                             <div class="form-group">
                                 <div class="input-daterange input-group" id="kt_datepicker_5">
-                                    <input type="text" class="form-control" name="start">
+                                    <input type="text" class="form-control" name="start" id="dateStart" placeholder="Data Inizio">
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" name="end">
+                                    <input type="text" class="form-control" name="end" id="dateEnd" placeholder="Data Fine">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Codice Scuola</label>
-                                <input type="text" class="form-control" id="cod" placeholder="Cod.">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Scuola</label>
-                                <input type="text" class="form-control" id="scuola" placeholder="Scuola">
-                            </div>
-                            <label for="exampleFormControlSelect1">Classe Concorso</label>
-                            <div class="form-group">
-                                <select id="select2-multiple" class="form-control select2-single">
-                                    <option selected="selected" value="-1"> - Seleziona - </option>
-                                    <option value="-1"> Opzione1</option>
-                                    <option value="-1">Opzione2</option>
-                                    <option value="-1"> Opzione3 </option>
-                                    <option value="-1"> Opzione4 </option>
+                                <label>Regione</label>
+                                <select class="form-control kt-select2" id="regione" name="param">
+                                    <option></option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Provincia</label>
+                                <select class="form-control kt-select2" id="provincia" name="param">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Comune</label>
+                                <select class="form-control kt-select2" id="comune" name="param">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Codice Scuola</label>
+                                <select class="form-control kt-select2" id="cod" name="param">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nome Scuola</label>
+                                <select class="form-control kt-select2" id="scuola" name="param">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Classe Concorso</label>
+                                <select class="form-control kt-select2" id="cdc" name="param">
+                                    <option></option>
+                                    @foreach (var x in ClassiDiConcorso)
+                                    {
+                                        
+                                        <option value="@x.Id">@x.Nome - @x.Descrizione</option>
+                                    }
+                                    </select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -148,5 +147,7 @@
 
 @section JavaScript
 {
-    <script src="~/Content/js/demo1/pages/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
+    @*<script src="~/Content/js/demo1/pages/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>*@
+    <script src="~/Content/js/lavoro.js" type="text/javascript"></script>
+
 }

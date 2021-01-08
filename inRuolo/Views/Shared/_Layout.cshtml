@@ -734,7 +734,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <form>
 
                                     <!--begin: Head -->
-                                    <div class="kt-head kt-head--skin-light kt-head--fit-x kt-head--fit-b" style="background-image: url(~/Content/media/misc/bg-1.jpg)">
+                                    <div class="kt-head kt-head--skin-light kt-head--fit-x kt-head--fit-b" style="background-image: url(Content/media/misc/bg-1.jpg)">
                                         <h3 class="kt-head__title">
                                             User Notifications
                                             &nbsp;
@@ -1471,12 +1471,12 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--begin:: Global Optional Vendors -->
     <script src="~/Content/vendors/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
     <script src="~/Content/vendors/general/block-ui/jquery.blockUI.js" type="text/javascript"></script>
-    <script src="~/Content/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
-    <script src="~/Content/vendors/custom/js/vendors/bootstrap-datepicker.init.js" type="text/javascript"></script>
-    <script src="~/Content/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-    <script src="~/Content/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
-    <script src="~/Content/vendors/custom/js/vendors/bootstrap-timepicker.init.js" type="text/javascript"></script>
-    <script src="~/Content/vendors/general/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <script src="~/Content/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    @*<script src="~/Content/vendors/custom/js/vendors/bootstrap-datepicker.init.js" type="text/javascript"></script>*@
+    @*<script src="~/Content/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>*@
+    @*<script src="~/Content/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>*@
+    @*<script src="~/Content/vendors/custom/js/vendors/bootstrap-timepicker.init.js" type="text/javascript"></script>*@
+    @*<script src="~/Content/vendors/general/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>*@
     <script src="~/Content/vendors/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js" type="text/javascript"></script>
     <script src="~/Content/vendors/general/bootstrap-maxlength/src/bootstrap-maxlength.js" type="text/javascript"></script>
     <script src="~/Content/vendors/custom/vendors/bootstrap-multiselectsplitter/bootstrap-multiselectsplitter.min.js" type="text/javascript"></script>
@@ -1529,6 +1529,8 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="~/Content/js/demo1/pages/dashboard.js" type="text/javascript"></script>
     <script src="~/Content/js/demo1/pages/custom/apps/user/profile.js" type="text/javascript"></script>
     <script src="~/Content/vendors/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+    <script src="~/Content/vendors/general/moment-with-locales.js" type="text/javascript"></script>
+    <script src="~/Content/vendors/general/vis-timeline-graph2d.min.js" type="text/javascript"></script>
     @*<script src="~/Content/js/demo1/pages/crud/metronic-datatable/base/data-ajax.js" type="text/javascript"></script>*@
     @*<script src="~/Content/js/demo1/pages/components/charts/morris-charts.js"></script>*@
     @RenderSection("JavaScript", required: false)

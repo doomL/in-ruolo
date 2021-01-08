@@ -156,7 +156,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AreaEsame.cs" />
+    <Compile Include="Models\Comune.cs" />
+    <Compile Include="Models\ParametriScuole.cs" />
+    <Compile Include="Models\PeriodoServizio.cs" />
+    <Compile Include="Models\PeriodoTab.cs" />
     <Compile Include="Models\ScegliTra.cs" />
+    <Compile Include="Models\Scuola.cs" />
     <Compile Include="Models\Vincolo.cs" />
     <Compile Include="Models\Soluzione.cs" />
     <Compile Include="Models\SoluzioneClasse.cs" />
@@ -180,6 +185,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\data\comuni.json" />
     <Content Include="Content\css\demo1\pages\general\error\error-1.css" />
     <Content Include="Content\css\demo1\pages\general\error\error-1.min.css" />
     <Content Include="Content\css\demo1\pages\general\error\error-1.rtl.css" />
@@ -435,6 +441,8 @@
     <Content Include="Content\js\demo1\pages\wizard\wizard-4.min.js" />
     <Content Include="Content\js\demo1\scripts.bundle.js" />
     <Content Include="Content\js\demo1\scripts.bundle.min.js" />
+    <Content Include="Content\js\lavoro.js" />
+    <Content Include="Content\js\punteggio.js" />
     <Content Include="Content\media\bg\300.jpg" />
     <Content Include="Content\media\bg\350.jpg" />
     <Content Include="Content\media\bg\400.jpg" />
@@ -3885,6 +3893,7 @@
     <Content Include="Content\vendors\general\jquery-validation\dist\localization\methods_nl.min.js" />
     <Content Include="Content\vendors\general\jquery-validation\dist\localization\methods_pt.js" />
     <Content Include="Content\vendors\general\jquery-validation\dist\localization\methods_pt.min.js" />
+    <Content Include="Content\vendors\general\jquery.flot.axislabels.js" />
     <Content Include="Content\vendors\general\jquery.repeater\complex-repeater.html" />
     <Content Include="Content\vendors\general\jquery.repeater\gruntfile.js" />
     <Content Include="Content\vendors\general\jquery.repeater\index.html" />
@@ -4033,6 +4042,7 @@
     <Content Include="Content\vendors\general\markdown\node_modules\nopt\examples\my-program.js" />
     <Content Include="Content\vendors\general\markdown\node_modules\nopt\lib\nopt.js" />
     <Content Include="Content\vendors\general\md5.min.js" />
+    <Content Include="Content\vendors\general\moment-with-locales.js" />
     <Content Include="Content\vendors\general\moment\ender.js" />
     <Content Include="Content\vendors\general\moment\locale\af.js" />
     <Content Include="Content\vendors\general\moment\locale\ar-dz.js" />
@@ -5495,6 +5505,7 @@
     <Content Include="Content\vendors\general\typeahead.js\test\typeahead\plugin_spec.js" />
     <Content Include="Content\vendors\general\typeahead.js\test\typeahead\results_spec.js" />
     <Content Include="Content\vendors\general\typeahead.js\test\typeahead\typeahead_spec.js" />
+    <Content Include="Content\vendors\general\vis-timeline-graph2d.min.js" />
     <Content Include="Content\vendors\general\waypoints\gulpfile.js" />
     <Content Include="Content\vendors\general\waypoints\lib\jquery.waypoints.js" />
     <Content Include="Content\vendors\general\waypoints\lib\jquery.waypoints.min.js" />
