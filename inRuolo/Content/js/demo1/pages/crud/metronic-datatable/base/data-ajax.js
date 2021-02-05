@@ -63,7 +63,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 				type: 'remote',
 				source: {
 					read: {
-						url: 'User/GetTitoli',
+						url: 'Formazione/GetTitoli',
 						// sample custom headers
 						headers: { 'x-my-custokt-header': 'some value', 'x-test-header': 'the value' },
 						map: function (raw) {
@@ -260,7 +260,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 		var el = $('#modal_datatable_ajax_source');
 		var jsonEsami;
 		$.ajax({
-			url: 'User/GetSsdUtente',
+			url: 'Formazione/GetSsdUtente',
 			data: { idFormazione: -1, idTitolo: id },
 			async: false,
 			success: function (response) {
@@ -467,7 +467,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 		var el = $('#modal_datatable_ajax_source-vo');
 		var jsonEsami;
 		$.ajax({
-			url: 'User/GetEsamiUtenteJsonVo',
+			url: 'Formazione/GetEsamiUtenteJsonVo',
 			data: { idFormazione: -1, idTitolo: id },
 			async: false,
 			success: function (response) {
@@ -583,7 +583,7 @@ var KTDatatableRemoteAjaxDemo = function () {
 
 function FillTitolo() {
 	$.ajax({
-		url: 'User/GetTitoliCategoria',
+		url: 'Formazione/GetTitoliCategoria',
 		data: { idCategoria: $("#categoriaTitolo").val() },
 		success: function (response) {
 			const obj = JSON.parse(response);
@@ -598,7 +598,7 @@ function FillTitolo() {
 
 $("#salvaTitolo").click(function () {
 	$.ajax({
-		url: 'User/PutTitolo',
+		url: 'Formazione/PutTitolo',
 		data: { idCategoria: $("#categoriaTitolo").val(), nomeCategoria: $("#categoriaTitolo option:selected").text(), titolo: $("#select2-multiple").val(), nomeTitolo: $("#select2-multiple option:selected").text(), luogo: $("#luogo").val(), data: $("#yearpicker").val(), voto: $("#voto").val(), lode: $("#lode").is(":checked") },
 		success: function (response) {
 			swal.fire({
@@ -628,7 +628,7 @@ $('body').on('click', '.deleteTitolo', function () {
 	}).then(function (result) {
 		if (result.value) {
 			$.ajax({
-				url: 'User/DeleteTitolo',
+				url: 'Formazione/DeleteTitolo',
 				data: { idTitolo: idTitolo },
 				success: function (response) {
 					swal.fire({
@@ -650,7 +650,7 @@ $('body').on('click', '.deleteTitolo', function () {
 });
 $("#salvaComplementare").click(function () {
 	$.ajax({
-		url: 'User/PutComplementare',
+		url: 'Formazione/PutComplementare',
 		data: { tipo: $("#categoriaCompl").val(), strTipo: $("#categoriaCompl option:selected").text(), nome: $("#nomeComplementare").val(), luogo: $("#luogoComplementare").val(), data: $("#yearpickerCompl").val(), ente: $("#enteComplementare").val(), livello: $("#livelloComplementare").val() },
 		success: function (response) {
 			swal.fire({
@@ -685,7 +685,7 @@ $('body').on('click', '#addExam', function () {
 		</div>\
  </div >')
 	$.ajax({
-		url: 'User/GetEsami',
+		url: 'Formazione/GetEsami',
 		success: function (response) {
 			//console.log(response)
 			const obj = JSON.parse(response);
@@ -717,7 +717,7 @@ $("#salvaEsami").click(function () {
 	});
 	var esami = JSON.stringify(array);
 	$.ajax({
-		url: 'User/PutEsami',
+		url: 'Formazione/PutEsami',
 		data: { esami: esami, idTitolo: idTitolo, idSsd: idSsd,idFormazione:0 },
 		success: function (response) {
 			swal.fire({
@@ -745,7 +745,7 @@ $('#ModalAddEsamiVo').on('shown.bs.modal', function (event) {
 	var reference_tag = $(event.relatedTarget);
 	idVo = reference_tag.data('id')
 	$.ajax({
-		url: 'User/GetEquivalenti',
+		url: 'Formazione/GetEquivalenti',
 		data: { idSsd: idVo },
 		success: function (response) {
 			const obj = JSON.parse(response);
@@ -771,7 +771,7 @@ $("#salvaEsameVo").click(function () {
 	obj.idSsd = data3
 
 	$.ajax({
-		url: 'User/PutEsamiVo',
+		url: 'Formazione/PutEsamiVo',
 		data: { cfu: obj.cfu, name: obj.name, idTitolo: idTitolo, idFormazione:0, idSsd: obj.idSsd },
 		success: function (response) {
 			swal.fire({
@@ -801,7 +801,7 @@ $('body').on('change', '.checkboxExamVo', function () {
 			//$("#semestri" + id).val("0").change();
 			//$('select[name=stuff] option:first').html("abcd");
 			$.ajax({
-				url: 'User/DeleteEsamiVo',
+				url: 'Formazione/DeleteEsamiVo',
 				data: { idEsame: id },
 				success: function (response) {
 					swal.fire({
@@ -830,7 +830,7 @@ $('body').on('change', '.checkboxExamVo', function () {
 		if ($('#semestri' + id).val() != "0") {
 			alert("carico esame con CFU" + $('#semestri' + id).val() + " e codice" + id)
 			$.ajax({
-				url: 'User/PutEsamiVo',
+				url: 'Formazione/PutEsamiVo',
 				data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo },
 				success: function (response) {
 					swal.fire({
@@ -853,7 +853,7 @@ $('body').on('change', '.checkboxExamVo', function () {
 		if ($('#semestri' + id).val() != "0") {
 			alert("cancellato")
 			$.ajax({
-				url: 'User/DeleteEsamiVo',
+				url: 'Formazione/DeleteEsamiVo',
 				data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo },
 				success: function (response) {
 					swal.fire({
@@ -880,7 +880,7 @@ $('body').on('change', '.semestri', function () {
 	if ($("#" + id).val() == "0") {
 		alert("cancellato")
 		$.ajax({
-			url: 'User/DeleteEsamiVo',
+			url: 'Formazione/DeleteEsamiVo',
 			data: { idEsame: id, cfu: $('#semestri' + id).val(), idTitolo: idTitolo,idFormazione:0, idSsd: idSsd },
 			success: function (response) {
 				swal.fire({
@@ -900,7 +900,7 @@ $('body').on('change', '.semestri', function () {
 	else if (!$('#' + id).is('disabled')) { 
 		console.log("carico esame " + id + " " + $('#' + id + ' option:selected').val() + " " + idTitolo + " " + idSsd + " " + dataId)
 		$.ajax({
-			url: 'User/PutEsamiVo',
+			url: 'Formazione/PutEsamiVo',
 			data: { name: dataId, cfu: $('#' + id + ' option:selected').val(), idTitolo: idTitolo, idFormazione: 0, idSsd: id.replace('semestri', '') },
 			success: function (response) {
 				swal.fire({
@@ -963,7 +963,7 @@ $('body').on('click', '.addbuttonComplementari', function (e) {
 
 function EnumComplementare() {
 	$.ajax({
-		url: 'User/GetEnumComplementare',
+		url: 'Formazione/GetEnumComplementare',
 		success: function (response) {
 			const obj = JSON.parse(response);
 			var $dropdown = $("#categoriaCompl");
@@ -977,7 +977,7 @@ function EnumComplementare() {
 }
 function EnumTitoli() {
 	$.ajax({
-		url: 'User/GetEnumTitoli',
+		url: 'Formazione/GetEnumTitoli',
 		success: function (response) {
 			const obj = JSON.parse(response);
 			var $dropdown = $("#categoriaTitolo");
@@ -998,7 +998,7 @@ $('body').on('click', '.currentExam', function (e) {
 	var idT = $('#' + this.id).attr('name')
 	var jsonEsami;
 	$.ajax({
-		url: 'User/GetEsamiUtente',
+		url: 'Formazione/GetEsamiUtente',
 		data: { idSsd: idSsd, idTitolo: idT,idFormazione:0 },
 		async: false,
 		success: function (response) {
@@ -1048,7 +1048,7 @@ $("table.order-list").on("click", ".ibtnDel", function (event) {
 	}).then(function (result) {
 		if (result.value) {
 			$.ajax({
-				url: 'User/DeleteEsami',
+				url: 'Formazione/DeleteEsami',
 				data: { idEsame: idEsame },
 				async: false,
 				success: function (response) {

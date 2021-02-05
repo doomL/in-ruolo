@@ -18,7 +18,7 @@ var demo2 = function () {
         [2017, randValue()],
         [2018, randValue()],
         [2019, randValue()]
-    
+
     ];
     var mediaUtenti = [
         [2009, randValue()],
@@ -32,7 +32,7 @@ var demo2 = function () {
         [2017, randValue()],
         [2018, randValue()],
         [2019, randValue()]
-     
+
     ];
 
     var plot = $.plot($("#kt_flotcharts_2"), [{
@@ -148,10 +148,10 @@ jQuery(document).ready(function () {
             $.each(obj, function () {
                 timeline = new Object();
                 timeline.id = this.Id
-                timeline.content = this.Scuola
+                timeline.content = this.TipologiaScuola + " - " + this.Scuola
                 timeline.start = this.DataInizio
                 timeline.end = this.DataFine
-                timeline.title = "Classe Di Concorso " + this.ClasseConcorso
+                timeline.title = "Classe Di Concorso " + this.Classe
                 TimelineItem.push(timeline)
 
             })
@@ -177,13 +177,6 @@ jQuery(document).ready(function () {
             );
         }
     });
-    var data1 = [
-        [2009, 40],
-        [2010, 120],
-        [2011, 60],
-        [2012, 96],
-        [2013, 30]
-    ];
     var options = {
         colors: [KTApp.getStateColor("brand")],
         series: {
@@ -217,8 +210,25 @@ jQuery(document).ready(function () {
             axisLabel: 'Giorni',
         }]
     };
+    $.ajax({
+        url: 'Panoramica/GetAnnualità',
+        success: function (response) {
+            //var json = JSON.parse(response);
+            //console.log(json);
+            //var dict = new Number[Number,Number];
+            //dict=json
+            $.plot($("#kt_flotcharts_7"), [response], options);
+            console.log(response)
+        }
+    })
 
-    $.plot($("#kt_flotcharts_7"), [data1], options);
+    var data1 = [[2009, 40],
+        [2010, 120],
+        [2011, 60],
+        [2012, 96],
+        [2013, 30]
+    ];
+
 
     demo2()
     $('#cdc').select2({

@@ -22,6 +22,12 @@ namespace inRuolo.Controllers
             System.Diagnostics.Debug.WriteLine("lenght" + classi.ClassiAcquisite.Length);
             ViewData["ClassiDiConcorsoAcquisite"] = classi.ClassiAcquisite;
             ViewData["ClassiDiConcorsoAcquisibili"] = classi.ClassiAcquisibili;
+            var Prezzo = classi.ClassiAcquisibili.OrderBy(ca => ca.Proposte[0].PropostaConMasterOttima.Costo).ToList();
+            var Cfu = classi.ClassiAcquisibili.OrderBy(ca => ca.CfuMinimi).ToList();
+            var Popolarita = classi.ClassiAcquisibili.OrderByDescending(ca => ca.Classe.PostiConcorso).ToList();
+            ViewData["Prezzo"] = Prezzo;
+            ViewData["Cfu"] = Cfu;
+            ViewData["Popolarita"] = Popolarita;
             ViewData["Titoli"] = JsonConvert.DeserializeObject<TitoloUtente[]>(Service.InvokeServiceGetApi("TitoloUtente/all/" + utenteLoggato.Id));
             ViewData["Complementari"] = JsonConvert.DeserializeObject<Complementare[]>(Service.InvokeServiceGetApi("Complementare/all/" + utenteLoggato.Id));
             return View();
@@ -37,12 +43,24 @@ namespace inRuolo.Controllers
         {
             List<ClasseConcorso> classi = JsonConvert.DeserializeObject<List<ClasseConcorso>>(Service.InvokeServiceGetApi("Classi"));
             ViewData["ClassiDiConcorso"] = classi;
+            GetAnnualità();
             return View();
         }
         public ActionResult ClassiDiConcorso()
         {
-            List<ClasseConcorso> classi = JsonConvert.DeserializeObject<List<ClasseConcorso>>(Service.InvokeServiceGetApi("Classi"));
-            ViewData["ClassiDiConcorso"] = classi;
+            System.Diagnostics.Debug.WriteLine(UtilsController.GetTimeElapsed());
+            User utenteLoggato = (User)Session["user"];
+            SituazioneClassiUtente classi = JsonConvert.DeserializeObject<SituazioneClassiUtente>(Service.InvokeServiceGetApi("InRuolo/classi/" + utenteLoggato.Id));
+            ViewData["ClassiDiConcorsoAcquisite"] = classi.ClassiAcquisite;
+            ViewData["ClassiDiConcorsoAcquisibili"] = classi.ClassiAcquisibili;
+            var Prezzo = classi.ClassiAcquisibili.OrderBy(ca => ca.Proposte[0].PropostaSingoliSsd.Costo).ToList();
+            var Cfu = classi.ClassiAcquisibili.OrderBy(ca => ca.CfuMinimi).ToList();
+            var Popolarita = classi.ClassiAcquisibili.OrderByDescending(ca => ca.Classe.PostiConcorso).ToList();
+            ViewData["Prezzo"] = Prezzo;
+            ViewData["Cfu"] = Cfu;
+            ViewData["Popolarita"] = Popolarita;
+            //ViewData["PercentualeCompletamento"] = (classi.ClassiAcquisibili.Length / (classi.ClassiAcquisibili.Length + classi.ClassiAcquisite.Length)) * 100;
+            //System.Diagnostics.Debug.WriteLine((((float)classi.ClassiAcquisibili.Length / ((float)classi.ClassiAcquisibili.Length + (float)classi.ClassiAcquisite.Length)) * 100));
             return View();
         }
         public string GetScuole()
@@ -89,10 +107,10 @@ namespace inRuolo.Controllers
                 //Statale,
                 //Paritaria,
                 //Privata,
-                TipologiaScuola=scuola[0].Tipologia,
-                Scuola=scuola[0].NomeScuola,
-                Classe=classe.Nome,
-        };
+                TipologiaScuola = scuola[0].Tipologia,
+                Scuola = scuola[0].NomeScuola,
+                Classe = classe.Nome,
+            };
             Service.InvokeServicePostApi("PeriodiServizio/upsert/" + utenteLoggato.Id, periodoServizio);
             bool response = true;
             return Json(response, JsonRequestBehavior.AllowGet);
@@ -106,9 +124,47 @@ namespace inRuolo.Controllers
         public ActionResult DeletePeriodo()
         {
             System.Diagnostics.Debug.WriteLine(Request["idPeriodo"]);
-            Service.InvokeServicePostApi("PeriodiServizio/delete/"+ Request["idPeriodo"],null);
+            Service.InvokeServicePostApi("PeriodiServizio/delete/" + Request["idPeriodo"], null);
             bool response = true;
             return Json(response, JsonRequestBehavior.AllowGet);
+        }
+        public Dictionary<int,int> GetAnnualità()
+        {
+            User utenteLoggato = (User)Session["user"];
+            List<PeriodoServizio> periodi = JsonConvert.DeserializeObject<List<PeriodoServizio>>(Service.InvokeServiceGetApi("PeriodiServizio/all/" + utenteLoggato.Id));
+            DateTime DataMinima = periodi[0].DataInizio;
+            DateTime DataMassima = periodi[periodi.Count - 1].DataFine;
+            Dictionary<int, int> giorni = new Dictionary<int, int>();
+            foreach (PeriodoServizio p in periodi)
+            {
+                if (p.DataInizio < DataMinima)
+                    DataMinima = p.DataInizio;
+                if (p.DataFine > DataMassima)
+                    DataMassima = p.DataFine;
+            }
+            foreach (PeriodoServizio p in periodi)
+            {
+                DateTime end = new DateTime(p.DataInizio.Year, 12, 31);
+                DateTime begin = new DateTime(p.DataFine.Year, 1, 1);
+                AddOrUpdateDictionaryEntry(giorni,p.DataInizio.Year,(end - p.DataInizio).Days);
+                AddOrUpdateDictionaryEntry(giorni,p.DataFine.Year, (p.DataFine-begin).Days);
+            }
+            
+            System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(giorni));
+
+            bool response = true;
+            return giorni;
+        }
+        public void AddOrUpdateDictionaryEntry(Dictionary<int,int> dict,int key, int value)
+        {
+            if (dict.ContainsKey(key))
+            {
+                dict[key] = value;
+            }
+            else
+            {
+                dict.Add(key, value);
+            }
         }
     }
 }

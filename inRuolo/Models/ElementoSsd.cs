@@ -1,8 +1,8 @@
 ﻿namespace inRuolo.Models
 {
-    public class Vincolo
+    public class ElementoSsd
     {
-        public int NCrediti;
         public string Ssd;
+        public int Cfu;
     }
 }

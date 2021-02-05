@@ -9,5 +9,7 @@
         public string Livello;
         public string Ente;
         public string StrTipo;
+        public bool ContieneSsd;
+        public int Id;
     }
 }

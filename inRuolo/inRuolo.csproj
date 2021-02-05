@@ -144,6 +144,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AjaxResponse.cs" />
+    <Compile Include="Controllers\FormazioneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Logger.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -151,24 +152,29 @@
     <Compile Include="Controllers\RequestBody.cs" />
     <Compile Include="Controllers\Service.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UtilsController.cs" />
     <Compile Include="Controllers\WizardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AreaEsame.cs" />
     <Compile Include="Models\Comune.cs" />
+    <Compile Include="Models\Corso.cs" />
+    <Compile Include="Models\ElementoSsd.cs" />
+    <Compile Include="Models\EsameCorso.cs" />
+    <Compile Include="Models\Fornitore.cs" />
     <Compile Include="Models\ParametriScuole.cs" />
     <Compile Include="Models\PeriodoServizio.cs" />
     <Compile Include="Models\PeriodoTab.cs" />
-    <Compile Include="Models\ScegliTra.cs" />
+    <Compile Include="Models\Proposta.cs" />
+    <Compile Include="Models\PropostaSsd.cs" />
+    <Compile Include="Models\PropostaSsdConMaster.cs" />
+    <Compile Include="Models\Quesito.cs" />
+    <Compile Include="Models\Riutilizzo.cs" />
     <Compile Include="Models\Scuola.cs" />
-    <Compile Include="Models\Vincolo.cs" />
-    <Compile Include="Models\Soluzione.cs" />
     <Compile Include="Models\SoluzioneClasse.cs" />
     <Compile Include="Models\SituazioneClassiUtente.cs" />
     <Compile Include="Models\Categoria.cs" />
-    <Compile Include="Models\ClasseNota.cs" />
-    <Compile Include="Models\Nota.cs" />
     <Compile Include="Models\Parametri.cs" />
     <Compile Include="Models\ClasseConcorso.cs" />
     <Compile Include="Models\Complementare.cs" />
@@ -443,6 +449,7 @@
     <Content Include="Content\js\demo1\scripts.bundle.min.js" />
     <Content Include="Content\js\lavoro.js" />
     <Content Include="Content\js\punteggio.js" />
+    <Content Include="Content\js\quesiti.js" />
     <Content Include="Content\media\bg\300.jpg" />
     <Content Include="Content\media\bg\350.jpg" />
     <Content Include="Content\media\bg\400.jpg" />
@@ -6393,8 +6400,8 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\User\Complementari.cshtml" />
-    <Content Include="Views\User\Titoli.cshtml" />
+    <Content Include="Views\Formazione\Complementari.cshtml" />
+    <Content Include="Views\Formazione\Titoli.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Wizard\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -6414,10 +6421,14 @@
     <Content Include="Views\Panoramica\ClassiDiConcorso.cshtml" />
     <Content Include="Views\Panoramica\Lavoro.cshtml" />
     <Content Include="Views\Panoramica\Punteggio.cshtml" />
+    <Content Include="Views\Panoramica\ClassiDiConcorsoBackup.cshtml" />
+    <Content Include="Views\Panoramica\IndexOld.cshtml" />
+    <Content Include="Views\Formazione\Quesiti.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\RequestBody\" />
+    <Folder Include="Views\Utils\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

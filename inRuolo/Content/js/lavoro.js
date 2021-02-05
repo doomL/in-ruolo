@@ -17,7 +17,7 @@ jQuery(document).ready(function () {
             $.each(obj, function () {
                 dateStart = new Date(Date.parse(this.DataInizio));
                 dateEnd = new Date(Date.parse(this.DataFine));
-                markup = '<tr><th scope="row">' + this.Id + '</th><td>' + dateStart.toLocaleDateString("it-IT", dateOption) + ' - ' + dateEnd.toLocaleDateString("it-IT", dateOption) + '</td><td>' + this.Scuola + '</td><td>' + this.ClasseConcorso + '</td><td>' + Math.round(Math.abs((dateStart.getTime() - dateEnd.getTime()) / (oneDay))) + '</td><td>' + this.PuntiServizioSpecifico + '</td><td class="row"><div class="dropdown">\
+                markup = '<tr><th scope="row">' + this.Id + '</th><td>' + dateStart.toLocaleDateString("it-IT", dateOption) + ' - ' + dateEnd.toLocaleDateString("it-IT", dateOption) + '</td><td>' + this.TipologiaScuola+" - "+ this.Scuola + '</td><td>' + this.Classe + '</td><td>' + Math.round(Math.abs((dateStart.getTime() - dateEnd.getTime()) / (oneDay))) + '</td><td>' + this.PuntiServizioSpecifico + '</td><td class="row"><div class="dropdown">\
 							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown">\
 								<i class="la la-cog"></i>\
 							</a>\
@@ -303,7 +303,7 @@ $("#salvaPeriodo").click(function () {
                     $.each(obj, function () {
                         dateStart = new Date(Date.parse(this.DataInizio));
                         dateEnd = new Date(Date.parse(this.DataFine));
-                        markup = '<tr><th scope="row">' + this.Id + '</th><td>' + dateStart.toLocaleDateString("it-IT", dateOption) + ' - ' + dateEnd.toLocaleDateString("it-IT", dateOption) + '</td><td>' + this.Scuola + '</td><td>' + this.ClasseConcorso + '</td><td>' + Math.round(Math.abs((dateStart.getTime() - dateEnd.getTime()) / (oneDay))) + '</td><td>' + this.PuntiServizioSpecifico + '</td><td class="row"><div class="dropdown">\
+                        markup = '<tr><th scope="row">' + this.Id + '</th><td>' + dateStart.toLocaleDateString("it-IT", dateOption) + ' - ' + dateEnd.toLocaleDateString("it-IT", dateOption) + '</td><td>' + this.TipologiaScuola + " - " + this.Scuola + '</td><td>' + this.Classe + '</td><td>' + Math.round(Math.abs((dateStart.getTime() - dateEnd.getTime()) / (oneDay))) + '</td><td>' + this.PuntiServizioSpecifico + '</td><td class="row"><div class="dropdown">\
 							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown">\
 								<i class="la la-cog"></i>\
 							</a>\
@@ -357,7 +357,7 @@ $('body').on('click', '.deletePeriodo', function (e) {
                             $.each(obj, function () {
                                 dateStart = new Date(Date.parse(this.DataInizio));
                                 dateEnd = new Date(Date.parse(this.DataFine));
-                                markup = '<tr><th scope="row">' + this.Id + '</th><td>' + dateStart.toLocaleDateString("it-IT", dateOption) + ' - ' + dateEnd.toLocaleDateString("it-IT", dateOption) + '</td><td>' + this.Scuola + '</td><td>' + this.ClasseConcorso + '</td><td>' + Math.round(Math.abs((dateStart.getTime() - dateEnd.getTime()) / (oneDay))) + '</td><td>' + this.PuntiServizioSpecifico + '</td><td class="row"><div class="dropdown">\
+                                markup = '<tr><th scope="row">' + this.Id + '</th><td>' + dateStart.toLocaleDateString("it-IT", dateOption) + ' - ' + dateEnd.toLocaleDateString("it-IT", dateOption) + '</td><td>' + this.TipologiaScuola + " - " + this.Scuola + '</td><td>' + this.Classe + '</td><td>' + Math.round(Math.abs((dateStart.getTime() - dateEnd.getTime()) / (oneDay))) + '</td><td>' + this.PuntiServizioSpecifico + '</td><td class="row"><div class="dropdown">\
 							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown">\
 								<i class="la la-cog"></i>\
 							</a>\

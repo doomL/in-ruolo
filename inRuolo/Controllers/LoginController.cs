@@ -33,6 +33,7 @@ namespace inRuolo.Controllers
             Log.Write("Debug",loggato.Nome);
             bool response=false;
             Log.Write("Debug",loggedUser);
+            UtilsController.SetLoginTime();
             if (loggedUser != "")
             {
                 response = true;
@@ -55,9 +56,17 @@ namespace inRuolo.Controllers
             utente.Password = Request["password"];
             utente.Cognome = Request["cognome"];
             utente.Nome = Request["nome"];
+            utente.DatiFatturazione = new DatiFatturazione();
             //var json = Newtonsoft.Json.JsonConvert.SerializeObject(utente);
             String output=Service.InvokeServicePostApi("User/registrazione", utente);
             Log.Write("Debug",output);
+            bool response = true;
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult SignOut()
+        {
+            Session.Clear();
+            Response.Redirect("~/Login/Index");
             bool response = true;
             return Json(response, JsonRequestBehavior.AllowGet);
         }

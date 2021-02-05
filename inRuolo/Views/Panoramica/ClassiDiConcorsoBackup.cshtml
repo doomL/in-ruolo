@@ -1,0 +1,301 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using inRuolo.Models
+@{
+    var ClassiDiConcorso = (ClasseConcorso[])ViewData["ClassiDiConcorsoAcquisite"];
+    var Acquisibili = (SoluzioneClasse[])ViewData["ClassiDiConcorsoAcquisibili"];
+}
+<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+    <!-- begin:: Subheader -->
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                Classi Di Concorso
+            </h3>
+            <span class="kt-subheader__separator kt-hidden"></span>
+
+        </div>
+    </div>
+
+    <!-- end:: Subheader -->
+    <!-- begin:: Content -->
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+
+        <!--Begin::App-->
+        <!--Begin:: App Content-->
+        <div class="kt-portlet__body">
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="kt_tabs_5_1" role="tabpanel">
+
+                    <!--Begin:: Classi Di Concorso Table-->
+                    <h3 class="text-center">
+                        Conseguite
+                    </h3>
+                    
+                        <!--dwadwadwad-->
+                        <div class="kt-portlet kt-portlet--collapse" data-ktportlet="true" id="kt_portlet_tools_4">
+                            <div class="kt-portlet__head">
+                                <div class="kt-portlet__head-label">
+                                    <h3 class="kt-portlet__head-title">
+                                        Classi Di Concorso Conseguite
+                                    </h3>
+                                </div>
+                                <div class="kt-portlet__head-toolbar">
+                                    <div class="kt-portlet__head-group">
+                                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-brand btn-icon-md" aria-describedby="tooltip_55g8c6yi09"><i class="la la-angle-down"></i></a>
+                                        <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_55g8c6yi09" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(365px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 30px;"></div>                            <div class="tooltip-inner">Expand</div>                        </div><div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_3d5x4ywgfs" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(435px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 32px;"></div>                            <div class="tooltip-inner">Remove</div>                        </div><div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_tt1io7s18t" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(402px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 29px;"></div>                            <div class="tooltip-inner">Reload</div>                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__body" kt-hidden-height="100" style="display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;">
+
+                                <div class="kt-widget6">
+                                    <div class="kt-widget6__head">
+                                        @if (ClassiDiConcorso != null)
+                                        {
+                                            <div class="kt-widget6__item">
+                                                <span>Codice</span>
+                                                <span>Nome</span>
+                                                <span> </span>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="kt-widget6__body">
+                                        @if (ClassiDiConcorso != null)
+                                        {
+                                            foreach (var x in ClassiDiConcorso)
+                                            {
+                                                <div class="kt-widget6__item">
+                                                    <span class="kt-font-success kt-font-bold"><h4>@x.Nome</h4></span>
+                                                    <span><h5> @x.Descrizione</h5></span>
+                                                    <span> </span>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--dwadwadwad-->
+
+                    
+
+                    <div class="kt-separator kt-separator--space kt-separator--dashed"></div>
+                    <h3 class="text-center">
+                        Conseguibili
+                    </h3>
+                    <div class="kt-separator kt-separator--space kt-separator--dashed"></div>
+                    <!--Begin:: Conseguibili-->
+                    @{var i = 0;}
+                    @if (Acquisibili != null)
+                    {
+                        foreach (var x in Acquisibili)
+                        {
+                            //var sumVinc = 0;
+                            //var sumList = 0;
+                            //foreach (var y in x.Soluzioni)
+                            //{
+                            //    sumVinc += y.Vincolati.Length;
+                            //    sumList += y.ListaScelte.Length;
+                            //}
+                            <div class="kt-portlet kt-portlet--collapse" data-ktportlet="true" id="kt_portlet_tools_41">
+                                <div class="kt-portlet__head">
+                                    <div class="kt-portlet__head-label">
+                                        <h3 class="kt-portlet__head-title">
+                                            @*@{System.Diagnostics.Debug.WriteLine(sumVinc + sumList);}*@
+                                            @if (x.CfuMinimi >= 90)
+                                            {
+
+                                                <span class="kt-font-danger">@x.Classe.Nome </span>@x.Classe.Descrizione
+                                            }
+                                            else
+                                            {
+                                                <span class="kt-font-warning">@x.Classe.Nome</span> @x.Classe.Descrizione
+                                            }
+                                        </h3>
+                                    </div>
+                                    <div class="kt-portlet__head-toolbar">
+                                        <div class="kt-portlet__head-group">
+                                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-brand btn-icon-md" aria-describedby="tooltip_7cdafv7vvs"><i class="la la-angle-down"></i></a>
+                                            <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_7cdafv7vvs" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(678px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 27px;"></div>                            <div class="tooltip-inner">Expand</div>                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kt-portlet__body" kt-hidden-height="298" style="display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;">
+                                    <div class="kt-portlet__content">
+                                        <!-- Conseguibile Content-->
+
+                                        <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
+                                            <div class="card">
+                                                <div class="card-header" id="heading_@(i)one">
+                                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)one" aria-expanded="false" aria-controls="collapse_@(i)one">
+                                                        <i class="flaticon-pie-chart-1"></i> Cosa Ti Manca
+                                                    </div>
+                                                </div>
+                                                <div id="collapse_@(i)one" class="collapse" aria-labelledby="heading_@(i)one" data-parent="#accordionExample6" style="">
+                                                    @foreach (var y in x.Proposte)
+                                                    {
+                                                        foreach (var z in y.PropostaSingoliSsd.ListaSsd)
+                                                        {
+                                                            <div class="card-body">
+                                                                <h5>
+                                                                    - <span class="kt-font-info">@z.Cfu CFU</span> - Del Settore Scientifico Disciplinare @z.Ssd
+                                                                </h5>
+
+                                                            </div>
+                                                        }
+                                                        @*foreach (var z in y.ListaScelte)
+                                                            {
+                                                                <div class="card-body">
+                                                                    <h5>
+                                                                        - <span class="kt-font-info">@z.NCrediti CFU</span> - Del Settore Scientifico Disciplinare @String.Join(", ", z.SsdScelta);
+                                                                    </h5>
+
+
+                                                                </div>
+                                                            }*@
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="heading_@(i)two">
+                                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)two" aria-expanded="false" aria-controls="collapse_@(i)two">
+                                                        <i class="flaticon2-notification"></i> Cosa Dovresti Acquistare
+                                                    </div>
+                                                </div>
+                                                <div id="collapse_@(i)two" class="collapse" aria-labelledby="heading_@(i)two" data-parent="#accordionExample6">
+                                                    <div class="card-body">
+                                                        <h5>
+                                                            - <span class="kt-font-info">1 Master </span>: Lingue E Comunicazione
+                                                        </h5>
+                                                        <h5>
+                                                            - <span class="kt-font-info">6 CFU </span>: Corso ...
+                                                        </h5>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="heading_@(i)three">
+                                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)three" aria-expanded="false" aria-controls="collapse_@(i)three">
+                                                        <i class="flaticon2-chart"></i> Quanto Ti Costa
+                                                    </div>
+                                                </div>
+                                                <div id="collapse_@(i)three" class="collapse" aria-labelledby="heading_@(i)three" data-parent="#accordionExample6">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-dollar-sign"></i></button>
+                                                                <h3 class="kt-font-info d-inline-block align-middle">@x.Proposte[0].PropostaSingoliSsd.Costo €</h3>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-check-double"></i></button>
+                                                                <h3 class="kt-font-info d-inline-block align-middle">@x.Proposte[0].PropostaSingoliSsd.Cfu CFU</h3>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-clock"></i></button>
+                                                                <h3 class="kt-font-info d-inline-block align-middle">5 Mesi</h3>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="kt-divider"><span></span></div>
+                                                        <br />
+                                                        <div class="row justify-content-center">
+                                                            <button type="button" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</button>
+                                                            <button type="button" class="btn btn-outline-brand btn-lg"><i class="fa fa-star"></i> Lista Desideri</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            i++;
+                        }
+                    }
+
+                    <!--end:: Conseguibili-->
+                </div>
+                <!--End:: Classi Di Concorso Table-->
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="kt-portlet kt-portlet--mobile">
+                            <div class="kt-portlet__head">
+                                <div class="kt-portlet__head-label">
+                                    <h3 class="kt-portlet__head-title">
+                                        Percentuale Di Completamento <small></small>
+                                    </h3>
+                                </div>
+                            </div>
+                            @{ int percentuale;
+                                int costo = 0;
+                                percentuale = (int)(100.0 - ((float)Acquisibili.Length / ((float)ClassiDiConcorso.Length + (float)Acquisibili.Length) * 100));
+                                foreach (var x in Acquisibili)
+                                {
+                                    costo += (int)x.Proposte[0].PropostaSingoliSsd.Costo;
+                                }
+                            }
+                            <div class="kt-portlet__body">
+                                <div class="kt-widget24">
+                                    <div class="kt-widget24__details">
+                                        <div class="kt-widget24__info">
+                                            <h4 class="kt-widget24__title">
+                                                Costo Totale
+                                            </h4>
+                                            <span class="kt-widget24__desc">
+                                                Stima Spesa Conseguimento Classi Di Concorso Mancanti
+                                            </span>
+                                        </div>
+                                        <span class="kt-widget24__stats kt-font-brand">
+                                            @costo € 
+                                        </span>
+                                    </div>
+                                    <div class="progress progress--sm">
+                                        <div class="progress-bar kt-bg-brand" role="progressbar" style="width: @percentuale%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="kt-widget24__action">
+                                        <span class="kt-widget24__change">
+                                            Piano Di Studi
+                                        </span>
+                                        <span class="kt-widget24__number">
+                                            @percentuale %
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="kt-portlet kt-portlet--mobile">
+                            <div class="kt-portlet__head">
+                                <div class="kt-portlet__head-label">
+                                    <h3 class="kt-portlet__head-title">
+                                        Basic Portlet <small>portlet sub title</small>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__body">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--End:: App Content-->
+        <!--End::App-->
+    </div>
+    <!-- end:: Content -->
+</div>
+@section JavaScript
+{
+}

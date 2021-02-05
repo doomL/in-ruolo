@@ -1,0 +1,463 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using inRuolo.Models
+@{
+    var Titoli = (TitoloUtente[])ViewData["Titoli"];
+    var ClassiDiConcorso = (ClasseConcorso[])ViewData["ClassiDiConcorsoAcquisite"];
+    var Complementari = (Complementare[])ViewData["Complementari"];
+    var Acquisibili = (SoluzioneClasse[])ViewData["ClassiDiConcorsoAcquisibili"];
+
+}
+<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+    <!-- begin:: Subheader -->
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                Panoramica
+            </h3>
+            <span class="kt-subheader__separator kt-hidden"></span>
+
+        </div>
+    </div>
+
+    <!-- end:: Subheader -->
+    <!-- begin:: Content -->
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+
+        <!--Begin::App-->
+        <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app">
+
+            <!--Begin:: App Content-->
+            <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
+                <h3 class="display-4 text-center">Migliora La tua Formazione!</h3>
+                <div class="kt-divider"><span></span></div>
+                <br />
+                <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_5">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success" style=" margin: 0 0 10px 0;" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#kt_portlet_base_demo_1_1_tab_content" role="tab">
+                                        <i class="la la-cog"></i> Titoli
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_2_tab_content" role="tab">
+                                        <i class="la la-briefcase"></i> Complementari
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-group">
+                                <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-default btn-pill btn-icon-md" aria-describedby="tooltip_lgrg9cug03"><i class="la la-angle-down"></i></a>
+                                @*<a href="#" data-ktportlet-tool="reload" class="btn btn-sm btn-icon btn-default btn-pill  btn-icon-md" aria-describedby="tooltip_f6afed90yk"><i class="la la-refresh"></i></a>
+                                    <a href="#" data-ktportlet-tool="remove" class="btn btn-sm btn-icon btn-default btn-pill  btn-icon-md"><i class="la la-close"></i></a>*@
+                                <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_f6afed90yk" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(708px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 31px;"></div>                            <div class="tooltip-inner">Collapse</div>                        </div><div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_lgrg9cug03" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(674px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 31px;"></div>                            <div class="tooltip-inner">Collapse</div>                        </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body" kt-hidden-height="202" style="">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nome</th>
+                                            <th>Voto</th>
+                                            <th>Luogo</th>
+                                            <th>Data Conseguimento</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{var row = 1; }
+                                        @foreach (var x in Titoli)
+                                        {
+                                            <tr>
+                                                <th scope="row">@row</th>
+                                                <td>@x.Nome</td>
+                                                <td>@x.Voto</td>
+                                                <td>@x.Luogo</td>
+                                                <td>@x.Data</td>
+                                            </tr>
+                                            row++;
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nome</th>
+                                            <th>Tipo</th>
+                                            <th>Luogo</th>
+                                            <th>Data Conseguimento</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{row = 1; }
+                                        @foreach (var x in Complementari)
+                                        {
+                                            <tr>
+                                                <th scope="row">@row</th>
+                                                <td>@x.Nome</td>
+                                                <td>@x.StrTipo</td>
+                                                <td>@x.Luogo</td>
+                                                <td>@x.Data</td>
+                                            </tr>
+                                            row++;
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kt-portlet">
+                    <ul class="nav nav-pills nav-fill" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#kt_tabs_5_1">Classi Di Concorso</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#kt_tabs_5_2">Punteggio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#kt_tabs_5_3">Potenzialità</a>
+                        </li>
+
+                    </ul>
+
+                    <div class="kt-portlet__body">
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="kt_tabs_5_1" role="tabpanel">
+
+                                <!--Begin:: Classi Di Concorso Table-->
+                                <h3 class="">
+                                    Conseguite
+                                </h3>
+                                <div class="kt-portlet kt-portlet--height-fluid">
+
+                                    <div class="kt-portlet__body">
+                                        <div class="kt-widget6">
+                                            <div class="kt-widget6__head">
+                                                @if (ClassiDiConcorso != null)
+                                                {
+                                                    <div class="kt-widget6__item">
+                                                        <span>Codice</span>
+                                                        <span>Nome</span>
+                                                        <span> </span>
+                                                    </div>
+                                                }
+                                            </div>
+
+                                            <div class="kt-widget6__body">
+                                                @if (ClassiDiConcorso != null)
+                                                {
+                                                    foreach (var x in ClassiDiConcorso)
+                                                    {
+                                                        <div class="kt-widget6__item">
+                                                            <span class="kt-font-success kt-font-bold"><h4>@x.Nome</h4></span>
+                                                            <span><h5> @x.Descrizione</h5></span>
+                                                            <span> </span>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="kt-separator kt-separator--space kt-separator--dashed"></div>
+                                <h3 class="">
+                                    Conseguibili
+                                </h3>
+                                <div class="kt-separator kt-separator--space kt-separator--dashed"></div>
+                                <!--Begin:: Conseguibili-->
+                                @{var i = 0;}
+                                @if (Acquisibili != null)
+                                {
+                                    foreach (var x in Acquisibili)
+                                    {
+                                        var sumVinc = 0;
+                                        var sumList = 0;
+                                        //foreach (var y in x.Soluzioni)
+                                        //{
+                                        //    sumVinc += y.Vincolati.Length;
+                                        //    sumList += y.ListaScelte.Length;
+                                        //}
+                                        <div class="kt-portlet kt-portlet--collapse" data-ktportlet="true" id="kt_portlet_tools_41">
+                                            <div class="kt-portlet__head">
+                                                <div class="kt-portlet__head-label">
+                                                    <h3 class="kt-portlet__head-title">
+                                                        @{System.Diagnostics.Debug.WriteLine(sumVinc + sumList);}
+                                                        @if (sumVinc + sumList >= 3)
+                                                        {
+
+                                                            <span class="kt-font-danger">@x.Classe.Nome</span>@x.Classe.Descrizione
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="kt-font-warning">@x.Classe.Nome</span> @x.Classe.Descrizione
+                                                        }
+                                                    </h3>
+                                                </div>
+                                                <div class="kt-portlet__head-toolbar">
+                                                    <div class="kt-portlet__head-group">
+                                                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-brand btn-icon-md" aria-describedby="tooltip_7cdafv7vvs"><i class="la la-angle-down"></i></a>
+                                                        <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_7cdafv7vvs" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(678px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 27px;"></div>                            <div class="tooltip-inner">Expand</div>                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="kt-portlet__body" kt-hidden-height="298" style="display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;">
+                                                <div class="kt-portlet__content">
+                                                    <!-- Conseguibile Content-->
+
+                                                    <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading_@(i)one">
+                                                                <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)one" aria-expanded="false" aria-controls="collapse_@(i)one">
+                                                                    <i class="flaticon-pie-chart-1"></i> Cosa Ti Manca
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapse_@(i)one" class="collapse" aria-labelledby="heading_@(i)one" data-parent="#accordionExample6" style="">
+                                                               @* @foreach (var y in x.Soluzioni)
+                                                                {
+                                                                    foreach (var z in y.Vincolati)
+                                                                    {
+                                                                        <div class="card-body">
+                                                                            <h5>
+                                                                                - <span class="kt-font-info">@z.NCrediti CFU</span> - Del Settore Scientifico Disciplinare @z.Ssd
+                                                                            </h5>
+
+                                                                        </div>
+                                                                    }
+                                                                    foreach (var z in y.ListaScelte)
+                                                                    {
+                                                                        <div class="card-body">
+                                                                            <h5>
+                                                                                - <span class="kt-font-info">@z.NCrediti CFU</span> - Del Settore Scientifico Disciplinare @String.Join(", ", z.SsdScelta);
+                                                                            </h5>
+
+
+                                                                        </div>
+                                                                    }
+                                                                }*@
+                                                            </div>
+                                                        </div>
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading_@(i)two">
+                                                                <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)two" aria-expanded="false" aria-controls="collapse_@(i)two">
+                                                                    <i class="flaticon2-notification"></i> Cosa Dovresti Acquistare
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapse_@(i)two" class="collapse" aria-labelledby="heading_@(i)two" data-parent="#accordionExample6">
+                                                                <div class="card-body">
+                                                                    <h5>
+                                                                        - <span class="kt-font-info">1 Master </span>: Lingue E Comunicazione
+                                                                    </h5>
+                                                                    <h5>
+                                                                        - <span class="kt-font-info">6 CFU </span>: Corso ...
+                                                                    </h5>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading_@(i)three">
+                                                                <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)three" aria-expanded="false" aria-controls="collapse_@(i)three">
+                                                                    <i class="flaticon2-chart"></i> Quanto Ti Costa
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapse_@(i)three" class="collapse" aria-labelledby="heading_@(i)three" data-parent="#accordionExample6">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-dollar-sign"></i></button>
+                                                                            <h3 class="kt-font-info d-inline-block align-middle">750,00 €</h3>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-clock"></i></button>
+                                                                            <h3 class="kt-font-info d-inline-block align-middle">5 Mesi</h3>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br />
+                                                                    <div class="kt-divider"><span></span></div>
+                                                                    <br />
+                                                                    <div class="row justify-content-center">
+                                                                        <button type="button" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</button>
+                                                                        <button type="button" class="btn btn-outline-brand btn-lg"><i class="fa fa-star"></i> Lista Desideri</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        i++;
+                                    }
+                                }
+
+                                <!--end:: Conseguibili-->
+                            </div>
+                            <!--End:: Classi Di Concorso Table-->
+                            <div class="tab-pane" id="kt_tabs_5_2" role="tabpanel">
+                                <!--Start:: Punteggio-->
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h3 class="">
+                                            Il Tuo Punteggio
+                                        </h3>
+                                        <i class="flaticon2-poll-symbol" style="height: 1rem; font-size: 3.75em;"><h3 class="kt-font-info d-inline-block align-middle">&nbsp;19 Punti</h3></i>
+                                    </div>
+                                    <div class="col-6">
+                                        <h3 class="">
+                                            Periodo Di Servizio
+                                        </h3>
+                                        <i class="flaticon-time-1" style="height: 1rem; font-size: 3.75em;"><h3 class="kt-font-info d-inline-block align-middle">&nbsp;2 Anni</h3></i>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="kt-divider"><span></span></div>
+                                <br />
+                                <table class="table table-bordered table-hover" style="font-size: 110%;">
+                                    <tbody>
+                                        <tr class="w-25">
+                                            <th scope="row">10 Punti</th>
+                                            <td>Anno Servizio 2015-2016</td>
+
+                                        </tr>
+                                        <tr class="w-25">
+                                            <th scope="row">5 Punti</th>
+                                            <td>Anno Servizio 2016-2017</td>
+
+                                        </tr>
+                                        <tr class="w-25">
+                                            <th scope="row">2 Punti</th>
+                                            <td>Corso EiPass:LIM</td>
+
+                                        </tr>
+                                        <tr class="w-25">
+                                            <th scope="row">2 Punti</th>
+                                            <td>Corso EiPass:Tablet</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <div class="kt-divider"><span></span></div>
+                                <br />
+                                <div class="kt-portlet kt-portlet--height-fluid">
+                                    <div class="kt-portlet__head">
+                                        <div class="kt-portlet__head-label">
+                                            <h3 class="kt-portlet__head-title">
+                                                Se Vuoi Migliorare
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="kt-portlet__body">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="kt_widget31_tab1_content">
+                                                <div class="kt-widget31">
+                                                    <div class="kt-widget31__item">
+                                                        <div class="kt-widget31__content">
+                                                            <div class="kt-widget31__pic">
+                                                                <img src="~/Content/media/logos/Nss.png" alt="">
+                                                            </div>
+                                                            <div class="kt-widget31__info">
+                                                                <a href="#" class="kt-widget31__username">
+                                                                    Corso Di Dattilografia Online
+                                                                </a>
+                                                                <p class="kt-widget31__text">
+                                                                    notiziesullascuola.it
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="kt-widget31__content">
+                                                            <div class="kt-widget31__progress">
+                                                                <h3>2 Punti</h3>
+                                                            </div>
+                                                            <a href="#" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="kt-divider"><span></span></div>
+                                                <br />
+                                                <div class="kt-widget31">
+                                                    <div class="kt-widget31__item">
+                                                        <div class="kt-widget31__content">
+                                                            <div class="kt-widget31__pic">
+                                                                <img src="~/Content/media/logos/Nss.png" alt="">
+                                                            </div>
+                                                            <div class="kt-widget31__info">
+                                                                <a href="#" class="kt-widget31__username">
+                                                                    Corso Tablet
+                                                                </a>
+                                                                <p class="kt-widget31__text">
+                                                                    notiziesullascuola.it
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="kt-widget31__content">
+                                                            <div class="kt-widget31__progress">
+                                                                <h3>6 Punti</h3>
+                                                            </div>
+                                                            <a href="#" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</a>
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="kt_tabs_5_3" role="tabpanel">
+                                <!--begin::Portlet-->
+                                <div class="kt-portlet kt-portlet--tab">
+                                    <div class="kt-portlet__head">
+                                        <div class="kt-portlet__head-label">
+                                            <span class="kt-portlet__head-icon kt-hidden">
+                                                <i class="la la-gear"></i>
+                                            </span>
+                                            <h3 class="kt-portlet__head-title">
+                                                Pie Chart
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="kt-portlet__body">
+                                        <div id="kt_morris_4" style="height:500px;"></div>
+                                    </div>
+                                </div>
+
+                                <!--end::Portlet-->
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!--End:: App Content-->
+        </div>
+
+        <!--End::App-->
+    </div>
+    <!-- end:: Content -->
+</div>
+

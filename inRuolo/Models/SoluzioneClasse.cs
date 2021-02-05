@@ -3,6 +3,8 @@
     public class SoluzioneClasse
     {
         public ClasseConcorso Classe;
-        public Soluzione[] Soluzioni;
+        public int CfuMinimi;
+        public Proposta[] Proposte;
+        public Proposta[] ProposteScartate;
     }
 }

@@ -7,7 +7,9 @@
     var ClassiDiConcorso = (ClasseConcorso[])ViewData["ClassiDiConcorsoAcquisite"];
     var Complementari = (Complementare[])ViewData["Complementari"];
     var Acquisibili = (SoluzioneClasse[])ViewData["ClassiDiConcorsoAcquisibili"];
-
+    var Prezzo = (List<SoluzioneClasse>)ViewData["Prezzo"];
+    var Cfu = (List<SoluzioneClasse>)ViewData["Cfu"];
+    var Popolarita = (List<SoluzioneClasse>)ViewData["Popolarita"];
 }
 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
 
@@ -142,17 +144,33 @@
                                 <h3 class="">
                                     Conseguite
                                 </h3>
-                                <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-portlet kt-portlet--collapse" data-ktportlet="true" id="kt_portlet_tools_4">
+                                    <div class="kt-portlet__head">
+                                        <div class="kt-portlet__head-label">
+                                            <h3 class="kt-portlet__head-title">
+                                                Classi Di Concorso Conseguite
+                                            </h3>
+                                        </div>
+                                        <div class="kt-portlet__head-toolbar">
+                                            <div class="kt-portlet__head-group">
+                                                <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-brand btn-icon-md" aria-describedby="tooltip_55g8c6yi09"><i class="la la-angle-down"></i></a>
+                                                <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_55g8c6yi09" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(365px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 30px;"></div>                            <div class="tooltip-inner">Expand</div>                        </div><div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_3d5x4ywgfs" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(435px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 32px;"></div>                            <div class="tooltip-inner">Remove</div>                        </div><div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_tt1io7s18t" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(402px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 29px;"></div>                            <div class="tooltip-inner">Reload</div>                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="kt-portlet__body" kt-hidden-height="100" style="display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;">
 
-                                    <div class="kt-portlet__body">
                                         <div class="kt-widget6">
                                             <div class="kt-widget6__head">
                                                 @if (ClassiDiConcorso != null)
                                                 {
                                                     <div class="kt-widget6__item">
                                                         <span>Codice</span>
+
                                                         <span>Nome</span>
-                                                        <span> </span>
+
+                                                        <span>Popolarità </span>
+
                                                     </div>
                                                 }
                                             </div>
@@ -165,13 +183,14 @@
                                                         <div class="kt-widget6__item">
                                                             <span class="kt-font-success kt-font-bold"><h4>@x.Nome</h4></span>
                                                             <span><h5> @x.Descrizione</h5></span>
-                                                            <span> </span>
+                                                            <span><h5> @x.Popolarita %</h5></span>
                                                         </div>
                                                     }
                                                 }
                                             </div>
 
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -181,130 +200,172 @@
                                 </h3>
                                 <div class="kt-separator kt-separator--space kt-separator--dashed"></div>
                                 <!--Begin:: Conseguibili-->
-                                @{var i = 0;}
-                                @if (Acquisibili != null)
-                                {
-                                    foreach (var x in Acquisibili)
-                                    {
-                                        var sumVinc = 0;
-                                        var sumList = 0;
-                                        foreach (var y in x.Soluzioni)
-                                        {
-                                            sumVinc += y.Vincolati.Length;
-                                            sumList += y.ListaScelte.Length;
-                                        }
-                                        <div class="kt-portlet kt-portlet--collapse" data-ktportlet="true" id="kt_portlet_tools_41">
-                                            <div class="kt-portlet__head">
-                                                <div class="kt-portlet__head-label">
-                                                    <h3 class="kt-portlet__head-title">
-                                                        @{System.Diagnostics.Debug.WriteLine(sumVinc + sumList);}
-                                                        @if (sumVinc + sumList >= 3)
+                                <div class="kt-portlet kt-portlet--height-fluid">
+                                    <div class="kt-portlet__head">
+                                        <div class="kt-portlet__head-label">
+                                            <h3 class="kt-portlet__head-title">
+                                                I Nostri Consigli
+                                            </h3>
+                                        </div>
+                                        <div class="kt-portlet__head-toolbar">
+                                            <ul class="nav nav-pills nav-pills-sm nav-pills-label nav-pills-bold" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" data-toggle="tab" href="#kt_widget5_tab1_content" role="tab">
+                                                        Più Economici
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#kt_widget5_tab2_content" role="tab">
+                                                        Più Brevi
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#kt_widget5_tab3_content" role="tab">
+                                                        Più Richiesti
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="kt-portlet__body">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="kt_widget5_tab1_content" aria-expanded="true">
+                                                <div class="kt-widget5">
+                                                    @{ foreach (var x in Prezzo)
                                                         {
-
-                                                            <span class="kt-font-danger">@x.Classe.Nome</span>@x.Classe.Descrizione
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="kt-font-warning">@x.Classe.Nome</span> @x.Classe.Descrizione
-                                                        }
-                                                    </h3>
-                                                </div>
-                                                <div class="kt-portlet__head-toolbar">
-                                                    <div class="kt-portlet__head-group">
-                                                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-brand btn-icon-md" aria-describedby="tooltip_7cdafv7vvs"><i class="la la-angle-down"></i></a>
-                                                        <div class="tooltip tooltip-portlet tooltip bs-tooltip-top" role="tooltip" id="tooltip_7cdafv7vvs" aria-hidden="true" x-placement="top" style="position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(678px, -39px, 0px);">                            <div class="tooltip-arrow arrow" style="left: 27px;"></div>                            <div class="tooltip-inner">Expand</div>                        </div>
-                                                    </div>
+                                                            <div class="kt-widget5__item">
+                                                                <div class="kt-widget5__content">
+                                                                    <div class="kt-widget5__pic">
+                                                                        <img class="kt-widget7__img" src="./assets/media//products/product27.jpg" alt="">
+                                                                    </div>
+                                                                    <div class="kt-widget5__section">
+                                                                        <a href="#" class="kt-widget5__title">
+                                                                            @x.Classe.Nome @x.Classe.Descrizione
+                                                                        </a>
+                                                                        <p class="kt-widget5__desc">
+                                                                            @x.Proposte[0].PropostaConMasterOttima.Master.Nome
+                                                                        </p>
+                                                                        <div class="kt-widget5__info">
+                                                                            <span>Costo:</span>
+                                                                            <span class="kt-font-info">@x.Proposte[0].PropostaConMasterOttima.Costo €</span>
+                                                                            <span>Cfu Corsi Singoli:</span>
+                                                                            <span class="kt-font-info">@x.Proposte[0].PropostaConMasterOttima.CfuSingoliSsd</span>
+                                                                            <span>Popolarità:</span>
+                                                                            <span class="kt-font-info">@x.Classe.Popolarita %</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="kt-widget5__content">
+                                                                    <div class="kt-widget5__stats">
+                                                                        <button type="button" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</button>
+                                                                        @*<span class="kt-widget5__number">19,200</span>
+                                                                            <span class="kt-widget5__sales">sales</span>*@
+                                                                    </div>
+                                                                    <div class="kt-widget5__stats">
+                                                                        <button type="button" class="btn btn-outline-brand btn-lg"><i class="fa fa-star"></i> Lista Desideri</button>
+                                                                        @*<span class="kt-widget5__number">1046</span>
+                                                                            <span class="kt-widget5__votes">votes</span>*@
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        } }
                                                 </div>
                                             </div>
-                                            <div class="kt-portlet__body" kt-hidden-height="298" style="display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;">
-                                                <div class="kt-portlet__content">
-                                                    <!-- Conseguibile Content-->
-
-                                                    <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
-                                                        <div class="card">
-                                                            <div class="card-header" id="heading_@(i)one">
-                                                                <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)one" aria-expanded="false" aria-controls="collapse_@(i)one">
-                                                                    <i class="flaticon-pie-chart-1"></i> Cosa Ti Manca
-                                                                </div>
-                                                            </div>
-                                                            <div id="collapse_@(i)one" class="collapse" aria-labelledby="heading_@(i)one" data-parent="#accordionExample6" style="">
-                                                                @foreach (var y in x.Soluzioni)
-                                                                {
-                                                                    foreach (var z in y.Vincolati)
-                                                                    {
-                                                                        <div class="card-body">
-                                                                            <h5>
-                                                                                - <span class="kt-font-info">@z.NCrediti CFU</span> - Del Settore Scientifico Disciplinare @z.Ssd
-                                                                            </h5>
-
-                                                                        </div>
-                                                                    }
-                                                                    foreach (var z in y.ListaScelte)
-                                                                    {
-                                                                        <div class="card-body">
-                                                                            <h5>
-                                                                                - <span class="kt-font-info">@z.NCrediti CFU</span> - Del Settore Scientifico Disciplinare @String.Join(", ", z.SsdScelta);
-                                                                            </h5>
-
-
-                                                                        </div>
-                                                                    }
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                        <div class="card">
-                                                            <div class="card-header" id="heading_@(i)two">
-                                                                <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)two" aria-expanded="false" aria-controls="collapse_@(i)two">
-                                                                    <i class="flaticon2-notification"></i> Cosa Dovresti Acquistare
-                                                                </div>
-                                                            </div>
-                                                            <div id="collapse_@(i)two" class="collapse" aria-labelledby="heading_@(i)two" data-parent="#accordionExample6">
-                                                                <div class="card-body">
-                                                                    <h5>
-                                                                        - <span class="kt-font-info">1 Master </span>: Lingue E Comunicazione
-                                                                    </h5>
-                                                                    <h5>
-                                                                        - <span class="kt-font-info">6 CFU </span>: Corso ...
-                                                                    </h5>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card">
-                                                            <div class="card-header" id="heading_@(i)three">
-                                                                <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse_@(i)three" aria-expanded="false" aria-controls="collapse_@(i)three">
-                                                                    <i class="flaticon2-chart"></i> Quanto Ti Costa
-                                                                </div>
-                                                            </div>
-                                                            <div id="collapse_@(i)three" class="collapse" aria-labelledby="heading_@(i)three" data-parent="#accordionExample6">
-                                                                <div class="card-body">
-                                                                    <div class="row">
-                                                                        <div class="col-6">
-                                                                            <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-dollar-sign"></i></button>
-                                                                            <h3 class="kt-font-info d-inline-block align-middle">750,00 €</h3>
-                                                                        </div>
-                                                                        <div class="col-6">
-                                                                            <button type="button" class="btn btn-secondary  btn-lg btn-icon btn-circle"><i class="fa fa-clock"></i></button>
-                                                                            <h3 class="kt-font-info d-inline-block align-middle">5 Mesi</h3>
+                                            <div class="tab-pane" id="kt_widget5_tab2_content">
+                                                <div class="kt-widget5">
+                                                    @{ foreach (var x in Cfu)
+                                                        {
+                                                            <div class="kt-widget5__item">
+                                                                <div class="kt-widget5__content">
+                                                                    <div class="kt-widget5__pic">
+                                                                        <img class="kt-widget7__img" src="./assets/media//products/product27.jpg" alt="">
+                                                                    </div>
+                                                                    <div class="kt-widget5__section">
+                                                                        <a href="#" class="kt-widget5__title">
+                                                                            @x.Classe.Nome @x.Classe.Descrizione
+                                                                        </a>
+                                                                        <p class="kt-widget5__desc">
+                                                                            @x.Proposte[0].PropostaConMasterOttima.Master.Nome
+                                                                        </p>
+                                                                        <div class="kt-widget5__info">
+                                                                            <span>Costo:</span>
+                                                                            <span class="kt-font-info">@x.Proposte[0].PropostaConMasterOttima.Costo €</span>
+                                                                            <span>Cfu Corsi Singoli:</span>
+                                                                            <span class="kt-font-info">@x.Proposte[0].PropostaConMasterOttima.CfuSingoliSsd</span>
+                                                                            <span>Popolarità:</span>
+                                                                            <span class="kt-font-info">@x.Classe.Popolarita %</span>
                                                                         </div>
                                                                     </div>
-                                                                    <br />
-                                                                    <div class="kt-divider"><span></span></div>
-                                                                    <br />
-                                                                    <div class="row justify-content-center">
+                                                                </div>
+                                                                <div class="kt-widget5__content">
+                                                                    <div class="kt-widget5__stats">
                                                                         <button type="button" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</button>
+                                                                        @*<span class="kt-widget5__number">19,200</span>
+                                                                            <span class="kt-widget5__sales">sales</span>*@
+                                                                    </div>
+                                                                    <div class="kt-widget5__stats">
                                                                         <button type="button" class="btn btn-outline-brand btn-lg"><i class="fa fa-star"></i> Lista Desideri</button>
+                                                                        @*<span class="kt-widget5__number">1046</span>
+                                                                            <span class="kt-widget5__votes">votes</span>*@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
+                                                        } }
                                                 </div>
+                                            </div>
+                                            <div class="tab-pane" id="kt_widget5_tab3_content">
+                                                <div class="kt-widget5">
+                                                    @{ foreach (var x in Popolarita)
+                                                        {
+                                                             
+
+                                                            <div class="kt-widget5__item">
+                                                                <div class="kt-widget5__content">
+                                                                    <div class="kt-widget5__pic">
+                                                                        <img class="kt-widget7__img" src="./assets/media//products/product27.jpg" alt="">
+                                                                    </div>
+                                                                    <div class="kt-widget5__section">
+                                                                        <a href="#" class="kt-widget5__title">
+                                                                            @x.Classe.Nome @x.Classe.Descrizione
+                                                                        </a>
+                                                                        <p class="kt-widget5__desc">
+                                                                            @x.Proposte[0].PropostaConMasterOttima.Master.Nome
+                                                                        </p>
+                                                                        <div class="kt-widget5__info">
+                                                                            <span>Costo:</span>
+                                                                            <span class="kt-font-info">@x.Proposte[0].PropostaConMasterOttima.Costo €</span>
+                                                                            <span>Cfu Corsi Singoli:</span>
+                                                                            <span class="kt-font-info">@x.Proposte[0].PropostaConMasterOttima.CfuSingoliSsd</span>
+                                                                            <span>Popolarità:</span>
+                                                                            <span class="kt-font-info">@x.Classe.Popolarita %</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="kt-widget5__content">
+                                                                    <div class="kt-widget5__stats">
+                                                                        <button type="button" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</button>
+                                                                        @*<span class="kt-widget5__number">19,200</span>
+                                                                            <span class="kt-widget5__sales">sales</span>*@
+                                                                    </div>
+                                                                    <div class="kt-widget5__stats">
+                                                                        <button type="button" class="btn btn-outline-brand btn-lg"><i class="fa fa-star"></i> Lista Desideri</button>
+                                                                        @*<span class="kt-widget5__number">1046</span>
+                                                                            <span class="kt-widget5__votes">votes</span>*@
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        } }
+                                                </div>
+                                            </div>
+
+                                            <div class="row justify-content-center">
+                                                @*<button type="button" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</button>*@
+                                                <button type="button" class="btn btn-outline-brand btn-lg"><i class="fa fa-th-list"></i>Ulteriori Informazioni</button>
+
                                             </div>
                                         </div>
-                                        i++;
-                                    }
-                                }
+                                    </div>
+                                </div>
 
                                 <!--end:: Conseguibili-->
                             </div>
@@ -427,19 +488,128 @@
                             </div>
                             <div class="tab-pane" id="kt_tabs_5_3" role="tabpanel">
                                 <!--begin::Portlet-->
-                                <div class="kt-portlet kt-portlet--tab">
-                                    <div class="kt-portlet__head">
-                                        <div class="kt-portlet__head-label">
-                                            <span class="kt-portlet__head-icon kt-hidden">
-                                                <i class="la la-gear"></i>
-                                            </span>
-                                            <h3 class="kt-portlet__head-title">
-                                                Pie Chart
-                                            </h3>
-                                        </div>
-                                    </div>
+                                <div class="kt-portlet kt-portlet--height-fluid">
                                     <div class="kt-portlet__body">
-                                        <div id="kt_morris_4" style="height:500px;"></div>
+                                        <div class="kt-widget kt-widget--user-profile-3">
+                                            <div class="kt-widget__top">
+                                                <div class="kt-widget__media kt-hidden-">
+                                                    <img src="./assets/media/users/100_1.jpg" alt="image">
+                                                </div>
+                                                <div class="kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest kt-font-light kt-hidden">
+                                                    JM
+                                                </div>
+                                                <div class="kt-widget__content">
+                                                    <div class="kt-widget__head">
+                                                        <a href="#" class="kt-widget__username">
+                                                            Jason Muller
+                                                            <i class="flaticon2-correct"></i>
+                                                        </a>
+                                                        <div class="kt-widget__action">
+                                                            <button type="button" class="btn btn-label-success btn-sm btn-upper">ask</button>&nbsp;
+                                                            <button type="button" class="btn btn-brand btn-sm btn-upper">hire</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="kt-widget__subhead">
+                                                        <a href="#"><i class="flaticon2-new-email"></i>jason@siastudio.com</a>
+                                                        <a href="#"><i class="flaticon2-calendar-3"></i>PR Manager </a>
+                                                        <a href="#"><i class="flaticon2-placeholder"></i>Melbourne</a>
+                                                    </div>
+                                                    <div class="kt-widget__info">
+                                                        <div class="kt-widget__desc">
+                                                            I distinguish three main text objektive could be merely to inform people.
+                                                            <br> A second could be persuade people.You want people to bay objective
+                                                        </div>
+                                                        <div class="kt-widget__progress">
+                                                            <div class="kt-widget__text">
+                                                                Progress
+                                                            </div>
+                                                            <div class="progress" style="height: 5px;width: 100%;">
+                                                                <div class="progress-bar kt-bg-success" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                            <div class="kt-widget__stats">
+                                                                78%
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="kt-widget__bottom">
+                                                <div class="kt-widget__item">
+                                                    <div class="kt-widget__icon">
+                                                        <i class="flaticon-piggy-bank"></i>
+                                                    </div>
+                                                    <div class="kt-widget__details">
+                                                        <span class="kt-widget__title">Earnings</span>
+                                                        <span class="kt-widget__value"><span>$</span>249,500</span>
+                                                    </div>
+                                                </div>
+                                                <div class="kt-widget__item">
+                                                    <div class="kt-widget__icon">
+                                                        <i class="flaticon-confetti"></i>
+                                                    </div>
+                                                    <div class="kt-widget__details">
+                                                        <span class="kt-widget__title">Expances</span>
+                                                        <span class="kt-widget__value"><span>$</span>164,700</span>
+                                                    </div>
+                                                </div>
+                                                <div class="kt-widget__item">
+                                                    <div class="kt-widget__icon">
+                                                        <i class="flaticon-pie-chart"></i>
+                                                    </div>
+                                                    <div class="kt-widget__details">
+                                                        <span class="kt-widget__title">Net</span>
+                                                        <span class="kt-widget__value"><span>$</span>164,700</span>
+                                                    </div>
+                                                </div>
+                                                <div class="kt-widget__item">
+                                                    <div class="kt-widget__icon">
+                                                        <i class="flaticon-file-2"></i>
+                                                    </div>
+                                                    <div class="kt-widget__details">
+                                                        <span class="kt-widget__title">73 Tasks</span>
+                                                        <a href="#" class="kt-widget__value kt-font-brand">View</a>
+                                                    </div>
+                                                </div>
+                                                <div class="kt-widget__item">
+                                                    <div class="kt-widget__icon">
+                                                        <i class="flaticon-chat-1"></i>
+                                                    </div>
+                                                    <div class="kt-widget__details">
+                                                        <span class="kt-widget__title">648 Comments</span>
+                                                        <a href="#" class="kt-widget__value kt-font-brand">View</a>
+                                                    </div>
+                                                </div>
+                                                <div class="kt-widget__item">
+                                                    <div class="kt-widget__icon">
+                                                        <i class="flaticon-network"></i>
+                                                    </div>
+                                                    <div class="kt-widget__details">
+                                                        <div class="kt-section__content kt-section__content--solid">
+                                                            <div class="kt-badge kt-badge__pics">
+                                                                <a href="#" class="kt-badge__pic" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="" data-original-title="John Myer">
+                                                                    <img src="./assets/media/users/100_7.jpg" alt="image">
+                                                                </a>
+                                                                <a href="#" class="kt-badge__pic" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="" data-original-title="Alison Brandy">
+                                                                    <img src="./assets/media/users/100_3.jpg" alt="image">
+                                                                </a>
+                                                                <a href="#" class="kt-badge__pic" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="" data-original-title="Selina Cranson">
+                                                                    <img src="./assets/media/users/100_2.jpg" alt="image">
+                                                                </a>
+                                                                <a href="#" class="kt-badge__pic" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="" data-original-title="Luke Walls">
+                                                                    <img src="./assets/media/users/100_13.jpg" alt="image">
+                                                                </a>
+                                                                <a href="#" class="kt-badge__pic" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="" data-original-title="Micheal York">
+                                                                    <img src="./assets/media/users/100_4.jpg" alt="image">
+                                                                </a>
+                                                                <a href="#" class="kt-badge__pic kt-badge__pic--last kt-font-brand">
+                                                                    +7
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
