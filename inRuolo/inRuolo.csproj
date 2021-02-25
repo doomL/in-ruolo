@@ -144,6 +144,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AjaxResponse.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\FormazioneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Logger.cs" />
@@ -6424,6 +6425,7 @@
     <Content Include="Views\Panoramica\ClassiDiConcorsoBackup.cshtml" />
     <Content Include="Views\Panoramica\IndexOld.cshtml" />
     <Content Include="Views\Formazione\Quesiti.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

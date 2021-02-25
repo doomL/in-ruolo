@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "inRuolo", "inRuolo\inRuolo.csproj", "{5CE047F8-C3C4-49DD-A012-DB018CF429C6}"
 EndProject
+<<<<<<< HEAD
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "inRuoloLandingPage", "inRuoloLandingPage\inRuoloLandingPage.csproj", "{AA4C699B-2CE4-4576-BEBB-A1650A55759D}"
+EndProject
+=======
+>>>>>>> parent of 6530027 (Added LandingPage)
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +20,13 @@ Global
 		{5CE047F8-C3C4-49DD-A012-DB018CF429C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CE047F8-C3C4-49DD-A012-DB018CF429C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CE047F8-C3C4-49DD-A012-DB018CF429C6}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
+		{AA4C699B-2CE4-4576-BEBB-A1650A55759D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA4C699B-2CE4-4576-BEBB-A1650A55759D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA4C699B-2CE4-4576-BEBB-A1650A55759D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA4C699B-2CE4-4576-BEBB-A1650A55759D}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+>>>>>>> parent of 6530027 (Added LandingPage)
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

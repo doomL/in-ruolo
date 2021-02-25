@@ -1,0 +1,56 @@
+﻿@using inRuolo.Models
+@using inRuolo.Controllers
+@{
+    SoluzioneClasse x = (SoluzioneClasse)this.ViewData["x"];
+}
+<div class="kt-widget5__item">
+    <div class="kt-widget5__content">
+        <div class="kt-widget5__pic">
+            <img class="kt-widget7__img" src="./assets/media//products/product27.jpg" alt="">
+        </div>
+        <div class="kt-widget5__section">
+            <a href="#" class="kt-widget5__title">
+                @x.Classe.Nome @x.Classe.Descrizione
+            </a>
+            @if (x.Proposte[0].PropostaConMasterOttima != null)
+            {
+                <p class="kt-widget5__desc">
+                    @x.Proposte[0].PropostaConMasterOttima.Master.Nome
+                </p>
+                <div class="kt-widget5__info">
+                    <span>Costo:</span>
+                    <span class="kt-font-info">@x.Proposte[0].PropostaConMasterOttima.Costo €</span>
+                    <span>Cfu Corsi Singoli:</span>
+                    <span class="kt-font-info">@x.Proposte[0].PropostaConMasterOttima.CfuSingoliSsd</span>
+                    <span>Popolarità:</span>
+                    <span class="kt-font-info">@x.Classe.Popolarita %</span>
+                </div>
+            }
+            else
+            { <p class="kt-widget5__desc">
+                    Acquisto Singoli SSD
+                </p>
+                <div class="kt-widget5__info">
+                    <span>Costo:</span>
+                    <span class="kt-font-info">@x.Proposte[0].PropostaSingoliSsd.Costo €</span>
+                    <span>Cfu Corsi Singoli:</span>
+                    <span class="kt-font-info">@x.Proposte[0].PropostaSingoliSsd.Cfu</span>
+                    <span>Popolarità:</span>
+                    <span class="kt-font-info">@x.Classe.Popolarita %</span>
+                </div>}
+
+        </div>
+    </div>
+    <div class="kt-widget5__content">
+        <div class="kt-widget5__stats">
+            <button type="button" class="btn btn-brand mr-3 btn-lg"><i class="fa fa-cart-plus"></i> Acquista</button>
+            @*<span class="kt-widget5__number">19,200</span>
+                <span class="kt-widget5__sales">sales</span>*@
+        </div>
+        <div class="kt-widget5__stats">
+            <button type="button" class="btn btn-outline-brand btn-lg"><i class="fa fa-star"></i> Lista Desideri</button>
+            @*<span class="kt-widget5__number">1046</span>
+                <span class="kt-widget5__votes">votes</span>*@
+        </div>
+    </div>
+</div>
